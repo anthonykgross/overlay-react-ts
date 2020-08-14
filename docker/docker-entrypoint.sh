@@ -15,7 +15,7 @@ tests() {
 run() {
   permission
   if [ "$APPLICATION_ENV" = "prod" ]; then
-    gosu docker serve -s build --no-clipboard
+    gosu docker serve -s build --no-clipboard -l 3000
   else
     gosu docker yarn start
     # tail -f

@@ -4,6 +4,8 @@ services:
     build:
       context: .
       dockerfile: docker/Dockerfile
+    environment:
+      - APPLICATION_ENV=dev
     volumes:
       - ./logs:/var/log
       - ./src:/src
