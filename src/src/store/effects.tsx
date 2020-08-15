@@ -1,5 +1,5 @@
 import {all} from 'redux-saga/effects';
-import {MainEffects} from "../layers/main/effects";
+import {MainEffects} from "../layers/effects";
 
 export function* rootSaga() {
     yield all([
