@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {connect, useDispatch} from 'react-redux';
-import {Websocket} from "../services/websocket";
-import {websocketActions} from "../services/websocket/actions";
+import {Websocket} from "../api/websocket";
+import {websocketActions} from "../api/websocket/actions";
 import './scss/index.scss'
 
 const mapStateToProps = (state: any) => {
