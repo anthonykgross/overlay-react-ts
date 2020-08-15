@@ -1,5 +1,5 @@
 import {takeEvery} from 'redux-saga/effects';
-import {AuthenticatedAction, websocketChannels} from "../components/websocket/actions";
+import {AuthenticatedAction, websocketChannels} from "../services/websocket/actions";
 
 function* onAll(d: any) {
     console.log(d);

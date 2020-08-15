@@ -1,7 +1,8 @@
 import React, {useEffect} from 'react';
 import {connect, useDispatch} from 'react-redux';
-import {Websocket} from "../components/websocket/models";
-import {websocketActions} from "../components/websocket/actions";
+import {Websocket} from "../services/websocket";
+import {websocketActions} from "../services/websocket/actions";
+import './scss/index.scss'
 
 const mapStateToProps = (state: any) => {
     return {
@@ -9,7 +10,7 @@ const mapStateToProps = (state: any) => {
     };
 };
 
-function MainLayer(props: any) {
+function MainComponent(props: any) {
     const dispatch = useDispatch();
     let ws = new Websocket();
 
@@ -68,9 +69,10 @@ function MainLayer(props: any) {
     })
 
     return (
-        <div className="main-layer">
+        <div id="main">
             {props.children}
         </div>
     );
 }
-export default connect(mapStateToProps)(MainLayer);
+
+export default connect(mapStateToProps)(MainComponent);

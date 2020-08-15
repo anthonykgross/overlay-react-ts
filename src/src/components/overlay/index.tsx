@@ -1,9 +1,9 @@
 import React from "react";
 
-function OverlayLayer () {
+function OverlayComponent () {
     return (
         <div>Overlay</div>
     )
 }
 
-export default OverlayLayer;
+export default OverlayComponent;

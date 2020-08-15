@@ -1,4 +1,4 @@
-import {AuthenticatedResponse} from "./models";
+import {AuthenticatedResponse} from ".";
 
 export const websocketChannels = {
     AUTHENTICATED: '@websocket/authenticated',
