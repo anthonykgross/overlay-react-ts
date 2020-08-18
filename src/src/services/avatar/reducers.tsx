@@ -1,4 +1,5 @@
 import {websocketChannels} from "../../api/websocket/actions";
+import {channels} from "../../components/actions";
 
 let initialState = {
     body: {
@@ -23,323 +24,317 @@ let initialState = {
 };
 
 const avatarReducer = (state = initialState, action: any) => {
-    if (action.type === websocketChannels.EVENT_UPDATE) {
-        if (action.response.name === "redemption-latest") {
-            let itemId = action.response.data.itemId;
+    if (action.type === channels.REDEMPTION_LATEST) {
+        let itemId = action.data.itemId;
 
-            // top : Topless
-            if (itemId === '5ee61a5e2fbe3012726b7600') {
-                return {
-                    ...state,
-                    body: {
-                        ...state.body,
-                        top: null
-                    }
-                };
-            }
-
-            // top : Docker
-            if (itemId === '5ee624207860f62c30bfe216') {
-                return {
-                    ...state,
-                    body: {
-                        ...state.body,
-                        top: 'docker'
-                    }
-                };
-            }
-
-            // top : Sharingame
-            if (itemId === '5ee716656fa56df6e7662847') {
-                return {
-                    ...state,
-                    body: {
-                        ...state.body,
-                        top: 'sharingame'
-                    }
-                };
-            }
-
-            // Apple
-            if (itemId === '5ee7164480d4db20e95b8673') {
-                return {
-                    ...state,
-                    body: {
-                        ...state.body,
-                        top: 'apple'
-                    },
-                    head: {
-                        ...state.head,
-                        hat: 'pigeon',
-                        hair: 'short'
-                    }
-                };
-            }
-
-            // top : Akg Black
-            if (itemId === '5ee84ded9d2b04c9f3e1b2ab') {
-                return {
-                    ...state,
-                    body: {
-                        ...state.body,
-                        top: 'akg_black'
-                    }
-                };
-            }
-
-            // top : AWS
-            if (itemId === '5ee84e1b605e84afddc55b61') {
-                return {
-                    ...state,
-                    body: {
-                        ...state.body,
-                        top: 'aws'
-                    }
-                };
-            }
-
-            // top : Crash Bandicoot
-            if (itemId === '5ee84e4c74b7efe6652a6b9d') {
-                return {
-                    ...state,
-                    body: {
-                        ...state.body,
-                        top: 'bandicoot'
-                    }
-                };
-            }
-
-            // top : Geek
-            if (itemId === '5ee84e7a44e1918491d7de9c') {
-                return {
-                    ...state,
-                    body: {
-                        ...state.body,
-                        top: 'geek'
-                    }
-                };
-            }
-
-            // top : Nes
-            if (itemId === '5ee84e99bb559aa5fc7cdd4c') {
-                return {
-                    ...state,
-                    body: {
-                        ...state.body,
-                        top: 'nes'
-                    }
-                };
-            }
-
-            // top : Playstation
-            if (itemId === '5ee84ec27c64d66d088d4e6b') {
-                return {
-                    ...state,
-                    body: {
-                        ...state.body,
-                        top: 'playstation'
-                    }
-                };
-            }
-
-            // top : Python
-            if (itemId === '5ee84ee8b9aae99c53d00437') {
-                return {
-                    ...state,
-                    body: {
-                        ...state.body,
-                        top: 'python'
-                    }
-                };
-            }
-
-            // top : Superman
-            if (itemId === '5ee84f0724db53fd2b4519eb') {
-                return {
-                    ...state,
-                    body: {
-                        ...state.body,
-                        top: 'superman'
-                    }
-                };
-            }
-
-            // top : Symfony
-            if (itemId === '5ee84f2027e9919526e171ae') {
-                return {
-                    ...state,
-                    body: {
-                        ...state.body,
-                        top: 'symfony'
-                    }
-                };
-            }
-
-            // top : Tux
-            if (itemId === '5ee84f37b2166a5ad569184b') {
-                return {
-                    ...state,
-                    body: {
-                        ...state.body,
-                        top: 'tux'
-                    }
-                };
-            }
-
-            // Take off hats
-            if (itemId === '5eff8693e19b4dfa809c34f1') {
-                return {
-                    ...state,
-                    head: {
-                        ...state.head,
-                        hat: null,
-                        hair: 'normal'
-                    }
-                };
-            }
-
-            // hair : Black Spike
-            if (itemId === '5eff3f2dda18424cc9ade355') {
-                return {
-                    ...state,
-                    head: {
-                        ...state.head,
-                        hair: 'black_spike'
-                    }
-                };
-            }
-
-            // hair : Brown Spike
-            if (itemId === '5eff3f460d169bf40a281d3c') {
-                return {
-                    ...state,
-                    head: {
-                        ...state.head,
-                        hair: 'brown_spike'
-                    }
-                };
-            }
-
-            // hair : Spike
-            if (itemId === '5eff3f7412e446780bd40226') {
-                return {
-                    ...state,
-                    head: {
-                        ...state.head,
-                        hair: 'spike'
-                    }
-                };
-            }
-
-            // hair : Old
-            if (itemId === '5eff3f07eb3cd15bc4952665') {
-                return {
-                    ...state,
-                    head: {
-                        ...state.head,
-                        hair: 'old'
-                    }
-                };
-            }
-
-            // hair : Short
-            if (itemId === '5eff40480cc5f175913a73b9') {
-                return {
-                    ...state,
-                    head: {
-                        ...state.head,
-                        hair: 'short'
-                    }
-                };
-            }
-
-            // hair : Normal
-            if (itemId === '5eff4012383ffa7e7b12f6c4') {
-                return {
-                    ...state,
-                    head: {
-                        ...state.head,
-                        hair: 'normal'
-                    }
-                };
-            }
-
-            // hat : strawhat
-            if (itemId === '5eff3be198e6e1f90356787f') {
-                return {
-                    ...state,
-                    head: {
-                        ...state.head,
-                        hair: 'short',
-                        hat: 'strawhat'
-                    }
-                };
-            }
-
-            // hat : Pigeon
-            if (itemId === '5eff3c0a5adad948dca25d15') {
-                return {
-                    ...state,
-                    head: {
-                        ...state.head,
-                        hair: 'short',
-                        hat: 'pigeon'
-                    }
-                };
-            }
-
-            // hat : Magician
-            if (itemId === '5eff3c34b3f5cb824cd7f662') {
-                return {
-                    ...state,
-                    head: {
-                        ...state.head,
-                        hair: 'short',
-                        hat: 'magician'
-                    }
-                };
-            }
-
-            // hat : swimming_cap
-            if (itemId === '5eff3c4d5df8201ee81c595f') {
-                return {
-                    ...state,
-                    head: {
-                        ...state.head,
-                        hair: 'short',
-                        hat: 'swimming_cap'
-                    }
-                };
-            }
-
-            // hat : pokemon_cap
-            if (itemId === '5eff3c7cc327cf81103498e2') {
-                return {
-                    ...state,
-                    head: {
-                        ...state.head,
-                        hair: 'short',
-                        hat: 'pokemon_cap'
-                    }
-                };
-            }
-
-            // hat : pikachu
-            if (itemId === '5eff3c9fa261513b19336ba9') {
-                return {
-                    ...state,
-                    head: {
-                        ...state.head,
-                        hair: 'short',
-                        hat: 'pikachu'
-                    }
-                };
-            }
+        // top : Topless
+        if (itemId === '5ee61a5e2fbe3012726b7600') {
+            return {
+                ...state,
+                body: {
+                    ...state.body,
+                    top: null
+                }
+            };
         }
 
-        return {
-            ...state,
-        };
+        // top : Docker
+        if (itemId === '5ee624207860f62c30bfe216') {
+            return {
+                ...state,
+                body: {
+                    ...state.body,
+                    top: 'docker'
+                }
+            };
+        }
+
+        // top : Sharingame
+        if (itemId === '5ee716656fa56df6e7662847') {
+            return {
+                ...state,
+                body: {
+                    ...state.body,
+                    top: 'sharingame'
+                }
+            };
+        }
+
+        // Apple
+        if (itemId === '5ee7164480d4db20e95b8673') {
+            return {
+                ...state,
+                body: {
+                    ...state.body,
+                    top: 'apple'
+                },
+                head: {
+                    ...state.head,
+                    hat: 'pigeon',
+                    hair: 'short'
+                }
+            };
+        }
+
+        // top : Akg Black
+        if (itemId === '5ee84ded9d2b04c9f3e1b2ab') {
+            return {
+                ...state,
+                body: {
+                    ...state.body,
+                    top: 'akg_black'
+                }
+            };
+        }
+
+        // top : AWS
+        if (itemId === '5ee84e1b605e84afddc55b61') {
+            return {
+                ...state,
+                body: {
+                    ...state.body,
+                    top: 'aws'
+                }
+            };
+        }
+
+        // top : Crash Bandicoot
+        if (itemId === '5ee84e4c74b7efe6652a6b9d') {
+            return {
+                ...state,
+                body: {
+                    ...state.body,
+                    top: 'bandicoot'
+                }
+            };
+        }
+
+        // top : Geek
+        if (itemId === '5ee84e7a44e1918491d7de9c') {
+            return {
+                ...state,
+                body: {
+                    ...state.body,
+                    top: 'geek'
+                }
+            };
+        }
+
+        // top : Nes
+        if (itemId === '5ee84e99bb559aa5fc7cdd4c') {
+            return {
+                ...state,
+                body: {
+                    ...state.body,
+                    top: 'nes'
+                }
+            };
+        }
+
+        // top : Playstation
+        if (itemId === '5ee84ec27c64d66d088d4e6b') {
+            return {
+                ...state,
+                body: {
+                    ...state.body,
+                    top: 'playstation'
+                }
+            };
+        }
+
+        // top : Python
+        if (itemId === '5ee84ee8b9aae99c53d00437') {
+            return {
+                ...state,
+                body: {
+                    ...state.body,
+                    top: 'python'
+                }
+            };
+        }
+
+        // top : Superman
+        if (itemId === '5ee84f0724db53fd2b4519eb') {
+            return {
+                ...state,
+                body: {
+                    ...state.body,
+                    top: 'superman'
+                }
+            };
+        }
+
+        // top : Symfony
+        if (itemId === '5ee84f2027e9919526e171ae') {
+            return {
+                ...state,
+                body: {
+                    ...state.body,
+                    top: 'symfony'
+                }
+            };
+        }
+
+        // top : Tux
+        if (itemId === '5ee84f37b2166a5ad569184b') {
+            return {
+                ...state,
+                body: {
+                    ...state.body,
+                    top: 'tux'
+                }
+            };
+        }
+
+        // Take off hats
+        if (itemId === '5eff8693e19b4dfa809c34f1') {
+            return {
+                ...state,
+                head: {
+                    ...state.head,
+                    hat: null,
+                    hair: 'normal'
+                }
+            };
+        }
+
+        // hair : Black Spike
+        if (itemId === '5eff3f2dda18424cc9ade355') {
+            return {
+                ...state,
+                head: {
+                    ...state.head,
+                    hair: 'black_spike'
+                }
+            };
+        }
+
+        // hair : Brown Spike
+        if (itemId === '5eff3f460d169bf40a281d3c') {
+            return {
+                ...state,
+                head: {
+                    ...state.head,
+                    hair: 'brown_spike'
+                }
+            };
+        }
+
+        // hair : Spike
+        if (itemId === '5eff3f7412e446780bd40226') {
+            return {
+                ...state,
+                head: {
+                    ...state.head,
+                    hair: 'spike'
+                }
+            };
+        }
+
+        // hair : Old
+        if (itemId === '5eff3f07eb3cd15bc4952665') {
+            return {
+                ...state,
+                head: {
+                    ...state.head,
+                    hair: 'old'
+                }
+            };
+        }
+
+        // hair : Short
+        if (itemId === '5eff40480cc5f175913a73b9') {
+            return {
+                ...state,
+                head: {
+                    ...state.head,
+                    hair: 'short'
+                }
+            };
+        }
+
+        // hair : Normal
+        if (itemId === '5eff4012383ffa7e7b12f6c4') {
+            return {
+                ...state,
+                head: {
+                    ...state.head,
+                    hair: 'normal'
+                }
+            };
+        }
+
+        // hat : strawhat
+        if (itemId === '5eff3be198e6e1f90356787f') {
+            return {
+                ...state,
+                head: {
+                    ...state.head,
+                    hair: 'short',
+                    hat: 'strawhat'
+                }
+            };
+        }
+
+        // hat : Pigeon
+        if (itemId === '5eff3c0a5adad948dca25d15') {
+            return {
+                ...state,
+                head: {
+                    ...state.head,
+                    hair: 'short',
+                    hat: 'pigeon'
+                }
+            };
+        }
+
+        // hat : Magician
+        if (itemId === '5eff3c34b3f5cb824cd7f662') {
+            return {
+                ...state,
+                head: {
+                    ...state.head,
+                    hair: 'short',
+                    hat: 'magician'
+                }
+            };
+        }
+
+        // hat : swimming_cap
+        if (itemId === '5eff3c4d5df8201ee81c595f') {
+            return {
+                ...state,
+                head: {
+                    ...state.head,
+                    hair: 'short',
+                    hat: 'swimming_cap'
+                }
+            };
+        }
+
+        // hat : pokemon_cap
+        if (itemId === '5eff3c7cc327cf81103498e2') {
+            return {
+                ...state,
+                head: {
+                    ...state.head,
+                    hair: 'short',
+                    hat: 'pokemon_cap'
+                }
+            };
+        }
+
+        // hat : pikachu
+        if (itemId === '5eff3c9fa261513b19336ba9') {
+            return {
+                ...state,
+                head: {
+                    ...state.head,
+                    hair: 'short',
+                    hat: 'pikachu'
+                }
+            };
+        }
     }
 
     return state;

@@ -4,12 +4,6 @@ import {Websocket} from "../api/websocket";
 import {websocketActions} from "../api/websocket/actions";
 import './scss/index.scss'
 
-const mapStateToProps = (state: any) => {
-    return {
-        ...state
-    };
-};
-
 function MainComponent(props: any) {
     const dispatch = useDispatch();
     let ws = new Websocket();
@@ -75,4 +69,4 @@ function MainComponent(props: any) {
     );
 }
 
-export default connect(mapStateToProps)(MainComponent);
+export default MainComponent;
