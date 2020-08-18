@@ -1,19 +1,20 @@
 import SocketIOClientStatic from "socket.io-client";
+import {
+    AuthenticatedResponse,
+    AuthenticatedResponseSchema,
+    EventResponse, EventSchema,
+    EventTestResponse, EventTestSchema,
+    EventUpdateResponse, EventUpdateSchema,
+    SubscribeContestResponse, SubscribeContestResponseSchema,
+    SubscribeGiveawayResponse, SubscribeGiveawayResponseSchema
+} from "./schema";
+import {Schema} from "@hapi/joi";
 
-export interface AuthenticatedResponse {
-    channelId: string,
-    clientId: string,
-    message: string,
-    project: string,
-}
-
-export interface SubscribeContestResponse {
-    room: string,
-    message: string
-}
-export interface SubscribeGiveawayResponse {
-    room: string,
-    message: string
+function checkSchema(schema: Schema, value: any) {
+    let {error} = schema.validate(value);
+    if (error) {
+        console.error(error.message, value);
+    }
 }
 
 export class Websocket {
@@ -30,29 +31,36 @@ export class Websocket {
             this.onConnect();
         });
 
-        this.socket.on('disconnect', (response: any) => {
+        this.socket.on('disconnect', (response: string) => {
             this.onDisconnect(response);
         });
 
         this.socket.on('authenticated', (response: AuthenticatedResponse) => {
+            checkSchema(AuthenticatedResponseSchema, response);
+
             this.socket.emit('subscribe', {"room": "contests::" + response.channelId}, (n: any, response: SubscribeContestResponse) => {
-                this.onContestsRoomSubscribe(response)
+                checkSchema(SubscribeContestResponseSchema, response);
+                this.onContestsRoomSubscribe(response);
             });
             this.socket.emit('subscribe', {"room": "giveaways::" + response.channelId}, (n: any, response: SubscribeGiveawayResponse) => {
-                this.onGiveawaysRoomSubscribe(response)
+                checkSchema(SubscribeGiveawayResponseSchema, response);
+                this.onGiveawaysRoomSubscribe(response);
             });
             this.onAuthenticated(response);
         });
 
-        this.socket.on('event:test', (response: any) => {
+        this.socket.on('event:test', (response: EventTestResponse) => {
+            checkSchema(EventTestSchema, response);
             this.onEventTest(response);
         });
 
-        this.socket.on('event', (response: any) => {
+        this.socket.on('event', (response: EventResponse) => {
+            checkSchema(EventSchema, response);
             this.onEvent(response);
         });
 
-        this.socket.on('event:update', (response: any) => {
+        this.socket.on('event:update', (response: EventUpdateResponse) => {
+            checkSchema(EventUpdateSchema, response);
             this.onEventUpdate(response);
         });
 
@@ -101,16 +109,16 @@ export class Websocket {
 
     onConnect = () => {
     };
-    onDisconnect = (response: any) => {
+    onDisconnect = (response: string) => {
     };
     onAuthenticated = (response: AuthenticatedResponse) => {
     };
 
-    onEventTest = (response: any) => {
+    onEventTest = (response: EventTestResponse) => {
     };
-    onEvent = (response: any) => {
+    onEvent = (response: EventResponse) => {
     };
-    onEventUpdate = (response: any) => {
+    onEventUpdate = (response: EventUpdateResponse) => {
     };
     onEventReset = (response: any) => {
     };
@@ -123,8 +131,10 @@ export class Websocket {
     };
     onContestWinner = (response: any) => {
     };
+
     onContestsRoomSubscribe(response: SubscribeContestResponse) {
     }
+
     // GIVEAWAYS
     onGiveAwayRunning = (response: any) => {
     };
@@ -134,6 +144,7 @@ export class Websocket {
     };
     onGiveAwayWinner = (response: any) => {
     };
+
     onGiveawaysRoomSubscribe(response: SubscribeGiveawayResponse) {
     }
 }

@@ -5,8 +5,8 @@ export const endpoints = {
             get: 'https://api.streamelements.com/kappa/v2/contests/${channelId}/${contestId}',
         },
         giveaways: {
-            list: 'https://api.streamelements.com/kappa/v2/giveaways/${channelId}',
-            get: 'https://api.streamelements.com/kappa/v2/giveaways/${channelId}/${giveawayId}',
+            list: 'https://api.streamelements.com/kappa/v3/giveaways/${channelId}',
+            get: 'https://api.streamelements.com/kappa/v3/giveaways/${channelId}/${giveawayId}',
         },
         store: {
             list: 'https://api.streamelements.com/kappa/v2/store/${channelId}/items',
@@ -34,6 +34,7 @@ export class Api {
     getHeaders() {
         return {
             headers: {
+                'Access-Control-Allow-Origin': '*',
                 'Authorization': 'Bearer ' + process.env.REACT_APP_STREAMELEMENT_TOKEN,
                 'Content-Type': 'application/json'
             }

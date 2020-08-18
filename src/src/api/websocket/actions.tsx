@@ -1,4 +1,10 @@
-import {AuthenticatedResponse} from ".";
+import {
+    AuthenticatedAction,
+    AuthenticatedResponse,
+    EventResponse,
+    EventTestResponse,
+    EventUpdateResponse
+} from "./schema";
 
 export const websocketChannels = {
     AUTHENTICATED: '@websocket/authenticated',
@@ -20,42 +26,38 @@ export const websocketChannels = {
     SUBSCRIBE_GIVEAWAY: '@websocket/subscribe_giveaway',
 };
 
-export interface AuthenticatedAction {
-    type: string
-    response: AuthenticatedResponse
-}
-
 export const websocketActions = {
-    authenticated: (response: AuthenticatedResponse) => {
+    authenticated: (response: AuthenticatedResponse): AuthenticatedAction => {
         return {
             type: websocketChannels.AUTHENTICATED,
             response: response
         };
     },
+
     connect: () => {
         return {
             type: websocketChannels.CONNECT,
         };
     },
-    disconnect: (response: any) => {
+    disconnect: (response: string) => {
         return {
             type: websocketChannels.DISCONNECT,
             response: response
         };
     },
-    eventTest: (response: any) => {
+    eventTest: (response: EventTestResponse) => {
         return {
             type: websocketChannels.EVENT_TEST,
             response: response
         };
     },
-    event: (response: any) => {
+    event: (response: EventResponse) => {
         return {
             type: websocketChannels.EVENT,
             response: response
         };
     },
-    eventUpdate: (response: any) => {
+    eventUpdate: (response: EventUpdateResponse) => {
         return {
             type: websocketChannels.EVENT_UPDATE,
             response: response

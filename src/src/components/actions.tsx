@@ -1,12 +1,40 @@
 export const channels = {
-    REDEMPTION_LATEST: 'redemption-latest',
+    REDEMPTION_NEW: 'redemption-new',
+    VIEWER_UPDATE: 'viewer-update',
+    SESSION_UPDATE: 'session-update',
+    CONTEST_UPDATE: 'contest-update',
+    GIVEAWAY_UPDATE: 'giveaway-update',
 };
 
 export const actions = {
-    redemption_latest: (data: any) => {
+    newRedemption: (data: any) => {
         return {
-            type: channels.REDEMPTION_LATEST,
+            type: channels.REDEMPTION_NEW,
             data: data
+        };
+    },
+    updateNbViewers: (total: number) => {
+        return {
+            type: channels.VIEWER_UPDATE,
+            total: total
+        };
+    },
+    updateSession: (session: any) => {
+        return {
+            type: channels.SESSION_UPDATE,
+            session: session
+        };
+    },
+    updateContest: (contest: any) => {
+        return {
+            type: channels.CONTEST_UPDATE,
+            contest: contest
+        };
+    },
+    updateGiveaway: (giveaway: any) => {
+        return {
+            type: channels.GIVEAWAY_UPDATE,
+            giveaway: giveaway
         };
     },
 }

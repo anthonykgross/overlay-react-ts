@@ -1,4 +1,3 @@
-import {websocketChannels} from "../../api/websocket/actions";
 import {channels} from "../../components/actions";
 
 let initialState = {
@@ -24,7 +23,7 @@ let initialState = {
 };
 
 const avatarReducer = (state = initialState, action: any) => {
-    if (action.type === channels.REDEMPTION_LATEST) {
+    if (action.type === channels.REDEMPTION_NEW) {
         let itemId = action.data.itemId;
 
         // top : Topless

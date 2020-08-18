@@ -1,15 +1,21 @@
 import React, {useEffect} from 'react';
-import {connect, useDispatch} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {Websocket} from "../api/websocket";
 import {websocketActions} from "../api/websocket/actions";
 import './scss/index.scss'
+import {
+    AuthenticatedResponse,
+    EventResponse,
+    EventTestResponse,
+    EventUpdateResponse, SubscribeContestResponse, SubscribeGiveawayResponse
+} from "../api/websocket/schema";
 
 function MainComponent(props: any) {
     const dispatch = useDispatch();
-    let ws = new Websocket();
 
     useEffect(() => {
-        ws.onAuthenticated = (d) => {
+        let ws = new Websocket();
+        ws.onAuthenticated = (d: AuthenticatedResponse) => {
             dispatch(websocketActions.authenticated(d))
         }
         ws.onConnect = () => {
@@ -18,13 +24,13 @@ function MainComponent(props: any) {
         ws.onDisconnect = (d) => {
             dispatch(websocketActions.disconnect(d))
         }
-        ws.onEventTest = (d) => {
+        ws.onEventTest = (d: EventTestResponse) => {
             dispatch(websocketActions.eventTest(d))
         }
-        ws.onEvent = (d) => {
+        ws.onEvent = (d: EventResponse) => {
             dispatch(websocketActions.event(d))
         }
-        ws.onEventUpdate = (d) => {
+        ws.onEventUpdate = (d: EventUpdateResponse) => {
             dispatch(websocketActions.eventUpdate(d))
         }
         ws.onEventReset = (d) => {
@@ -39,7 +45,7 @@ function MainComponent(props: any) {
         ws.onContestUpdate = (d) => {
             dispatch(websocketActions.contestUpdate(d))
         }
-        ws.onContestsRoomSubscribe = (d) => {
+        ws.onContestsRoomSubscribe = (d: SubscribeContestResponse) => {
             dispatch(websocketActions.subscribeContest(d))
         }
         ws.onGiveAwayRunning = (d) => {
@@ -54,7 +60,7 @@ function MainComponent(props: any) {
         ws.onGiveAwayWinner = (d) => {
             dispatch(websocketActions.giveawayWinner(d))
         }
-        ws.onGiveawaysRoomSubscribe = (d) => {
+        ws.onGiveawaysRoomSubscribe = (d: SubscribeGiveawayResponse) => {
             dispatch(websocketActions.subscribeGiveaway(d))
         }
         return function cleanUp() {
