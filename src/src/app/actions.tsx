@@ -1,16 +1,16 @@
 export const channels = {
-    REDEMPTION_NEW: 'redemption-new',
-    VIEWER_UPDATE: 'viewer-update',
-    SESSION_UPDATE: 'session-update',
-    CONTEST_UPDATE: 'contest-update',
-    GIVEAWAY_UPDATE: 'giveaway-update',
+    REDEMPTION_NEW: 'redemption/new',
+    VIEWER_UPDATE: 'viewer/update',
+    SESSION_UPDATE: 'session/update',
+    CONTEST_UPDATE: 'contest/update',
+    GIVEAWAY_UPDATE: 'giveaway/update',
 };
 
 export const actions = {
-    newRedemption: (data: any) => {
+    newRedemption: (redemption: any) => {
         return {
             type: channels.REDEMPTION_NEW,
-            data: data
+            redemption: redemption
         };
     },
     updateNbViewers: (total: number) => {

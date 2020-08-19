@@ -7,40 +7,32 @@ import ApiSession from "../api/session";
 import ApiContest from "../api/contest";
 import ApiGiveaway from "../api/giveaway";
 import giveaway from "../api/giveaway";
+import {ContestSchema} from "../api/schema/contest";
+import {checkSchema} from "../api/websocket";
+import {SessionSchema} from "../api/schema/session";
 
-function* onAll(d: any) {
-    console.log(d);
+function* onAll(action: any) {
+    console.log(action);
     yield;
 }
 
-function* onAuthenticated(d: AuthenticatedAction) {
-
-    let apiUser = new ApiUser();
-    let responseUser = yield apiUser.getViewerCount('anthonykgross');
-    if (responseUser.ok) {
-        let text = yield responseUser.text();
-
-        let nbViewers = parseInt(text);
-        if (isNaN(nbViewers)) {
-            nbViewers = 1;
-        }
-        yield put(actions.updateNbViewers(nbViewers));
-    }
-
+function* onAuthenticated(action: AuthenticatedAction) {
     let apiSession = new ApiSession();
-    let responseSession = yield apiSession.getSession(d.response.channelId)
+    let responseSession = yield apiSession.getSession(action.response.channelId)
     if (responseSession.ok) {
         let json = yield responseSession.json();
+        // checkSchema(SessionSchema, json);
         yield put(actions.updateSession(json));
     }
 
     let apiContest = new ApiContest();
-    let responseContests = yield apiContest.getContests(d.response.channelId);
+    let responseContests = yield apiContest.getContests(action.response.channelId);
     if (responseContests.ok) {
         let json = yield responseContests.json();
 
         let contest: any;
         for (contest of json.contests) {
+            checkSchema(ContestSchema, contest);
             if (contest.state === 'running') {
                 yield put(actions.updateContest(contest));
             }
@@ -49,7 +41,7 @@ function* onAuthenticated(d: AuthenticatedAction) {
     }
 
     let apiGiveaway = new ApiGiveaway();
-    let responseGiveaways = yield apiGiveaway.getGiveaways(d.response.channelId);
+    let responseGiveaways = yield apiGiveaway.getGiveaways(action.response.channelId);
     if (responseGiveaways.ok) {
         let json = yield responseGiveaways.json();
 
@@ -63,40 +55,40 @@ function* onAuthenticated(d: AuthenticatedAction) {
     yield;
 }
 
-function* onEventUpdate(d: EventUpdateAction) {
-    if (d.response.name === "redemption-latest") {
-        yield put(actions.newRedemption(d.response.data))
+function* onEventUpdate(action: EventUpdateAction) {
+    if (action.response.name === "redemption-latest") {
+        yield put(actions.newRedemption(action.response.data))
     }
     yield;
 }
 
-function* onEvent(d: EventAction) {
-    if (d.response.type === 'cheer') {
+function* onEvent(action: EventAction) {
+    if (action.response.type === 'cheer') {
         //onEventCheer(d.data.username, d.data.amount);
     }
-    if (d.response.type === 'follow') {
+    if (action.response.type === 'follow') {
         //onEventFollow(d.data.username);
     }
-    if (d.response.type === 'subscriber') {
+    if (action.response.type === 'subscriber') {
         //onEventSubscriber(d.data.username, d.data.amount);
     }
-    if (d.response.type === 'tip') {
+    if (action.response.type === 'tip') {
         //onEventTip(d.data.username, d.data.amount);
     }
     yield;
 }
 
-function* onEventTest(d: EventTestAction) {
-    if (d.response.listener === 'follower-latest') {
+function* onEventTest(action: EventTestAction) {
+    if (action.response.listener === 'follower-latest') {
         //onEventFollow(d.event.name);
     }
-    if (d.response.listener === 'tip-latest') {
+    if (action.response.listener === 'tip-latest') {
         //onEventTip(d.event.name, d.event.amount);
     }
-    if (d.response.listener === 'cheer-latest') {
+    if (action.response.listener === 'cheer-latest') {
         //onEventCheer(d.event.name, d.event.amount);
     }
-    if (d.response.listener === 'subscriber-latest') {
+    if (action.response.listener === 'subscriber-latest') {
         //onEventSubscriber(d.event.name, d.event.amount);
     }
     yield;

@@ -1,0 +1,215 @@
+{
+  "data": {
+    "tip-latest": {
+      "name": "ryotex1891",
+      "amount": 3.33,
+      "message": "Pr accompagner sur le canape"
+    },
+    "tip-session-top-donation": {
+      "name": "",
+      "amount": 0
+    },
+    "tip-weekly-top-donation": {
+      "name": "",
+      "amount": 0
+    },
+    "tip-monthly-top-donation": {
+      "name": "",
+      "amount": 0
+    },
+    "tip-alltime-top-donation": {
+      "name": "anonymous",
+      "amount": 50
+    },
+    "tip-session-top-donator": {
+      "name": "",
+      "amount": 0
+    },
+    "tip-weekly-top-donator": {
+      "name": "",
+      "amount": 0
+    },
+    "tip-monthly-top-donator": {
+      "name": "",
+      "amount": 0
+    },
+    "tip-alltime-top-donator": {
+      "name": "anonymous",
+      "amount": 50
+    },
+    "tip-session": {
+      "amount": 0
+    },
+    "tip-week": {
+      "amount": 0
+    },
+    "tip-month": {
+      "amount": 0
+    },
+    "tip-total": {
+      "amount": 86.03
+    },
+    "tip-count": {
+      "count": 0
+    },
+    "tip-goal": {
+      "amount": 4.33
+    },
+    "merch-goal-orders": {
+      "amount": 0
+    },
+    "merch-goal-items": {
+      "amount": 0
+    },
+    "merch-goal-total": {
+      "amount": 0
+    },
+    "follower-recent": [
+      {
+        "name": "kaloome",
+        "createdAt": "2020-08-17T20:24:55.471Z"
+      },
+      {
+        "name": "gogolplus",
+        "createdAt": "2020-08-17T18:34:01.798Z"
+      },
+      {
+        "name": "rexroof",
+        "createdAt": "2020-07-31T13:33:15.824Z"
+      },
+      {
+        "name": "mbenz2",
+        "createdAt": "2020-07-20T20:42:55.568Z"
+      },
+      {
+        "name": "kylian_dev",
+        "createdAt": "2020-07-18T12:12:48.104Z"
+      },
+      {
+        "name": "r00tkiller",
+        "createdAt": "2020-07-18T11:36:13.734Z"
+      },
+      {
+        "name": "goproslowyo",
+        "createdAt": "2020-07-18T11:25:15.865Z"
+      },
+      {
+        "name": "yocks",
+        "createdAt": "2020-07-05T15:49:41.923Z"
+      },
+      {
+        "name": "el_famoosoo",
+        "createdAt": "2020-07-03T20:07:06.644Z"
+      },
+      {
+        "name": "serhatdede",
+        "createdAt": "2020-07-03T19:12:18.631Z"
+      },
+      {
+        "name": "blacklir",
+        "createdAt": "2020-07-03T18:56:11.589Z"
+      },
+      {
+        "name": "lunniar",
+        "createdAt": "2020-07-02T19:57:15.007Z"
+      },
+      {
+        "name": "leafgard_",
+        "createdAt": "2020-07-02T19:13:15.976Z"
+      }
+    ],
+    "subscriber-recent": [
+      {
+        "name": "leafgard_",
+        "tier": "1000",
+        "amount": 2,
+        "createdAt": "2020-08-12T18:55:43.457Z"
+      },
+      {
+        "name": "crocknys",
+        "tier": "prime",
+        "amount": 1,
+        "createdAt": "2020-08-12T18:04:39.221Z"
+      },
+      {
+        "name": "shoukobaccara",
+        "tier": "prime",
+        "amount": 10,
+        "createdAt": "2020-08-12T17:16:02.199Z"
+      },
+      {
+        "name": "madriax",
+        "tier": "1000",
+        "amount": 20,
+        "createdAt": "2020-08-12T16:59:03.429Z"
+      },
+      {
+        "name": "louis1806",
+        "tier": "1000",
+        "amount": 18,
+        "createdAt": "2020-08-12T16:47:17.539Z"
+      },
+      {
+        "name": "ryotex1891",
+        "tier": "1000",
+        "amount": 18,
+        "createdAt": "2020-07-03T19:38:56.042Z"
+      },
+      {
+        "name": "louis1806",
+        "tier": "1000",
+        "amount": 17,
+        "createdAt": "2020-07-02T19:17:02.378Z"
+      },
+      {
+        "name": "madriax",
+        "tier": "1000",
+        "amount": 19,
+        "createdAt": "2020-07-02T18:58:14.374Z"
+      },
+      {
+        "name": "leafgard_",
+        "tier": "1000",
+        "amount": 1,
+        "createdAt": "2020-07-02T18:48:17.548Z"
+      }
+    ],
+    "host-recent": [],
+    "raid-recent": [],
+    "cheer-recent": [
+      {
+        "name": "bretonie",
+        "amount": 1,
+        "createdAt": "2020-07-02T19:50:02.374Z"
+      },
+      {
+        "name": "crazymeal",
+        "amount": 1,
+        "createdAt": "2020-07-02T18:54:45.696Z"
+      },
+      {
+        "name": "bretonie",
+        "amount": 1,
+        "createdAt": "2020-07-02T18:53:09.869Z"
+      }
+    ],
+    "tip-recent": [
+      {
+        "name": "ryotex1891",
+        "amount": 3.33,
+        "createdAt": "2020-07-03T20:04:27.363Z"
+      },
+      {
+        "name": "Madou le mineur",
+        "amount": 1,
+        "createdAt": "2020-07-02T19:52:47.568Z"
+      }
+    ],
+    "merch-recent": [],
+    "merch-latest": {
+      "amount": 0,
+      "items": [],
+      "name": ""
+    }
+  },
+}

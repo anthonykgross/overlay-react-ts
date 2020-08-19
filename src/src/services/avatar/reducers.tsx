@@ -1,4 +1,4 @@
-import {channels} from "../../components/actions";
+import {channels} from "../../app/actions";
 
 let initialState = {
     body: {

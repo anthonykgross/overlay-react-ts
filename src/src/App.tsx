@@ -1,10 +1,10 @@
 import React from 'react';
-import MainLayer from "./components";
+import MainLayer from "./app";
 import {Provider} from "react-redux";
 import {ConnectedRouter} from 'connected-react-router'
 import {Route} from "react-router";
 import {store, history} from "./store";
-import OverlayComponent from "./components/overlay";
+import OverlayComponent from "./app/scenes/overlay";
 
 function App() {
     return (

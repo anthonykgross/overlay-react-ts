@@ -1,7 +1,6 @@
 import SocketIOClientStatic from "socket.io-client";
 import {
-    AuthenticatedResponse,
-    AuthenticatedResponseSchema,
+    AuthenticatedResponse, AuthenticatedResponseSchema,
     EventResponse, EventSchema,
     EventTestResponse, EventTestSchema,
     EventUpdateResponse, EventUpdateSchema,
@@ -10,7 +9,7 @@ import {
 } from "./schema";
 import {Schema} from "@hapi/joi";
 
-function checkSchema(schema: Schema, value: any) {
+export function checkSchema(schema: Schema, value: any) {
     let {error} = schema.validate(value);
     if (error) {
         console.error(error.message, value);
