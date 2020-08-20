@@ -1,9 +1,11 @@
 import React, {useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import './scss/index.scss'
-import {Clock, ServiceTwitchChat, ServiceWebsocket} from "./services";
 import ApiUser from "../api/user";
 import {actions} from "./actions";
+import {Clock} from "./services/clock";
+import {Chat} from "./services/twitch";
+import {Websocket} from "./services/streamelements";
 
 function MainComponent(props: any) {
     const dispatch = useDispatch();
@@ -25,11 +27,11 @@ function MainComponent(props: any) {
         clock.run();
         clock.start();
 
-        let serviceTwitchChat = new ServiceTwitchChat(dispatch);
-        let serviceWebsocket = new ServiceWebsocket(dispatch);
+        let chat = new Chat(dispatch);
+        let websocket = new Websocket(dispatch);
         return function cleanUp() {
-            serviceWebsocket.stop();
-            serviceTwitchChat.stop();
+            chat.stop();
+            websocket.stop();
             clock.stop();
         }
     })

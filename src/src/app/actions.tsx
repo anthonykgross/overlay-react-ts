@@ -1,3 +1,7 @@
+import {Session} from "../api/schema/session";
+import {Contest} from "../api/schema/contest";
+import {Giveaway} from "../api/schema/giveaway";
+
 export const channels = {
     REDEMPTION_NEW: 'redemption/new',
     VIEWER_UPDATE: 'viewer/update',
@@ -19,19 +23,19 @@ export const actions = {
             total: total
         };
     },
-    updateSession: (session: any) => {
+    updateSession: (session: Session) => {
         return {
             type: channels.SESSION_UPDATE,
             session: session
         };
     },
-    updateContest: (contest: any) => {
+    updateContest: (contest: Contest) => {
         return {
             type: channels.CONTEST_UPDATE,
             contest: contest
         };
     },
-    updateGiveaway: (giveaway: any) => {
+    updateGiveaway: (giveaway: Giveaway) => {
         return {
             type: channels.GIVEAWAY_UPDATE,
             giveaway: giveaway

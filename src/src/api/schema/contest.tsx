@@ -1,7 +1,34 @@
 import Joi from '@hapi/joi'
 
+interface Option {
+    totalAmount: number
+    totalUsers: number
+    _id: string
+    title: string
+    command: string
+    winner?: boolean
+}
+
+export interface Contest {
+    botResponses: boolean
+    totalAmount: number
+    totalUsers: number
+    _id: string
+    title: string
+    minBet: number
+    maxBet: number
+    duration: number
+    options: Option[]
+    channel: string
+    state: string
+    createdAt: string
+    updatedAt: string
+    startedAt: string
+    endedAt?: string
+}
+
 export const ContestSchema = Joi.object({
-    botResponses: Joi.boolean(),
+    botResponses: Joi.boolean().required(),
     totalAmount: Joi.number().required(),
     totalUsers: Joi.number().required(),
     _id: Joi.string().required(),
@@ -21,8 +48,8 @@ export const ContestSchema = Joi.object({
     ).required(),
     channel: Joi.string().required(),
     state: Joi.string().required(),
-    createdAt: Joi.string(),
-    updatedAt: Joi.string(),
-    startedAt: Joi.string(),
+    createdAt: Joi.string().required(),
+    updatedAt: Joi.string().required(),
+    startedAt: Joi.string().required(),
     endedAt: Joi.string(),
 });

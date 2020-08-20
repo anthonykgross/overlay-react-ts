@@ -1,20 +1,11 @@
 import SocketIOClientStatic from "socket.io-client";
-import {
-    AuthenticatedResponse, AuthenticatedResponseSchema,
-    EventResponse, EventSchema,
-    EventTestResponse, EventTestSchema,
-    EventUpdateResponse, EventUpdateSchema,
-    SubscribeContestResponse, SubscribeContestResponseSchema,
-    SubscribeGiveawayResponse, SubscribeGiveawayResponseSchema
-} from "./schema";
-import {Schema} from "@hapi/joi";
-
-export function checkSchema(schema: Schema, value: any) {
-    let {error} = schema.validate(value);
-    if (error) {
-        console.error(error.message, value);
-    }
-}
+import {AuthenticatedResponse, AuthenticatedResponseSchema} from "./schema/authenticated";
+import {SubscribeContestResponse, SubscribeContestResponseSchema} from "./schema/subscribeContest";
+import {SubscribeGiveawayResponse, SubscribeGiveawayResponseSchema} from "./schema/subscribeGiveaway";
+import {EventTestResponse, EventTestResponseSchema} from "./schema/eventTest";
+import {EventResponse, EventResponseSchema} from "./schema/event";
+import {EventUpdateResponse, EventUpdateResponseSchema} from "./schema/eventUpdate";
+import {checkSchema} from "../../schema";
 
 export class Websocket {
     socket: SocketIOClient.Socket = SocketIOClientStatic(process.env.REACT_APP_STREAMELEMENT_ENDPOINT!, {
@@ -49,17 +40,17 @@ export class Websocket {
         });
 
         this.socket.on('event:test', (response: EventTestResponse) => {
-            checkSchema(EventTestSchema, response);
+            checkSchema(EventTestResponseSchema, response);
             this.onEventTest(response);
         });
 
         this.socket.on('event', (response: EventResponse) => {
-            checkSchema(EventSchema, response);
+            checkSchema(EventResponseSchema, response);
             this.onEvent(response);
         });
 
         this.socket.on('event:update', (response: EventUpdateResponse) => {
-            checkSchema(EventUpdateSchema, response);
+            checkSchema(EventUpdateResponseSchema, response);
             this.onEventUpdate(response);
         });
 

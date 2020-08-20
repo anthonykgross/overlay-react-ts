@@ -1,0 +1,51 @@
+{
+  "bot": {
+    "identifier": "tshirt_docker"
+  },
+  "cooldown": {
+    "user": 10,
+    "global": 0,
+    "category": 0
+  },
+  "quantity": {
+    "total": -1
+  },
+  "accessCodes": {
+    "keys": [],
+    "mode": "multi",
+    "random": false
+  },
+  "alert": {
+    "graphics": {
+      "duration": 8,
+      "type": "image",
+      "src": "https://cdn.streamelements.com/uploads/a8da7d30-7151-4045-96c9-4ec2e63b917c.png"
+    },
+    "audio": {
+      "volume": 0.5,
+      "src": null
+    },
+    "enabled": true
+  },
+  "subscriberOnly": false,
+  "sources": [
+    "bot",
+    "website",
+    "extension"
+  ],
+  "userInput": [],
+  "order": 1,
+  "_id": "5ee624207860f62c30bfe216",
+  "enabled": true,
+  "featured": false,
+  "name": "Tshirt Docker",
+  "description": "Description",
+  "type": "perk",
+  "cost": 10,
+  "allowMessages": false,
+  "categoryName": "",
+  "public": false,
+  "channel": "5bab6c2eecce2057ff0cb5c9",
+  "createdAt": "2020-06-14T13:20:32.629Z",
+  "updatedAt": "2020-07-03T19:27:23.487Z"
+}

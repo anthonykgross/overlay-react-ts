@@ -1,15 +1,28 @@
-import {takeLatest, put, call} from 'redux-saga/effects';
-import {websocketChannels} from "../api/websocket/actions";
+import {takeLatest, put, select} from 'redux-saga/effects';
+import {channels as websocketChannels} from "../api/streamelements/websocket/actions";
 import {actions} from "./actions";
-import {AuthenticatedAction, EventAction, EventTestAction, EventUpdateAction} from "../api/websocket/schema";
-import ApiUser from "../api/user";
 import ApiSession from "../api/session";
 import ApiContest from "../api/contest";
 import ApiGiveaway from "../api/giveaway";
-import giveaway from "../api/giveaway";
-import {ContestSchema} from "../api/schema/contest";
-import {checkSchema} from "../api/websocket";
-import {SessionSchema} from "../api/schema/session";
+import {
+    AuthenticatedAction,
+    EventAction,
+    EventTestAction,
+    EventUpdateAction
+} from "../api/streamelements/websocket/schema/actions";
+
+import {checkSchema} from "../api/schema";
+import {Contest, ContestSchema} from "../api/schema/contest";
+import {Session, SessionSchema} from "../api/schema/session";
+import {Giveaway, GiveawaySchema} from "../api/schema/giveaway";
+import {
+    EventUpdateRedemptionLatestResponse,
+    EventUpdateRedemptionLatestResponseSchema
+} from "../api/streamelements/websocket/schema/eventUpdate";
+
+import {selectors} from "./selectors";
+import {State} from "./reducers";
+import ApiStore from "../api/store";
 
 function* onAll(action: any) {
     console.log(action);
@@ -20,9 +33,9 @@ function* onAuthenticated(action: AuthenticatedAction) {
     let apiSession = new ApiSession();
     let responseSession = yield apiSession.getSession(action.response.channelId)
     if (responseSession.ok) {
-        let json = yield responseSession.json();
-        // checkSchema(SessionSchema, json);
-        yield put(actions.updateSession(json));
+        let session: Session = yield responseSession.json();
+        checkSchema(SessionSchema, session);
+        yield put(actions.updateSession(session));
     }
 
     let apiContest = new ApiContest();
@@ -30,7 +43,7 @@ function* onAuthenticated(action: AuthenticatedAction) {
     if (responseContests.ok) {
         let json = yield responseContests.json();
 
-        let contest: any;
+        let contest: Contest;
         for (contest of json.contests) {
             checkSchema(ContestSchema, contest);
             if (contest.state === 'running') {
@@ -45,8 +58,9 @@ function* onAuthenticated(action: AuthenticatedAction) {
     if (responseGiveaways.ok) {
         let json = yield responseGiveaways.json();
 
-        let giveaway: any;
+        let giveaway: Giveaway;
         for (giveaway of json.giveaways) {
+            checkSchema(GiveawaySchema, giveaway);
             if (giveaway.state === 'running') {
                 yield put(actions.updateGiveaway(giveaway));
             }
@@ -56,8 +70,19 @@ function* onAuthenticated(action: AuthenticatedAction) {
 }
 
 function* onEventUpdate(action: EventUpdateAction) {
+    let s: any = yield select();
+    let state = selectors.getState(s) as State;
+
     if (action.response.name === "redemption-latest") {
-        yield put(actions.newRedemption(action.response.data))
+        checkSchema(EventUpdateRedemptionLatestResponseSchema, action.response);
+        let response: EventUpdateRedemptionLatestResponse = action.response as EventUpdateRedemptionLatestResponse;
+
+        let apiStore = new ApiStore();
+        let responseGiveaways = yield apiStore.getItem(state.channelId, response.data.itemId);
+        if (responseGiveaways.ok) {
+            let json = yield responseGiveaways.json();
+            //yield put(actions.newRedemption(action.response.data))
+        }
     }
     yield;
 }

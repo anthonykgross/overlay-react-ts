@@ -1,6 +1,5 @@
 import {Client} from "tmi.js"
 
-
 export class TwitchChat {
     client: Client = Client({
         identity: {
