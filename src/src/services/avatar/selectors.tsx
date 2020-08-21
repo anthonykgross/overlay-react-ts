@@ -1,12 +1,13 @@
 import { createSelector } from 'reselect'
+import {State} from "./reducers";
 
-const selector = (state: any) => state.avatar;
+const state = (s: any): State => s.avatar;
 
-export const avatarSelector = {
+export const selector = {
     getState: createSelector(
-        [selector],
-        (stateAvatar) => {
-            return stateAvatar
+        [state],
+        (state) => {
+            return state
         }
     ),
 };

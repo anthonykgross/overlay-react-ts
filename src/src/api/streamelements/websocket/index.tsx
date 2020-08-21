@@ -3,9 +3,9 @@ import {AuthenticatedResponse, AuthenticatedResponseSchema} from "./schema/authe
 import {SubscribeContestResponse, SubscribeContestResponseSchema} from "./schema/subscribeContest";
 import {SubscribeGiveawayResponse, SubscribeGiveawayResponseSchema} from "./schema/subscribeGiveaway";
 import {EventTestResponse, EventTestResponseSchema} from "./schema/eventTest";
-import {EventResponse, EventResponseSchema} from "./schema/event";
 import {EventUpdateResponse, EventUpdateResponseSchema} from "./schema/eventUpdate";
 import {checkSchema} from "../../schema";
+import {EventResponse, EventResponseSchema} from "./schema/event";
 
 export class Websocket {
     socket: SocketIOClient.Socket = SocketIOClientStatic(process.env.REACT_APP_STREAMELEMENT_ENDPOINT!, {

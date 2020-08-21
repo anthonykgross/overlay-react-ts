@@ -4,7 +4,8 @@ export interface EventTestResponse {
     event: {}
     listener: string
 }
+
 export const EventTestResponseSchema = Joi.object({
-    event: Joi.any().required(),
+    event: Joi.any(),
     listener: Joi.string().required(),
 });

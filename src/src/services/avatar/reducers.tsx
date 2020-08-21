@@ -1,6 +1,26 @@
 import {channels} from "../../app/actions";
+import {Redemption} from "../../api/schema/redemption";
+import {Action} from "../../app/schema";
 
-let initialState = {
+export interface State {
+    body: {
+        body: string
+        pants: string
+        shoes: string
+        top: string
+    },
+    head: {
+        hair: string
+        hat: string
+    },
+    leftHand: string
+    rightHand: string
+    skin: string
+    top: string
+    accessories: string[]
+}
+
+let initialState: State = {
     body: {
         body: 'body',
         pants: 'white_short',
@@ -9,7 +29,7 @@ let initialState = {
     },
     head: {
         hair: 'normal',
-        hat: null,
+        hat: '',
     },
     leftHand: 'normal',
     rightHand: 'normal',
@@ -22,23 +42,23 @@ let initialState = {
     ]
 };
 
-const avatarReducer = (state = initialState, action: any) => {
+export const reducer = (state: State = initialState, action: Action): State => {
     if (action.type === channels.REDEMPTION_NEW) {
-        let itemId = action.data.itemId;
+        let redemption: Redemption = action.response as Redemption;
 
         // top : Topless
-        if (itemId === '5ee61a5e2fbe3012726b7600') {
+        if (redemption._id === '5ee61a5e2fbe3012726b7600') {
             return {
                 ...state,
                 body: {
                     ...state.body,
-                    top: null
+                    top: ''
                 }
             };
         }
 
         // top : Docker
-        if (itemId === '5ee624207860f62c30bfe216') {
+        if (redemption._id === '5ee624207860f62c30bfe216') {
             return {
                 ...state,
                 body: {
@@ -49,7 +69,7 @@ const avatarReducer = (state = initialState, action: any) => {
         }
 
         // top : Sharingame
-        if (itemId === '5ee716656fa56df6e7662847') {
+        if (redemption._id === '5ee716656fa56df6e7662847') {
             return {
                 ...state,
                 body: {
@@ -60,7 +80,7 @@ const avatarReducer = (state = initialState, action: any) => {
         }
 
         // Apple
-        if (itemId === '5ee7164480d4db20e95b8673') {
+        if (redemption._id === '5ee7164480d4db20e95b8673') {
             return {
                 ...state,
                 body: {
@@ -76,7 +96,7 @@ const avatarReducer = (state = initialState, action: any) => {
         }
 
         // top : Akg Black
-        if (itemId === '5ee84ded9d2b04c9f3e1b2ab') {
+        if (redemption._id === '5ee84ded9d2b04c9f3e1b2ab') {
             return {
                 ...state,
                 body: {
@@ -87,7 +107,7 @@ const avatarReducer = (state = initialState, action: any) => {
         }
 
         // top : AWS
-        if (itemId === '5ee84e1b605e84afddc55b61') {
+        if (redemption._id === '5ee84e1b605e84afddc55b61') {
             return {
                 ...state,
                 body: {
@@ -98,7 +118,7 @@ const avatarReducer = (state = initialState, action: any) => {
         }
 
         // top : Crash Bandicoot
-        if (itemId === '5ee84e4c74b7efe6652a6b9d') {
+        if (redemption._id === '5ee84e4c74b7efe6652a6b9d') {
             return {
                 ...state,
                 body: {
@@ -109,7 +129,7 @@ const avatarReducer = (state = initialState, action: any) => {
         }
 
         // top : Geek
-        if (itemId === '5ee84e7a44e1918491d7de9c') {
+        if (redemption._id === '5ee84e7a44e1918491d7de9c') {
             return {
                 ...state,
                 body: {
@@ -120,7 +140,7 @@ const avatarReducer = (state = initialState, action: any) => {
         }
 
         // top : Nes
-        if (itemId === '5ee84e99bb559aa5fc7cdd4c') {
+        if (redemption._id === '5ee84e99bb559aa5fc7cdd4c') {
             return {
                 ...state,
                 body: {
@@ -131,7 +151,7 @@ const avatarReducer = (state = initialState, action: any) => {
         }
 
         // top : Playstation
-        if (itemId === '5ee84ec27c64d66d088d4e6b') {
+        if (redemption._id === '5ee84ec27c64d66d088d4e6b') {
             return {
                 ...state,
                 body: {
@@ -142,7 +162,7 @@ const avatarReducer = (state = initialState, action: any) => {
         }
 
         // top : Python
-        if (itemId === '5ee84ee8b9aae99c53d00437') {
+        if (redemption._id === '5ee84ee8b9aae99c53d00437') {
             return {
                 ...state,
                 body: {
@@ -153,7 +173,7 @@ const avatarReducer = (state = initialState, action: any) => {
         }
 
         // top : Superman
-        if (itemId === '5ee84f0724db53fd2b4519eb') {
+        if (redemption._id === '5ee84f0724db53fd2b4519eb') {
             return {
                 ...state,
                 body: {
@@ -164,7 +184,7 @@ const avatarReducer = (state = initialState, action: any) => {
         }
 
         // top : Symfony
-        if (itemId === '5ee84f2027e9919526e171ae') {
+        if (redemption._id === '5ee84f2027e9919526e171ae') {
             return {
                 ...state,
                 body: {
@@ -175,7 +195,7 @@ const avatarReducer = (state = initialState, action: any) => {
         }
 
         // top : Tux
-        if (itemId === '5ee84f37b2166a5ad569184b') {
+        if (redemption._id === '5ee84f37b2166a5ad569184b') {
             return {
                 ...state,
                 body: {
@@ -186,19 +206,19 @@ const avatarReducer = (state = initialState, action: any) => {
         }
 
         // Take off hats
-        if (itemId === '5eff8693e19b4dfa809c34f1') {
+        if (redemption._id === '5eff8693e19b4dfa809c34f1') {
             return {
                 ...state,
                 head: {
                     ...state.head,
-                    hat: null,
+                    hat: '',
                     hair: 'normal'
                 }
             };
         }
 
         // hair : Black Spike
-        if (itemId === '5eff3f2dda18424cc9ade355') {
+        if (redemption._id === '5eff3f2dda18424cc9ade355') {
             return {
                 ...state,
                 head: {
@@ -209,7 +229,7 @@ const avatarReducer = (state = initialState, action: any) => {
         }
 
         // hair : Brown Spike
-        if (itemId === '5eff3f460d169bf40a281d3c') {
+        if (redemption._id === '5eff3f460d169bf40a281d3c') {
             return {
                 ...state,
                 head: {
@@ -220,7 +240,7 @@ const avatarReducer = (state = initialState, action: any) => {
         }
 
         // hair : Spike
-        if (itemId === '5eff3f7412e446780bd40226') {
+        if (redemption._id === '5eff3f7412e446780bd40226') {
             return {
                 ...state,
                 head: {
@@ -231,7 +251,7 @@ const avatarReducer = (state = initialState, action: any) => {
         }
 
         // hair : Old
-        if (itemId === '5eff3f07eb3cd15bc4952665') {
+        if (redemption._id === '5eff3f07eb3cd15bc4952665') {
             return {
                 ...state,
                 head: {
@@ -242,7 +262,7 @@ const avatarReducer = (state = initialState, action: any) => {
         }
 
         // hair : Short
-        if (itemId === '5eff40480cc5f175913a73b9') {
+        if (redemption._id === '5eff40480cc5f175913a73b9') {
             return {
                 ...state,
                 head: {
@@ -253,7 +273,7 @@ const avatarReducer = (state = initialState, action: any) => {
         }
 
         // hair : Normal
-        if (itemId === '5eff4012383ffa7e7b12f6c4') {
+        if (redemption._id === '5eff4012383ffa7e7b12f6c4') {
             return {
                 ...state,
                 head: {
@@ -264,7 +284,7 @@ const avatarReducer = (state = initialState, action: any) => {
         }
 
         // hat : strawhat
-        if (itemId === '5eff3be198e6e1f90356787f') {
+        if (redemption._id === '5eff3be198e6e1f90356787f') {
             return {
                 ...state,
                 head: {
@@ -276,7 +296,7 @@ const avatarReducer = (state = initialState, action: any) => {
         }
 
         // hat : Pigeon
-        if (itemId === '5eff3c0a5adad948dca25d15') {
+        if (redemption._id === '5eff3c0a5adad948dca25d15') {
             return {
                 ...state,
                 head: {
@@ -288,7 +308,7 @@ const avatarReducer = (state = initialState, action: any) => {
         }
 
         // hat : Magician
-        if (itemId === '5eff3c34b3f5cb824cd7f662') {
+        if (redemption._id === '5eff3c34b3f5cb824cd7f662') {
             return {
                 ...state,
                 head: {
@@ -300,7 +320,7 @@ const avatarReducer = (state = initialState, action: any) => {
         }
 
         // hat : swimming_cap
-        if (itemId === '5eff3c4d5df8201ee81c595f') {
+        if (redemption._id === '5eff3c4d5df8201ee81c595f') {
             return {
                 ...state,
                 head: {
@@ -312,7 +332,7 @@ const avatarReducer = (state = initialState, action: any) => {
         }
 
         // hat : pokemon_cap
-        if (itemId === '5eff3c7cc327cf81103498e2') {
+        if (redemption._id === '5eff3c7cc327cf81103498e2') {
             return {
                 ...state,
                 head: {
@@ -324,7 +344,7 @@ const avatarReducer = (state = initialState, action: any) => {
         }
 
         // hat : pikachu
-        if (itemId === '5eff3c9fa261513b19336ba9') {
+        if (redemption._id === '5eff3c9fa261513b19336ba9') {
             return {
                 ...state,
                 head: {
@@ -338,5 +358,3 @@ const avatarReducer = (state = initialState, action: any) => {
 
     return state;
 };
-
-export default avatarReducer;

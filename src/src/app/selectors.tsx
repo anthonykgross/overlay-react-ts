@@ -1,10 +1,11 @@
 import { createSelector } from 'reselect'
+import {State} from "./reducers";
 
-const s = (state: any) => state.app;
+const state = (s: any): State => s.app;
 
 export const selectors = {
     getState: createSelector(
-        [s],
+        [state],
         (state) => {
             return state
         }

@@ -23,6 +23,16 @@ import {
 import {selectors} from "./selectors";
 import {State} from "./reducers";
 import ApiStore from "../api/store";
+import {Redemption, RedemptionSchema} from "../api/schema/redemption";
+import {
+    EventCheerResponse,
+    EventCheerResponseSchema,
+    EventFollowResponse,
+    EventFollowResponseSchema,
+    EventSubscriberResponse,
+    EventSubscriberResponseSchema,
+    EventTipResponse, EventTipResponseSchema
+} from "../api/streamelements/websocket/schema/event";
 
 function* onAll(action: any) {
     console.log(action);
@@ -80,8 +90,9 @@ function* onEventUpdate(action: EventUpdateAction) {
         let apiStore = new ApiStore();
         let responseGiveaways = yield apiStore.getItem(state.channelId, response.data.itemId);
         if (responseGiveaways.ok) {
-            let json = yield responseGiveaways.json();
-            //yield put(actions.newRedemption(action.response.data))
+            let redemption: Redemption = yield responseGiveaways.json();
+            checkSchema(RedemptionSchema, redemption);
+            yield put(actions.newRedemption(redemption));
         }
     }
     yield;
@@ -89,16 +100,24 @@ function* onEventUpdate(action: EventUpdateAction) {
 
 function* onEvent(action: EventAction) {
     if (action.response.type === 'cheer') {
-        //onEventCheer(d.data.username, d.data.amount);
+        let response: EventCheerResponse = action.response as EventCheerResponse;
+        checkSchema(EventCheerResponseSchema, response);
+        yield put(actions.newCheer(response));
     }
     if (action.response.type === 'follow') {
-        //onEventFollow(d.data.username);
+        let response: EventFollowResponse = action.response as EventFollowResponse;
+        checkSchema(EventFollowResponseSchema, response);
+        yield put(actions.newFollow(response));
     }
     if (action.response.type === 'subscriber') {
-        //onEventSubscriber(d.data.username, d.data.amount);
+        let response: EventSubscriberResponse = action.response as EventSubscriberResponse;
+        checkSchema(EventSubscriberResponseSchema, response);
+        yield put(actions.newSubscriber(response));
     }
     if (action.response.type === 'tip') {
-        //onEventTip(d.data.username, d.data.amount);
+        let response: EventTipResponse = action.response as EventTipResponse;
+        checkSchema(EventTipResponseSchema, response);
+        yield put(actions.newTip(response));
     }
     yield;
 }

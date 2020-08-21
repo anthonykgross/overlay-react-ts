@@ -4,71 +4,88 @@ import {EventResponse} from "./event";
 import {EventUpdateResponse} from "./eventUpdate";
 import {SubscribeContestResponse} from "./subscribeContest";
 import {SubscribeGiveawayResponse} from "./subscribeGiveaway";
+import {Action} from "../../../../app/schema";
 
-export interface AuthenticatedAction {
+export interface AuthenticatedAction extends Action {
     type: string
     response: AuthenticatedResponse
 }
-export interface ConnectAction {
+
+export interface ConnectAction extends Action {
     type: string
 }
-export interface DisconnectAction {
+
+export interface DisconnectAction extends Action {
     type: string
     response: string
 }
-export interface EventTestAction {
+
+export interface EventTestAction extends Action {
     type: string
     response: EventTestResponse
 }
-export interface EventAction {
+
+export interface EventAction extends Action {
     type: string
     response: EventResponse
 }
-export interface EventResetAction {
+
+export interface EventResetAction extends Action {
     type: string
     response: any
 }
-export interface EventUpdateAction {
+
+export interface EventUpdateAction extends Action {
     type: string
     response: EventUpdateResponse
 }
-export interface ContestRunningAction {
+
+export interface ContestRunningAction extends Action {
     type: string
     response: any
 }
-export interface ContestStateAction {
+
+export interface ContestStateAction extends Action {
     type: string
     response: any
 }
-export interface ContestUpdateAction {
+
+export interface ContestUpdateAction extends Action {
     type: string
     response: any
 }
-export interface ContestWinnerAction {
+
+export interface ContestWinnerAction extends Action {
     type: string
     response: any
 }
-export interface SubscribeContestAction {
+
+export interface SubscribeContestAction extends Action {
     type: string
     response: SubscribeContestResponse
 }
-export interface GiveawayRunningAction {
+
+export interface GiveawayRunningAction extends Action {
     type: string
     response: any
 }
-export interface GiveawayStateAction {
+
+export interface GiveawayStateAction extends Action {
     type: string
     response: any
 }
-export interface GiveawayUpdateAction {
+
+export interface GiveawayUpdateAction extends Action {
     type: string
     response: any
 }
-export interface GiveawayWinnerAction {
+
+export interface GiveawayWinnerAction extends Action {
     type: string
     response: any
 }
-export interface SubscribeGiveawayAction {
+
+export interface SubscribeGiveawayAction extends Action {
     type: string
     response: SubscribeGiveawayResponse
 }

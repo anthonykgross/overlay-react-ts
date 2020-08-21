@@ -8,7 +8,9 @@ export const EventUpdateResponseSchema = Joi.object({
     name: Joi.string().required(),
     data: Joi.object().required(),
 });
-
+/*****************************************************
+ * RedemptionLatest
+ */
 export interface EventUpdateRedemptionLatestResponse extends EventUpdateResponse{
     data: {
         itemId: string,

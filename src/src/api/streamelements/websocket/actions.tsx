@@ -54,6 +54,7 @@ export const actions = {
     connect: (): ConnectAction => {
         return {
             type: channels.CONNECT,
+            response: {}
         };
     },
     disconnect: (response: string): DisconnectAction => {
