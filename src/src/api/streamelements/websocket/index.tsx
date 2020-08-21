@@ -6,6 +6,12 @@ import {EventTestResponse, EventTestResponseSchema} from "./schema/eventTest";
 import {EventUpdateResponse, EventUpdateResponseSchema} from "./schema/eventUpdate";
 import {checkSchema} from "../../schema";
 import {EventResponse, EventResponseSchema} from "./schema/event";
+import {ContestStateResponse} from "./schema/contestState";
+import {ContestUpdateResponse} from "./schema/contestUpdate";
+import {ContestWinnerResponse} from "./schema/contestWinner";
+import {GiveawayWinnerAction} from "./schema/actions";
+import {GiveawayWinnerResponse} from "./schema/giveawayWinner";
+import {GiveawayStateResponse} from "./schema/giveawayState";
 
 export class Websocket {
     socket: SocketIOClient.Socket = SocketIOClientStatic(process.env.REACT_APP_STREAMELEMENT_ENDPOINT!, {
@@ -77,19 +83,19 @@ export class Websocket {
 
         // GIVEAWAYS
         this.socket.on("giveaway:running", (response: any) => {
-            this.onGiveAwayRunning(response);
+            this.onGiveawayRunning(response);
         });
 
         this.socket.on('giveaway:state', (response: any) => {
-            this.onGiveAwayState(response);
+            this.onGiveawayState(response);
         });
 
         this.socket.on('giveaway:update', (response: any) => {
-            this.onGiveAwayUpdate(response);
+            this.onGiveawayUpdate(response);
         });
 
         this.socket.on('giveaway:winner', (response: any) => {
-            this.onGiveAwayWinner(response);
+            this.onGiveawayWinner(response);
         });
     }
 
@@ -115,24 +121,24 @@ export class Websocket {
     // CONTESTS
     onContestRunning = (response: any) => {
     };
-    onContestState = (response: any) => {
+    onContestState = (response: ContestStateResponse) => {
     };
-    onContestUpdate = (response: any) => {
+    onContestUpdate = (response: ContestUpdateResponse) => {
     };
-    onContestWinner = (response: any) => {
+    onContestWinner = (response: ContestWinnerResponse) => {
     };
 
     onContestsRoomSubscribe(response: SubscribeContestResponse) {
     }
 
     // GIVEAWAYS
-    onGiveAwayRunning = (response: any) => {
+    onGiveawayRunning = (response: any) => {
     };
-    onGiveAwayState = (response: any) => {
+    onGiveawayState = (response: GiveawayStateResponse) => {
     };
-    onGiveAwayUpdate = (response: any) => {
+    onGiveawayUpdate = (response: any) => {
     };
-    onGiveAwayWinner = (response: any) => {
+    onGiveawayWinner = (response: GiveawayWinnerResponse) => {
     };
 
     onGiveawaysRoomSubscribe(response: SubscribeGiveawayResponse) {

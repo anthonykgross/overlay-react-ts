@@ -2,13 +2,20 @@ import Joi from "@hapi/joi";
 
 export interface User {
     "badge-info": {
+        "broadcaster"?: number
         "subscriber"?: number
+        "moderator"?: number
+        "partner"?: number
+        "bits"?: number
+        "bits-leader"?: number
     },
     "badges": {
         "broadcaster"?: number
         "subscriber"?: number
         "moderator"?: number
         "partner"?: number
+        "bits"?: number
+        "bits-leader"?: number
     },
     "client-nonce"?: string
     "color": string
@@ -28,17 +35,27 @@ export interface User {
     "badges-raw": string
     "username": string
     "message-type": string
+    "emote-only"?: string
 }
 
 export const UserSchema = Joi.object({
     "badge-info": Joi.object().keys({
-        "subscriber": Joi.number().required(),
+        "broadcaster": Joi.number(),
+        "subscriber": Joi.number(),
+        "moderator": Joi.number(),
+        "partner": Joi.number(),
+        "bits": Joi.number(),
+        "founder": Joi.number(),
+        "bits-leader": Joi.number(),
     }).allow(null).required(),
     "badges": Joi.object().keys({
         "broadcaster": Joi.number(),
         "subscriber": Joi.number(),
         "moderator": Joi.number(),
         "partner": Joi.number(),
+        "bits": Joi.number(),
+        "founder": Joi.number(),
+        "bits-leader": Joi.number(),
     }).required(),
     "client-nonce": Joi.string(),
     "color": Joi.string().allow(null).required(),
@@ -58,4 +75,5 @@ export const UserSchema = Joi.object({
     "badges-raw": Joi.string().required(),
     "username": Joi.string().required(),
     "message-type": Joi.string().required(),
+    "emote-only": Joi.boolean(),
 });

@@ -1,6 +1,7 @@
 import {takeLatest, put, select} from 'redux-saga/effects';
 import {channels as websocketChannels} from "../api/streamelements/websocket/actions";
 import {actions} from "./actions";
+import {actions as followActions} from "../services/follower/actions";
 import ApiSession from "../api/session";
 import ApiContest from "../api/contest";
 import ApiGiveaway from "../api/giveaway";
@@ -45,7 +46,13 @@ function* onAuthenticated(action: AuthenticatedAction) {
     if (responseSession.ok) {
         let session: Session = yield responseSession.json();
         checkSchema(SessionSchema, session);
-        yield put(actions.updateSession(session));
+
+        let followers: string[] = [];
+        for(let o of session.data["follower-recent"]) {
+            followers.push(o.name)
+        }
+        let countFollowers: number = session.data["follower-total"].count;
+        yield put(followActions.initFollow(countFollowers, followers));
     }
 
     let apiContest = new ApiContest();
@@ -107,7 +114,7 @@ function* onEvent(action: EventAction) {
     if (action.response.type === 'follow') {
         let response: EventFollowResponse = action.response as EventFollowResponse;
         checkSchema(EventFollowResponseSchema, response);
-        yield put(actions.newFollow(response));
+        yield put(followActions.newFollow(response));
     }
     if (action.response.type === 'subscriber') {
         let response: EventSubscriberResponse = action.response as EventSubscriberResponse;
@@ -124,7 +131,8 @@ function* onEvent(action: EventAction) {
 
 function* onEventTest(action: EventTestAction) {
     if (action.response.listener === 'follower-latest') {
-        //onEventFollow(d.event.name);
+        let response: any = action.response;
+        yield put(followActions.testFollow(response.event.name));
     }
     if (action.response.listener === 'tip-latest') {
         //onEventTip(d.event.name, d.event.amount);

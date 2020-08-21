@@ -5,6 +5,7 @@ interface Winner {
     username: string
     avatar: string
     subscriber?: boolean
+    providerId?: number
     tickets: number
     createdAt: string
 }
@@ -56,6 +57,7 @@ export const GiveawaySchema = Joi.object({
             "username": Joi.string().required(),
             "avatar": Joi.string().required(),
             "subscriber": Joi.boolean(),
+            "providerId": Joi.number(),
             "tickets": Joi.number().required(),
             "createdAt": Joi.string().required()
         })

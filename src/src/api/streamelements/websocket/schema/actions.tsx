@@ -5,6 +5,11 @@ import {EventUpdateResponse} from "./eventUpdate";
 import {SubscribeContestResponse} from "./subscribeContest";
 import {SubscribeGiveawayResponse} from "./subscribeGiveaway";
 import {Action} from "../../../../app/schema";
+import {ContestStateResponse} from "./contestState";
+import {ContestUpdateResponse} from "./contestUpdate";
+import {ContestWinnerResponse} from "./contestWinner";
+import {GiveawayStateResponse} from "./giveawayState";
+import {GiveawayWinnerResponse} from "./giveawayWinner";
 
 export interface AuthenticatedAction extends Action {
     type: string
@@ -47,17 +52,17 @@ export interface ContestRunningAction extends Action {
 
 export interface ContestStateAction extends Action {
     type: string
-    response: any
+    response: ContestStateResponse
 }
 
 export interface ContestUpdateAction extends Action {
     type: string
-    response: any
+    response: ContestUpdateResponse
 }
 
 export interface ContestWinnerAction extends Action {
     type: string
-    response: any
+    response: ContestWinnerResponse
 }
 
 export interface SubscribeContestAction extends Action {
@@ -72,7 +77,7 @@ export interface GiveawayRunningAction extends Action {
 
 export interface GiveawayStateAction extends Action {
     type: string
-    response: any
+    response: GiveawayStateResponse
 }
 
 export interface GiveawayUpdateAction extends Action {
@@ -82,7 +87,7 @@ export interface GiveawayUpdateAction extends Action {
 
 export interface GiveawayWinnerAction extends Action {
     type: string
-    response: any
+    response: GiveawayWinnerResponse
 }
 
 export interface SubscribeGiveawayAction extends Action {

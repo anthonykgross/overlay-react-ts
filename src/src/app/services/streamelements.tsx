@@ -7,6 +7,11 @@ import {EventResponse} from "../../api/streamelements/websocket/schema/event";
 import {EventUpdateResponse} from "../../api/streamelements/websocket/schema/eventUpdate";
 import {SubscribeContestResponse} from "../../api/streamelements/websocket/schema/subscribeContest";
 import {SubscribeGiveawayResponse} from "../../api/streamelements/websocket/schema/subscribeGiveaway";
+import {GiveawayStateResponse} from "../../api/streamelements/websocket/schema/giveawayState";
+import {GiveawayWinnerResponse} from "../../api/streamelements/websocket/schema/giveawayWinner";
+import {ContestWinnerResponse} from "../../api/streamelements/websocket/schema/contestWinner";
+import {ContestStateResponse} from "../../api/streamelements/websocket/schema/contestState";
+import {ContestUpdateResponse} from "../../api/streamelements/websocket/schema/contestUpdate";
 
 export class Websocket {
     dispatch: Dispatch;
@@ -40,25 +45,28 @@ export class Websocket {
         this.ws.onContestRunning = (d) => {
             this.dispatch(actions.contestRunning(d))
         }
-        this.ws.onContestState = (d) => {
+        this.ws.onContestState = (d: ContestStateResponse) => {
             this.dispatch(actions.contestState(d))
         }
-        this.ws.onContestUpdate = (d) => {
+        this.ws.onContestUpdate = (d: ContestUpdateResponse) => {
             this.dispatch(actions.contestUpdate(d))
+        }
+        this.ws.onContestWinner = (d: ContestWinnerResponse) => {
+            this.dispatch(actions.contestWinner(d))
         }
         this.ws.onContestsRoomSubscribe = (d: SubscribeContestResponse) => {
             this.dispatch(actions.subscribeContest(d))
         }
-        this.ws.onGiveAwayRunning = (d) => {
+        this.ws.onGiveawayRunning = (d) => {
             this.dispatch(actions.giveawayRunning(d))
         }
-        this.ws.onGiveAwayState = (d) => {
+        this.ws.onGiveawayState = (d: GiveawayStateResponse) => {
             this.dispatch(actions.giveawayState(d))
         }
-        this.ws.onGiveAwayUpdate = (d) => {
+        this.ws.onGiveawayUpdate = (d) => {
             this.dispatch(actions.giveawayUpdate(d))
         }
-        this.ws.onGiveAwayWinner = (d) => {
+        this.ws.onGiveawayWinner = (d: GiveawayWinnerResponse) => {
             this.dispatch(actions.giveawayWinner(d))
         }
         this.ws.onGiveawaysRoomSubscribe = (d: SubscribeGiveawayResponse) => {
