@@ -2,10 +2,11 @@ import React, {useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import './scss/index.scss'
 import ApiUser from "../api/user";
-import {actions} from "./actions";
 import {Clock} from "./services/clock";
 import {Chat} from "./services/twitch";
 import {Websocket} from "./services/streamelements";
+
+import {actions} from "../services/viewer/actions";
 
 function MainComponent(props: any) {
     const dispatch = useDispatch();
@@ -21,7 +22,7 @@ function MainComponent(props: any) {
                     if (isNaN(nbViewers)) {
                         nbViewers = 1;
                     }
-                    dispatch(actions.updateNbViewers(nbViewers))
+                    dispatch(actions.updateNbViewer(nbViewers))
                 })
         });
         clock.run();

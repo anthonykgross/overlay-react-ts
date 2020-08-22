@@ -11,17 +11,17 @@ export interface State {
     tips: Tip[]
 }
 
-export interface NewTipAction extends Action{
+export interface NewTipAction extends Action {
     response: EventTipResponse
 }
 
-export interface TestTipAction extends Action{
+export interface TestTipAction extends Action {
     response: {
         username: string
         amount: number
     }
 }
 
-export interface InitTipAction extends Action{
+export interface InitTipAction extends Action {
     response: State
 }

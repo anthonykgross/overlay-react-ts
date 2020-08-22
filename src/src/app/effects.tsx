@@ -5,6 +5,7 @@ import {actions as followActions} from "../services/follower/actions";
 import {actions as cheerActions} from "../services/cheer/actions";
 import {actions as subscriberActions} from "../services/subscriber/actions";
 import {actions as tipActions} from "../services/tip/actions";
+import {actions as redemptionActions} from "../services/redemption/actions";
 import ApiSession from "../api/session";
 import ApiContest from "../api/contest";
 import ApiGiveaway from "../api/giveaway";
@@ -52,6 +53,7 @@ function* onAuthenticated(action: AuthenticatedAction) {
     if (responseSession.ok) {
         let session: Session = yield responseSession.json();
         checkSchema(SessionSchema, session);
+        console.log(session)
 
         /**
          * FOLLOWER
@@ -148,7 +150,7 @@ function* onEventUpdate(action: EventUpdateAction) {
         if (responseGiveaways.ok) {
             let redemption: Redemption = yield responseGiveaways.json();
             checkSchema(RedemptionSchema, redemption);
-            yield put(actions.newRedemption(redemption));
+            yield put(redemptionActions.newRedemption(redemption));
         }
     }
     yield;

@@ -1,6 +1,7 @@
-import {channels} from "../../app/actions";
 import {Redemption} from "../../api/schema/redemption";
 import {Action} from "../../app/schema";
+import {channels} from "../redemption/actions";
+import {NewRedemptionAction} from "../redemption/schema";
 
 export interface State {
     body: {
@@ -44,7 +45,8 @@ let initialState: State = {
 
 export const reducer = (state: State = initialState, action: Action): State => {
     if (action.type === channels.REDEMPTION_NEW) {
-        let redemption: Redemption = action.response as Redemption;
+        let a : NewRedemptionAction = action as NewRedemptionAction;
+        let redemption: Redemption = a.response.redemption;
 
         // top : Topless
         if (redemption._id === '5ee61a5e2fbe3012726b7600') {
