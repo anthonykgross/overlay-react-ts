@@ -126,7 +126,7 @@ export interface EventCheerResponse {
         username: string
         providerId: string
         displayName: string
-        amount:  string
+        amount:  number
         message:  string
         quantity:  string
         avatar: string
@@ -163,7 +163,7 @@ export interface EventTipResponse {
     updatedAt: string
     data: {
         username: string
-        amount:  string
+        amount:  number
         currency:  string
         message:  string
         avatar: string

@@ -2,6 +2,9 @@ import {takeLatest, put, select} from 'redux-saga/effects';
 import {channels as websocketChannels} from "../api/streamelements/websocket/actions";
 import {actions} from "./actions";
 import {actions as followActions} from "../services/follower/actions";
+import {actions as cheerActions} from "../services/cheer/actions";
+import {actions as subscriberActions} from "../services/subscriber/actions";
+import {actions as tipActions} from "../services/tip/actions";
 import ApiSession from "../api/session";
 import ApiContest from "../api/contest";
 import ApiGiveaway from "../api/giveaway";
@@ -34,6 +37,9 @@ import {
     EventSubscriberResponseSchema,
     EventTipResponse, EventTipResponseSchema
 } from "../api/streamelements/websocket/schema/event";
+import {Cheer} from "../services/cheer/schema";
+import {Subscriber} from "../services/subscriber/schema";
+import {Tip} from "../services/tip/schema";
 
 function* onAll(action: any) {
     console.log(action);
@@ -47,12 +53,55 @@ function* onAuthenticated(action: AuthenticatedAction) {
         let session: Session = yield responseSession.json();
         checkSchema(SessionSchema, session);
 
+        /**
+         * FOLLOWER
+         */
         let followers: string[] = [];
         for(let o of session.data["follower-recent"]) {
             followers.push(o.name)
         }
         let countFollowers: number = session.data["follower-total"].count;
         yield put(followActions.initFollow(countFollowers, followers));
+
+        /**
+         * CHEER
+         */
+        let cheers: Cheer[] = [];
+        for(let o of session.data["cheer-recent"]) {
+            cheers.push({
+                username: o.name,
+                amount: o.amount,
+            })
+        }
+        let countCheers: number = session.data["cheer-total"].amount;
+        yield put(cheerActions.initCheer(countCheers, cheers));
+
+        /**
+         * Subscriber
+         */
+        let subscribers: Subscriber[] = [];
+        for(let o of session.data["subscriber-recent"]) {
+            subscribers.push({
+                username: o.name,
+                amount: o.amount,
+                tier: o.tier,
+            })
+        }
+        let countSubscribers: number = session.data["subscriber-total"].count
+        yield put(subscriberActions.initSubscriber(countSubscribers, subscribers));
+
+        /**
+         * TIP
+         */
+        let tips: Tip[] = [];
+        for(let o of session.data["tip-recent"]) {
+            tips.push({
+                username: o.name,
+                amount: o.amount,
+            })
+        }
+        let countTips: number = session.data["tip-total"].amount
+        yield put(tipActions.initTip(countTips, tips));
     }
 
     let apiContest = new ApiContest();
@@ -109,7 +158,7 @@ function* onEvent(action: EventAction) {
     if (action.response.type === 'cheer') {
         let response: EventCheerResponse = action.response as EventCheerResponse;
         checkSchema(EventCheerResponseSchema, response);
-        yield put(actions.newCheer(response));
+        yield put(cheerActions.newCheer(response));
     }
     if (action.response.type === 'follow') {
         let response: EventFollowResponse = action.response as EventFollowResponse;
@@ -119,12 +168,12 @@ function* onEvent(action: EventAction) {
     if (action.response.type === 'subscriber') {
         let response: EventSubscriberResponse = action.response as EventSubscriberResponse;
         checkSchema(EventSubscriberResponseSchema, response);
-        yield put(actions.newSubscriber(response));
+        yield put(subscriberActions.newSubscriber(response));
     }
     if (action.response.type === 'tip') {
         let response: EventTipResponse = action.response as EventTipResponse;
         checkSchema(EventTipResponseSchema, response);
-        yield put(actions.newTip(response));
+        yield put(tipActions.newTip(response));
     }
     yield;
 }
@@ -135,13 +184,16 @@ function* onEventTest(action: EventTestAction) {
         yield put(followActions.testFollow(response.event.name));
     }
     if (action.response.listener === 'tip-latest') {
-        //onEventTip(d.event.name, d.event.amount);
+        let response: any = action.response;
+        yield put(tipActions.testTip(response.event.name, response.event.amount));
     }
     if (action.response.listener === 'cheer-latest') {
-        //onEventCheer(d.event.name, d.event.amount);
+        let response: any = action.response;
+        yield put(cheerActions.testCheer(response.event.name, response.event.amount));
     }
     if (action.response.listener === 'subscriber-latest') {
-        //onEventSubscriber(d.event.name, d.event.amount);
+        let response: any = action.response;
+        yield put(subscriberActions.testSubscriber(response.event.name, response.event.amount, response.event.tier));
     }
     yield;
 }

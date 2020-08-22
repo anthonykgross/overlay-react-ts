@@ -9,7 +9,6 @@ import {EventResponse, EventResponseSchema} from "./schema/event";
 import {ContestStateResponse} from "./schema/contestState";
 import {ContestUpdateResponse} from "./schema/contestUpdate";
 import {ContestWinnerResponse} from "./schema/contestWinner";
-import {GiveawayWinnerAction} from "./schema/actions";
 import {GiveawayWinnerResponse} from "./schema/giveawayWinner";
 import {GiveawayStateResponse} from "./schema/giveawayState";
 
