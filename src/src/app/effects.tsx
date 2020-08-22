@@ -6,11 +6,12 @@ import {actions as cheerActions} from "../services/cheer/actions";
 import {actions as subscriberActions} from "../services/subscriber/actions";
 import {actions as tipActions} from "../services/tip/actions";
 import {actions as redemptionActions} from "../services/redemption/actions";
+import {actions as contestActions} from "../services/contest/actions";
 import ApiSession from "../api/session";
 import ApiContest from "../api/contest";
 import ApiGiveaway from "../api/giveaway";
 import {
-    AuthenticatedAction,
+    AuthenticatedAction, ContestStateAction, ContestUpdateAction, ContestWinnerAction,
     EventAction,
     EventTestAction,
     EventUpdateAction
@@ -36,11 +37,17 @@ import {
     EventFollowResponseSchema,
     EventSubscriberResponse,
     EventSubscriberResponseSchema,
-    EventTipResponse, EventTipResponseSchema
+    EventTipResponse,
+    EventTipResponseSchema
 } from "../api/streamelements/websocket/schema/event";
 import {Cheer} from "../services/cheer/schema";
 import {Subscriber} from "../services/subscriber/schema";
 import {Tip} from "../services/tip/schema";
+import {
+    ContestStateResponseSchema,
+    ContestStateRunningResponse,
+    ContestStateRunningResponseSchema
+} from "../api/streamelements/websocket/schema/contestState";
 
 function* onAll(action: any) {
     console.log(action);
@@ -53,13 +60,12 @@ function* onAuthenticated(action: AuthenticatedAction) {
     if (responseSession.ok) {
         let session: Session = yield responseSession.json();
         checkSchema(SessionSchema, session);
-        console.log(session)
 
         /**
          * FOLLOWER
          */
         let followers: string[] = [];
-        for(let o of session.data["follower-recent"]) {
+        for (let o of session.data["follower-recent"]) {
             followers.push(o.name)
         }
         let countFollowers: number = session.data["follower-total"].count;
@@ -69,7 +75,7 @@ function* onAuthenticated(action: AuthenticatedAction) {
          * CHEER
          */
         let cheers: Cheer[] = [];
-        for(let o of session.data["cheer-recent"]) {
+        for (let o of session.data["cheer-recent"]) {
             cheers.push({
                 username: o.name,
                 amount: o.amount,
@@ -82,7 +88,7 @@ function* onAuthenticated(action: AuthenticatedAction) {
          * Subscriber
          */
         let subscribers: Subscriber[] = [];
-        for(let o of session.data["subscriber-recent"]) {
+        for (let o of session.data["subscriber-recent"]) {
             subscribers.push({
                 username: o.name,
                 amount: o.amount,
@@ -96,7 +102,7 @@ function* onAuthenticated(action: AuthenticatedAction) {
          * TIP
          */
         let tips: Tip[] = [];
-        for(let o of session.data["tip-recent"]) {
+        for (let o of session.data["tip-recent"]) {
             tips.push({
                 username: o.name,
                 amount: o.amount,
@@ -115,10 +121,9 @@ function* onAuthenticated(action: AuthenticatedAction) {
         for (contest of json.contests) {
             checkSchema(ContestSchema, contest);
             if (contest.state === 'running') {
-                yield put(actions.updateContest(contest));
+                yield put(contestActions.newContest(contest));
             }
         }
-
     }
 
     let apiGiveaway = new ApiGiveaway();
@@ -142,8 +147,8 @@ function* onEventUpdate(action: EventUpdateAction) {
     let state = selectors.getState(s) as State;
 
     if (action.response.name === "redemption-latest") {
-        checkSchema(EventUpdateRedemptionLatestResponseSchema, action.response);
         let response: EventUpdateRedemptionLatestResponse = action.response as EventUpdateRedemptionLatestResponse;
+        checkSchema(EventUpdateRedemptionLatestResponseSchema, response);
 
         let apiStore = new ApiStore();
         let responseGiveaways = yield apiStore.getItem(state.channelId, response.data.itemId);
@@ -200,10 +205,55 @@ function* onEventTest(action: EventTestAction) {
     yield;
 }
 
+function* onContestState(action: ContestStateAction) {
+    let s = yield select();
+    let state = selectors.getState(s) as State;
+
+    if (action.response.state === "running") {
+        let response: ContestStateRunningResponse = action.response as ContestStateRunningResponse;
+        checkSchema(ContestStateRunningResponseSchema, response)
+
+        let apiContest = new ApiContest();
+        let responseContests = yield apiContest.getContest(state.channelId, response.contestId);
+        if (responseContests.ok) {
+            let contest: Contest = yield responseContests.json();
+            checkSchema(ContestSchema, contest)
+            yield put(contestActions.newContest(contest))
+        }
+    }
+    if (action.response.state === "closed") {
+        checkSchema(ContestStateResponseSchema, action.response)
+        yield put(contestActions.closeContest())
+    }
+    if (action.response.state === "refunded") {
+        checkSchema(ContestStateResponseSchema, action.response)
+        yield put(contestActions.refundContest())
+    }
+    if (action.response.state === "completed") {
+        checkSchema(ContestStateResponseSchema, action.response)
+        yield put(contestActions.completeContest())
+    }
+}
+
+function* onContestWinner(action: ContestWinnerAction) {
+    yield put(contestActions.winnerContest(action.response.winnerId))
+}
+
+function* onContestUpdate(action: ContestUpdateAction) {
+    yield put(contestActions.betContest(
+        action.response.optionId,
+        action.response.amount,
+        action.response.userId
+    ));
+}
+
 export const MainEffects = [
     takeLatest('*', onAll),
     takeLatest(websocketChannels.AUTHENTICATED, onAuthenticated),
     takeLatest(websocketChannels.EVENT_UPDATE, onEventUpdate),
-    takeLatest(websocketChannels.EVENT_TEST, onEventTest),
     takeLatest(websocketChannels.EVENT, onEvent),
+    takeLatest(websocketChannels.EVENT_TEST, onEventTest),
+    takeLatest(websocketChannels.CONTEST_STATE, onContestState),
+    takeLatest(websocketChannels.CONTEST_UPDATE, onContestUpdate),
+    takeLatest(websocketChannels.CONTEST_WINNER, onContestWinner),
 ];

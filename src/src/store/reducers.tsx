@@ -8,6 +8,7 @@ import {reducer as subscriberReducer} from "../services/subscriber/reducers";
 import {reducer as tipReducer} from "../services/tip/reducers";
 import {reducer as viewerReducer} from "../services/viewer/reducers";
 import {reducer as redemptionReducer} from "../services/redemption/reducers";
+import {reducer as contestReducer} from "../services/contest/reducers";
 import {reducer as appReducer} from "../app/reducers";
 
 export const rootReducer = (history: BrowserHistory) => combineReducers({
@@ -19,5 +20,6 @@ export const rootReducer = (history: BrowserHistory) => combineReducers({
     tip: tipReducer,
     viewer: viewerReducer,
     redemption: redemptionReducer,
+    contest: contestReducer,
     router: connectRouter(history)
 });
