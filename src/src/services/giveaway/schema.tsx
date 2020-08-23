@@ -1,4 +1,5 @@
-import Joi from '@hapi/joi'
+import {Action} from "../../app/schema";
+import Joi from "@hapi/joi";
 
 interface Winner {
     _id: string
@@ -63,3 +64,34 @@ export const GiveawaySchema = Joi.object({
         })
     ).required()
 });
+
+export interface State {
+    active?: Giveaway
+    giveaways: Giveaway[]
+}
+
+export interface NewGiveawayAction extends Action {
+    response: Giveaway
+}
+
+export interface CloseGiveawayAction extends Action {
+    response: {}
+}
+
+export interface RefundGiveawayAction extends Action {
+    response: {}
+}
+
+export interface CompleteGiveawayAction extends Action {
+    response: {}
+}
+
+export interface WinnerGiveawayAction extends Action {
+    response: string
+}
+export interface EnterGiveawayAction extends Action {
+    response: {
+        username: string
+        amount: number
+    }
+}

@@ -2,7 +2,7 @@ import {Dispatch} from "redux";
 import {TwitchChat} from "../../api/twitch/chat";
 import {actions} from "../../api/twitch/chat/actions";
 import {User, UserSchema} from "../../api/twitch/chat/schema/user";
-import {checkSchema} from "../../api/schema";
+import {checkSchema} from "../schema";
 
 export class Chat {
     dispatch: Dispatch;

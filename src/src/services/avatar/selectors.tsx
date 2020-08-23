@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect'
-import {State} from "./reducers";
+import {State} from "./schema";
 
 const state = (s: any): State => s.avatar;
 

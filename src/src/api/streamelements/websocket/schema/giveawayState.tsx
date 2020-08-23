@@ -1,25 +1,37 @@
 import Joi from "@hapi/joi";
 
-export interface Data {
-    totalTickets: string
-    totalUsers: string
-}
 export interface GiveawayStateResponse {
     channelId: string
-    giveawayId?: string
-    data?: Data[]
+    giveawayId: string
     event: string
     state: string
 }
 export const GiveawayStateResponseSchema = Joi.object({
     channelId: Joi.string().required(),
-    giveawayId: Joi.string(),
-    data: Joi.array().items(
-        Joi.object().keys({
-            totalTickets: Joi.string().required(),
-            totalUsers: Joi.string().required()
-        })
-    ),
+    giveawayId: Joi.string().required(),
+    event: Joi.string().required(),
+    state: Joi.string().required(),
+});
+
+export interface Data {
+    totalTickets?: string
+    totalUsers?: string
+}
+
+export interface GiveawayStateCompletedResponse {
+    channelId: string
+    giveawayId: string
+    data: Data
+    event: string
+    state: string
+}
+export const GiveawayStateCompletedResponseSchema = Joi.object({
+    channelId: Joi.string().required(),
+    giveawayId: Joi.string().required(),
+    data: Joi.object().keys({
+        totalTickets: Joi.number(),
+        totalUsers: Joi.number()
+    }).required(),
     event: Joi.string().required(),
     state: Joi.string().required(),
 });

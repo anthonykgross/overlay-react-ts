@@ -1,12 +1,12 @@
 import React, {useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import './scss/index.scss'
-import ApiUser from "../api/user";
 import {Clock} from "./services/clock";
 import {Chat} from "./services/twitch";
 import {Websocket} from "./services/streamelements";
 
 import {actions} from "../services/viewer/actions";
+import {Api} from "../services/viewer/api";
 
 function MainComponent(props: any) {
     const dispatch = useDispatch();
@@ -14,8 +14,8 @@ function MainComponent(props: any) {
     useEffect(() => {
         let clock = new Clock(30 * 1000);
         clock.add(function() {
-            let apiUser = new ApiUser();
-            apiUser.getViewerCount(process.env.REACT_APP_TWITCH_USERNAME!)
+            let api = new Api();
+            api.getViewerCount(process.env.REACT_APP_TWITCH_USERNAME!)
                 .then(response => response.text())
                 .then((d: string) => {
                     let nbViewers = parseInt(d);

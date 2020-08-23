@@ -1,5 +1,4 @@
-import {Redemption} from "../../api/schema/redemption";
-import {NewRedemptionAction} from "./schema";
+import {NewRedemptionAction, Redemption} from "./schema";
 
 export const channels = {
     REDEMPTION_NEW: 'services/redemption/new',

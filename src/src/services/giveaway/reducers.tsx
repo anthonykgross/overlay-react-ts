@@ -1,19 +1,19 @@
 import {Action} from "../../app/schema";
 import {channels} from "./actions";
-import {State, NewContestAction, Contest} from "./schema";
+import {State, NewGiveawayAction, Giveaway} from "./schema";
 
 let initialState: State = {
-    contests: []
+    giveaways: []
 };
 
 export const reducer = (state: State = initialState, action: Action): State => {
-    if (action.type === channels.CONTEST_NEW) {
-        let a: NewContestAction = action as NewContestAction;
-        let contest: Contest = a.response;
+    if (action.type === channels.GIVEAWAY_NEW) {
+        let a: NewGiveawayAction = action as NewGiveawayAction;
+        let giveaway: Giveaway = a.response;
 
         return {
             ...state,
-            active: contest
+            active: giveaway
         };
     }
     return state;

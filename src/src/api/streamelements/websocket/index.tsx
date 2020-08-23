@@ -4,13 +4,14 @@ import {SubscribeContestResponse, SubscribeContestResponseSchema} from "./schema
 import {SubscribeGiveawayResponse, SubscribeGiveawayResponseSchema} from "./schema/subscribeGiveaway";
 import {EventTestResponse, EventTestResponseSchema} from "./schema/eventTest";
 import {EventUpdateResponse, EventUpdateResponseSchema} from "./schema/eventUpdate";
-import {checkSchema} from "../../schema";
 import {EventResponse, EventResponseSchema} from "./schema/event";
 import {ContestStateResponse} from "./schema/contestState";
 import {ContestUpdateResponse} from "./schema/contestUpdate";
 import {ContestWinnerResponse} from "./schema/contestWinner";
 import {GiveawayWinnerResponse} from "./schema/giveawayWinner";
 import {GiveawayStateResponse} from "./schema/giveawayState";
+import {GiveawayEntryResponse} from "./schema/giveawayEntry";
+import {checkSchema} from "../../../app/schema";
 
 export class Websocket {
     socket: SocketIOClient.Socket = SocketIOClientStatic(process.env.REACT_APP_STREAMELEMENT_ENDPOINT!, {
@@ -64,37 +65,28 @@ export class Websocket {
         });
 
         // CONTESTS
-        this.socket.on("contest:running", (response: any) => {
-            this.onContestRunning(response);
-        });
-
-        this.socket.on('contest:state', (response: any) => {
+        this.socket.on('contest:state', (response: ContestStateResponse) => {
             this.onContestState(response);
         });
 
-        this.socket.on('contest:update', (response: any) => {
+        this.socket.on('contest:update', (response: ContestUpdateResponse) => {
             this.onContestUpdate(response);
         });
 
-        this.socket.on('contest:winner', (response: any) => {
+        this.socket.on('contest:winner', (response: ContestWinnerResponse) => {
             this.onContestWinner(response);
         });
 
         // GIVEAWAYS
-        this.socket.on("giveaway:running", (response: any) => {
-            this.onGiveawayRunning(response);
-        });
-
-        this.socket.on('giveaway:state', (response: any) => {
+        this.socket.on('giveaway:state', (response: GiveawayStateResponse) => {
             this.onGiveawayState(response);
         });
 
-        this.socket.on('giveaway:update', (response: any) => {
-            this.onGiveawayUpdate(response);
-        });
-
-        this.socket.on('giveaway:winner', (response: any) => {
+        this.socket.on('giveaway:winner', (response: GiveawayWinnerResponse) => {
             this.onGiveawayWinner(response);
+        });
+        this.socket.on('giveaway:entry', (response: GiveawayEntryResponse) => {
+            this.onGiveawayEntry(response);
         });
     }
 
@@ -118,8 +110,6 @@ export class Websocket {
     onEventReset = (response: any) => {
     };
     // CONTESTS
-    onContestRunning = (response: any) => {
-    };
     onContestState = (response: ContestStateResponse) => {
     };
     onContestUpdate = (response: ContestUpdateResponse) => {
@@ -131,15 +121,12 @@ export class Websocket {
     }
 
     // GIVEAWAYS
-    onGiveawayRunning = (response: any) => {
-    };
     onGiveawayState = (response: GiveawayStateResponse) => {
-    };
-    onGiveawayUpdate = (response: any) => {
     };
     onGiveawayWinner = (response: GiveawayWinnerResponse) => {
     };
-
+    onGiveawayEntry = (response: GiveawayEntryResponse) => {
+    };
     onGiveawaysRoomSubscribe(response: SubscribeGiveawayResponse) {
     }
 }

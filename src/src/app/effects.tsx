@@ -1,26 +1,25 @@
 import {takeLatest, put, select} from 'redux-saga/effects';
 import {channels as websocketChannels} from "../api/streamelements/websocket/actions";
-import {actions} from "./actions";
 import {actions as followActions} from "../services/follower/actions";
 import {actions as cheerActions} from "../services/cheer/actions";
 import {actions as subscriberActions} from "../services/subscriber/actions";
 import {actions as tipActions} from "../services/tip/actions";
 import {actions as redemptionActions} from "../services/redemption/actions";
 import {actions as contestActions} from "../services/contest/actions";
-import ApiSession from "../api/session";
-import ApiContest from "../api/contest";
-import ApiGiveaway from "../api/giveaway";
+import {actions as giveawayActions} from "../services/giveaway/actions";
 import {
-    AuthenticatedAction, ContestStateAction, ContestUpdateAction, ContestWinnerAction,
+    AuthenticatedAction,
+    ContestStateAction,
+    ContestUpdateAction,
+    ContestWinnerAction,
     EventAction,
     EventTestAction,
-    EventUpdateAction
+    EventUpdateAction,
+    GiveawayEntryAction,
+    GiveawayStateAction,
+    GiveawayWinnerAction
 } from "../api/streamelements/websocket/schema/actions";
 
-import {checkSchema} from "../api/schema";
-import {Contest, ContestSchema} from "../api/schema/contest";
-import {Session, SessionSchema} from "../api/schema/session";
-import {Giveaway, GiveawaySchema} from "../api/schema/giveaway";
 import {
     EventUpdateRedemptionLatestResponse,
     EventUpdateRedemptionLatestResponseSchema
@@ -28,8 +27,6 @@ import {
 
 import {selectors} from "./selectors";
 import {State} from "./reducers";
-import ApiStore from "../api/store";
-import {Redemption, RedemptionSchema} from "../api/schema/redemption";
 import {
     EventCheerResponse,
     EventCheerResponseSchema,
@@ -40,14 +37,32 @@ import {
     EventTipResponse,
     EventTipResponseSchema
 } from "../api/streamelements/websocket/schema/event";
-import {Cheer} from "../services/cheer/schema";
-import {Subscriber} from "../services/subscriber/schema";
-import {Tip} from "../services/tip/schema";
 import {
     ContestStateResponseSchema,
     ContestStateRunningResponse,
     ContestStateRunningResponseSchema
 } from "../api/streamelements/websocket/schema/contestState";
+import {
+    GiveawayStateCompletedResponse,
+    GiveawayStateCompletedResponseSchema,
+    GiveawayStateResponseSchema,
+} from "../api/streamelements/websocket/schema/giveawayState";
+import {GiveawayEntryResponseSchema} from "../api/streamelements/websocket/schema/giveawayEntry";
+import {GiveawayWinnerResponseSchema} from "../api/streamelements/websocket/schema/giveawayWinner";
+import {checkSchema} from "./schema";
+
+import {Api as ApiContest} from "../services/contest/api";
+import {Api as ApiGiveaway} from "../services/giveaway/api";
+import {Api as ApiRedemption} from "../services/redemption/api";
+import {Api as ApiSession} from "../services/session/api";
+
+import {Session, SessionSchema} from "../services/session/schema";
+import {Cheer} from "../services/cheer/schema";
+import {Subscriber} from "../services/subscriber/schema";
+import {Tip} from "../services/tip/schema";
+import {Contest, ContestSchema} from "../services/contest/schema";
+import {Giveaway, GiveawaySchema} from "../services/giveaway/schema";
+import {Redemption, RedemptionSchema} from "../services/redemption/schema";
 
 function* onAll(action: any) {
     console.log(action);
@@ -135,7 +150,7 @@ function* onAuthenticated(action: AuthenticatedAction) {
         for (giveaway of json.giveaways) {
             checkSchema(GiveawaySchema, giveaway);
             if (giveaway.state === 'running') {
-                yield put(actions.updateGiveaway(giveaway));
+                yield put(giveawayActions.newGiveaway(giveaway));
             }
         }
     }
@@ -150,10 +165,10 @@ function* onEventUpdate(action: EventUpdateAction) {
         let response: EventUpdateRedemptionLatestResponse = action.response as EventUpdateRedemptionLatestResponse;
         checkSchema(EventUpdateRedemptionLatestResponseSchema, response);
 
-        let apiStore = new ApiStore();
-        let responseGiveaways = yield apiStore.getItem(state.channelId, response.data.itemId);
-        if (responseGiveaways.ok) {
-            let redemption: Redemption = yield responseGiveaways.json();
+        let apiRedemption = new ApiRedemption();
+        let responseItem = yield apiRedemption.getItem(state.channelId, response.data.itemId);
+        if (responseItem.ok) {
+            let redemption: Redemption = yield responseItem.json();
             checkSchema(RedemptionSchema, redemption);
             yield put(redemptionActions.newRedemption(redemption));
         }
@@ -211,32 +226,32 @@ function* onContestState(action: ContestStateAction) {
 
     if (action.response.state === "running") {
         let response: ContestStateRunningResponse = action.response as ContestStateRunningResponse;
-        checkSchema(ContestStateRunningResponseSchema, response)
+        checkSchema(ContestStateRunningResponseSchema, response);
 
         let apiContest = new ApiContest();
-        let responseContests = yield apiContest.getContest(state.channelId, response.contestId);
-        if (responseContests.ok) {
-            let contest: Contest = yield responseContests.json();
-            checkSchema(ContestSchema, contest)
-            yield put(contestActions.newContest(contest))
+        let responseContest = yield apiContest.getContest(state.channelId, response.contestId);
+        if (responseContest.ok) {
+            let contest: Contest = yield responseContest.json();
+            checkSchema(ContestSchema, contest);
+            yield put(contestActions.newContest(contest));
         }
     }
     if (action.response.state === "closed") {
-        checkSchema(ContestStateResponseSchema, action.response)
-        yield put(contestActions.closeContest())
+        checkSchema(ContestStateResponseSchema, action.response);
+        yield put(contestActions.closeContest());
     }
     if (action.response.state === "refunded") {
         checkSchema(ContestStateResponseSchema, action.response)
         yield put(contestActions.refundContest())
     }
     if (action.response.state === "completed") {
-        checkSchema(ContestStateResponseSchema, action.response)
-        yield put(contestActions.completeContest())
+        checkSchema(ContestStateResponseSchema, action.response);
+        yield put(contestActions.completeContest());
     }
 }
 
 function* onContestWinner(action: ContestWinnerAction) {
-    yield put(contestActions.winnerContest(action.response.winnerId))
+    yield put(contestActions.winnerContest(action.response.winnerId));
 }
 
 function* onContestUpdate(action: ContestUpdateAction) {
@@ -244,6 +259,50 @@ function* onContestUpdate(action: ContestUpdateAction) {
         action.response.optionId,
         action.response.amount,
         action.response.userId
+    ));
+}
+
+
+function* onGiveawayState(action: GiveawayStateAction) {
+    let s = yield select();
+    let state = selectors.getState(s) as State;
+
+    if (action.response.state === "running") {
+        checkSchema(GiveawayStateResponseSchema, action.response);
+
+        let apiGiveaway = new ApiGiveaway();
+        let responseGiveaway = yield apiGiveaway.getGiveaway(state.channelId, action.response.giveawayId);
+        if (responseGiveaway.ok) {
+            let giveaway: Giveaway = yield responseGiveaway.json();
+            checkSchema(GiveawaySchema, giveaway);
+            yield put(giveawayActions.newGiveaway(giveaway));
+        }
+    }
+    if (action.response.state === "closed") {
+        checkSchema(GiveawayStateResponseSchema, action.response);
+        yield put(giveawayActions.closeGiveaway());
+    }
+    if (action.response.state === "refunded") {
+        checkSchema(GiveawayStateResponseSchema, action.response);
+        yield put(giveawayActions.refundGiveaway());
+    }
+    if (action.response.state === "completed") {
+        let response: GiveawayStateCompletedResponse = action.response as GiveawayStateCompletedResponse;
+        checkSchema(GiveawayStateCompletedResponseSchema, response);
+        yield put(giveawayActions.completeGiveaway());
+    }
+}
+
+function* onGiveawayWinner(action: GiveawayWinnerAction) {
+    checkSchema(GiveawayWinnerResponseSchema, action.response);
+    yield put(giveawayActions.winnerGiveaway(action.response.data.winner.username));
+}
+
+function* onGiveawayEntry(action: GiveawayEntryAction) {
+    checkSchema(GiveawayEntryResponseSchema, action.response);
+    yield put(giveawayActions.enterGiveaway(
+        action.response.data.entry.tickets,
+        action.response.data.entry.username
     ));
 }
 
@@ -256,4 +315,7 @@ export const MainEffects = [
     takeLatest(websocketChannels.CONTEST_STATE, onContestState),
     takeLatest(websocketChannels.CONTEST_UPDATE, onContestUpdate),
     takeLatest(websocketChannels.CONTEST_WINNER, onContestWinner),
+    takeLatest(websocketChannels.GIVEAWAY_STATE, onGiveawayState),
+    takeLatest(websocketChannels.GIVEAWAY_WINNER, onGiveawayWinner),
+    takeLatest(websocketChannels.GIVEAWAY_ENTRY, onGiveawayEntry),
 ];

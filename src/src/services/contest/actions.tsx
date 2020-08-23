@@ -1,12 +1,11 @@
 import {
     BetContestAction,
     CloseContestAction,
-    CompleteContestAction,
+    CompleteContestAction, Contest,
     NewContestAction,
     RefundContestAction,
     WinnerContestAction
 } from "./schema";
-import {Contest} from "../../api/schema/contest";
 
 export const channels = {
     CONTEST_NEW: 'services/contest/new',

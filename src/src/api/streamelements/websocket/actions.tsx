@@ -2,7 +2,6 @@ import {AuthenticatedResponse} from "./schema/authenticated";
 import {
     AuthenticatedAction,
     ConnectAction,
-    ContestRunningAction,
     ContestStateAction,
     ContestUpdateAction,
     ContestWinnerAction,
@@ -11,10 +10,9 @@ import {
     EventResetAction,
     EventTestAction,
     EventUpdateAction,
-    GiveawayRunningAction,
     GiveawayStateAction,
-    GiveawayUpdateAction,
     GiveawayWinnerAction,
+    GiveawayEntryAction,
     SubscribeContestAction,
     SubscribeGiveawayAction
 } from "./schema/actions";
@@ -23,6 +21,12 @@ import {EventResponse} from "./schema/event";
 import {EventUpdateResponse} from "./schema/eventUpdate";
 import {SubscribeContestResponse} from "./schema/subscribeContest";
 import {SubscribeGiveawayResponse} from "./schema/subscribeGiveaway";
+import {GiveawayEntryResponse} from "./schema/giveawayEntry";
+import {GiveawayWinnerResponse} from "./schema/giveawayWinner";
+import {GiveawayStateResponse} from "./schema/giveawayState";
+import {ContestWinnerResponse} from "./schema/contestWinner";
+import {ContestUpdateResponse} from "./schema/contestUpdate";
+import {ContestStateResponse} from "./schema/contestState";
 
 export const channels = {
     AUTHENTICATED: 'api/streamelements/websocket/authenticated',
@@ -32,15 +36,13 @@ export const channels = {
     EVENT: 'api/streamelements/websocket/event',
     EVENT_UPDATE: 'api/streamelements/websocket/event/update',
     EVENT_RESET: 'api/streamelements/websocket/event/reset',
-    CONTEST_RUNNING: 'api/streamelements/websocket/contest/running',
     CONTEST_STATE: 'api/streamelements/websocket/contest/state',
     CONTEST_UPDATE: 'api/streamelements/websocket/contest/update',
     CONTEST_WINNER: 'api/streamelements/websocket/contest/winner',
     SUBSCRIBE_CONTEST: 'api/streamelements/websocket/contest/subscribe',
-    GIVEAWAY_RUNNING: 'api/streamelements/websocket/giveaway/running',
     GIVEAWAY_STATE: 'api/streamelements/websocket/giveaway/state',
-    GIVEAWAY_UPDATE: 'api/streamelements/websocket/giveaway/update',
     GIVEAWAY_WINNER: 'api/streamelements/websocket/giveaway/winner',
+    GIVEAWAY_ENTRY: 'api/streamelements/websocket/giveaway/entry',
     SUBSCRIBE_GIVEAWAY: 'api/streamelements/websocket/giveaway/subscribe',
 };
 
@@ -87,25 +89,19 @@ export const actions = {
             response: response
         };
     },
-    contestRunning: (response: any): ContestRunningAction => {
-        return {
-            type: channels.CONTEST_RUNNING,
-            response: response
-        };
-    },
-    contestState: (response: any): ContestStateAction => {
+    contestState: (response: ContestStateResponse): ContestStateAction => {
         return {
             type: channels.CONTEST_STATE,
             response: response
         };
     },
-    contestUpdate: (response: any): ContestUpdateAction => {
+    contestUpdate: (response: ContestUpdateResponse): ContestUpdateAction => {
         return {
             type: channels.CONTEST_UPDATE,
             response: response
         };
     },
-    contestWinner: (response: any): ContestWinnerAction => {
+    contestWinner: (response: ContestWinnerResponse): ContestWinnerAction => {
         return {
             type: channels.CONTEST_WINNER,
             response: response
@@ -117,27 +113,21 @@ export const actions = {
             response: response
         };
     },
-    giveawayRunning: (response: any): GiveawayRunningAction => {
-        return {
-            type: channels.GIVEAWAY_RUNNING,
-            response: response
-        };
-    },
-    giveawayState: (response: any): GiveawayStateAction => {
+    giveawayState: (response: GiveawayStateResponse): GiveawayStateAction => {
         return {
             type: channels.GIVEAWAY_STATE,
             response: response
         };
     },
-    giveawayUpdate: (response: any): GiveawayUpdateAction => {
+    giveawayWinner: (response: GiveawayWinnerResponse): GiveawayWinnerAction => {
         return {
-            type: channels.GIVEAWAY_UPDATE,
+            type: channels.GIVEAWAY_WINNER,
             response: response
         };
     },
-    giveawayWinner: (response: any): GiveawayWinnerAction => {
+    giveawayEntry: (response: GiveawayEntryResponse): GiveawayEntryAction => {
         return {
-            type: channels.GIVEAWAY_WINNER,
+            type: channels.GIVEAWAY_ENTRY,
             response: response
         };
     },
