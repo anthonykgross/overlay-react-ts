@@ -38,7 +38,7 @@ function MainComponent(props: any) {
     })
 
     return (
-        <div id="main">
+        <div>
             {props.children}
         </div>
     );

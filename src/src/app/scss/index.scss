@@ -1,9 +1,8 @@
 @import "variables";
 @import "node_modules/bootstrap/scss/bootstrap-reboot";
 
-#main {
-  //background-color: #232525;
-  background-color: #ff00ff;
+#root {
+  background-color: $dark-blue;
   height: $height + px;
   width: $width + px;
   position: relative;

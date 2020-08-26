@@ -1,8 +1,14 @@
 import React from "react";
+import DisplayComponent from "./components/display";
+import ChatBoxComponent from "../../components/chatbox";
+import "./index.scss"
 
-function OverlayComponent () {
+function OverlayComponent() {
     return (
-        <div>Overlay</div>
+        <div id={'overlay'}>
+            <ChatBoxComponent/>
+            <DisplayComponent/>
+        </div>
     )
 }
 

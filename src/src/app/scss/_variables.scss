@@ -11,3 +11,14 @@ $purple: #2a1e2a;
 $dark-blue: #222a3a;
 $blue: #455772;
 $green: #00ff00;
+$magenta: #ff00ff;
+
+$avatar_width: 300;
+$avatar_height: 256;
+
+$s16_9: 9 / 16;
+
+$display_width: $width - $avatar_width;
+$display_height: $display_width * $s16_9;
+
+

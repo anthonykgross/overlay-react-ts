@@ -1,5 +1,4 @@
-import {MessageAction} from "./schema/actions";
-import {User} from "./schema/user";
+import {MessageAction, User} from "./schema";
 
 export const channels = {
     CONNECT: 'api/twitch/chat/connect',

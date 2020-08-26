@@ -1,0 +1,9 @@
+@import "src/app/scss/variables";
+
+#display {
+  background-color: $green;
+  height: $display_height+px;
+  width: $display_width+px;
+  position: absolute;
+  right: 0;
+}

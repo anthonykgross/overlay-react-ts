@@ -1,0 +1,11 @@
+@import "src/app/scss/variables";
+
+#overlay {
+  .chatbox {
+    position: absolute;
+    height: $display_height + px;
+    width: $width - $display_width + px;
+    background-color: red;
+  }
+}
+

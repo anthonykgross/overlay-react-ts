@@ -1,4 +1,5 @@
 import Joi from "@hapi/joi";
+import {Action} from "../../../app/schema";
 
 export interface User {
     "badge-info": {
@@ -77,3 +78,13 @@ export const UserSchema = Joi.object({
     "message-type": Joi.string().required(),
     "emote-only": Joi.boolean(),
 });
+
+export interface Message {
+    user: User
+    message: string
+}
+
+export interface MessageAction extends Action {
+    type: string
+    response: Message
+}
