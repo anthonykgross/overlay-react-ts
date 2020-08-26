@@ -4,12 +4,10 @@ import MessageComponent from "./components/message";
 import {Dispatch} from "redux";
 import {selector} from "../../../services/chat/selectors";
 import {Message} from "../../../api/twitch/chat/schema";
+import {State} from "../../../services/chat/schema";
+import './index.scss'
 
-interface Props {
-    messages: Message[]
-}
-
-const mapStateToProps = (state: any) : Props => {
+const mapStateToProps = (state: any) : State => {
     return selector.getState(state);
 };
 
@@ -22,11 +20,11 @@ const connector = connect(
     mapDispatchToProps
 );
 
-function ChatBoxComponent(props: Props) {
+function ChatBoxComponent(props: State) {
     return (
         <div className={'chatbox'}>
             {
-                props.messages.map((message: Message, index: number) => {
+                props.messages.slice(-20).reverse().map((message: Message, index: number) => {
                     return (
                         <MessageComponent key={index} message={message} />
                     )

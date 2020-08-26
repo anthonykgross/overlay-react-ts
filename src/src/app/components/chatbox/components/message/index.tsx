@@ -13,9 +13,21 @@ function MessageComponent (props: Props) {
     let verifiedIcon = 'https://static-cdn.jtvnw.net/badges/v1/d12a2e27-16f6-41d0-ab77-b780518f00a3/3';
     let vipIcon = 'https://static-cdn.jtvnw.net/badges/v1/b817aba4-fad8-49e2-b88a-7cc744dfa6ec/3';
 
-    let icons;
+    let icons = [];
     if ('broadcaster' in props.message.user.badges) {
-        icons = <img src={broadcasterIcon}/>
+        icons.push(
+            <img key={'broadcaster'} src={broadcasterIcon}/>
+        )
+    }
+    if ('moderator' in props.message.user.badges) {
+        icons.push(
+            <img key={'moderator'} src={moderatorIcon}/>
+        );
+    }
+    if ('partner' in props.message.user.badges) {
+        icons.push(
+            <img key={'partner'} src={verifiedIcon}/>
+        );
     }
 
     return (

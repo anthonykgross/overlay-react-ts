@@ -1,11 +1,44 @@
 @import "src/app/scss/variables";
+@import "src/app/scss/mixins";
 
 #overlay {
-  .chatbox {
+  .display {
+    background-color: $green;
+    height: $display_height+px;
+    width: $display_width+px;
     position: absolute;
-    height: $display_height + px;
-    width: $width - $display_width + px;
-    background-color: red;
+    right: 0;
+  }
+
+  .chatbox {
+    @extend .window;
+    position: absolute;
+    height: $height - $avatar_height - 9 + px;
+    width: $avatar_width + px;
+    margin: 3px;
+    border: 0;
+  }
+
+  .avatar {
+    @extend .window;
+    background-color: $purple;
+    position: absolute;
+    height: $avatar_height + px;
+    width: $avatar_width + px;
+    top: $height - $avatar_height - 6 + px;
+    margin: 3px;
+
+    &.webcam {
+      background-color: magenta;
+      & > div {
+        display: none;
+      }
+    }
+
+    > * {
+      height: $avatar_height + px;
+      width: $avatar_width + px;
+    }
   }
 }
 

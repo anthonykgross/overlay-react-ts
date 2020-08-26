@@ -3,5 +3,16 @@
 .chatbox {
   .message {
     text-align: justify;
+    border-top: 1px solid $blue;
+    padding: 10px 10px;
+
+    img {
+      margin-right: 6px;
+      width: 18px;
+      height: 18px;
+    }
+    b {
+      color: $gray;
+    }
   }
 }

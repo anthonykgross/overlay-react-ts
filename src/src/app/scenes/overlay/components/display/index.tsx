@@ -1,9 +1,8 @@
 import React from "react";
-import "./index.scss"
 
 function DisplayComponent () {
     return (
-        <div id={'display'} />
+        <div className={'display'} />
     )
 }
 

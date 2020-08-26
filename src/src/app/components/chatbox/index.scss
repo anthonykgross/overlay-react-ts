@@ -1,0 +1,7 @@
+@import "src/app/scss/variables";
+
+.chatbox {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column-reverse;
+}

@@ -1,0 +1,66 @@
+@import "src/app/scss/variables";
+@import "src/app/scss/mixins";
+
+.avatar-layer {
+  overflow: hidden;
+  position: absolute;
+  background-position: center 940px;
+}
+
+.avatar {
+  overflow: hidden;
+
+  .body {
+    @extend .avatar-layer;
+    z-index: 0;
+  }
+
+  .body-shoes {
+    @extend .avatar-layer;
+    z-index: 10;
+  }
+
+  .body-pants {
+    @extend .avatar-layer;
+    z-index: 20;
+  }
+
+  .body-top {
+    @extend .avatar-layer;
+    z-index: 30;
+  }
+
+  .head-skin {
+    @extend .avatar-layer;
+    z-index: 80;
+  }
+
+  .head-hair {
+    @extend .avatar-layer;
+    z-index: 90;
+  }
+  .head-hat {
+    @extend .avatar-layer;
+    z-index: 100;
+  }
+
+  .accessories {
+    @extend .avatar-layer;
+    z-index: 110;
+  }
+
+  .right-hand {
+    @extend .avatar-layer;
+    z-index: 90;
+  }
+
+  .left-hand {
+    @extend .avatar-layer;
+    z-index: 90;
+  }
+
+  .top {
+    @extend .avatar-layer;
+    z-index: 120;
+  }
+}
