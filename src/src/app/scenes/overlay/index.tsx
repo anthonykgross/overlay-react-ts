@@ -3,6 +3,7 @@ import DisplayComponent from "./components/display";
 import ChatBoxComponent from "../../components/chatbox";
 import "./index.scss"
 import AvatarComponent from "../../components/avatar";
+import TaskBarComponent from "../../components/taskbar";
 
 function OverlayComponent() {
     return (
@@ -10,6 +11,7 @@ function OverlayComponent() {
             <ChatBoxComponent/>
             <AvatarComponent/>
             <DisplayComponent/>
+            <TaskBarComponent/>
         </div>
     )
 }

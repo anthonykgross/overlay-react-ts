@@ -1,9 +1,10 @@
 @import "src/app/scss/variables";
 @import "src/app/scss/mixins";
+@import "src/app/scenes/overlay/variables";
 
 #overlay {
   .display {
-    background-color: $green;
+    //background-color: $green;
     height: $display_height+px;
     width: $display_width+px;
     position: absolute;
@@ -39,6 +40,17 @@
       height: $avatar_height + px;
       width: $avatar_width + px;
     }
+  }
+
+  .taskbar {
+    @extend .window;
+    position: absolute;
+    height: $taskbar_height + px;
+    width: $taskbar_width + px;
+    bottom: 0;
+    right: 0;
+    margin: 3px;
+    border-left: 0;
   }
 }
 

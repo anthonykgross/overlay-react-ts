@@ -10,13 +10,20 @@ const reduxDevTools = (window as any).__REDUX_DEVTOOLS_EXTENSION__ ? (window as 
 
 export const history = createBrowserHistory();
 
+const persistedState = localStorage.getItem('overlayState')
+    ? JSON.parse(localStorage.getItem('overlayState')!)
+    : {}
+
 export const store = createStore(
     rootReducer(history),
+    persistedState,
     compose(
         applyMiddleware(sagaMiddleware),
         applyMiddleware(routerMiddleware(history)),
         reduxDevTools
     ),
 );
-
+store.subscribe(()=>{
+    localStorage.setItem('overlayState', JSON.stringify(store.getState()))
+});
 sagaMiddleware.run(rootSaga);
