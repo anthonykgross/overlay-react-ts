@@ -28,7 +28,7 @@ let initialState: State = {
 export const reducer = (state: State = initialState, action: Action): State => {
     if (action.type === channels.REDEMPTION_NEW) {
         let a : NewRedemptionAction = action as NewRedemptionAction;
-        let redemption: Redemption = a.response.redemption;
+        let redemption: Redemption = a.response;
 
         // top : Topless
         if (redemption._id === '5ee61a5e2fbe3012726b7600') {

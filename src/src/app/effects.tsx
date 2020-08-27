@@ -63,6 +63,7 @@ import {Tip} from "../services/tip/schema";
 import {Contest, ContestSchema} from "../services/contest/schema";
 import {Giveaway, GiveawaySchema} from "../services/giveaway/schema";
 import {Redemption, RedemptionSchema} from "../services/redemption/schema";
+import {Follower} from "../services/follower/schema";
 
 function* onAll(action: any) {
     console.log(action);
@@ -79,9 +80,12 @@ function* onAuthenticated(action: AuthenticatedAction) {
         /**
          * FOLLOWER
          */
-        let followers: string[] = [];
+        let followers: Follower[] = [];
         for (let o of session.data["follower-recent"]) {
-            followers.push(o.name)
+            followers.push({
+                username: o.name,
+                createdAt: o.createdAt
+            })
         }
         let countFollowers: number = session.data["follower-total"].count;
         yield put(followActions.initFollow(countFollowers, followers));
@@ -94,6 +98,7 @@ function* onAuthenticated(action: AuthenticatedAction) {
             cheers.push({
                 username: o.name,
                 amount: o.amount,
+                createdAt: o.createdAt
             })
         }
         let countCheers: number = session.data["cheer-total"].amount;
@@ -108,6 +113,7 @@ function* onAuthenticated(action: AuthenticatedAction) {
                 username: o.name,
                 amount: o.amount,
                 tier: o.tier,
+                createdAt: o.createdAt
             })
         }
         let countSubscribers: number = session.data["subscriber-total"].count
@@ -121,6 +127,7 @@ function* onAuthenticated(action: AuthenticatedAction) {
             tips.push({
                 username: o.name,
                 amount: o.amount,
+                createdAt: o.createdAt
             })
         }
         let countTips: number = session.data["tip-total"].amount

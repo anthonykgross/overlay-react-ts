@@ -1,5 +1,6 @@
 import {EventCheerResponse} from "../../api/streamelements/websocket/schema/event";
 import {Cheer, InitCheerAction, NewCheerAction, TestCheerAction} from "./schema";
+import moment from "moment";
 
 export const channels = {
     CHEER_NEW: 'services/cheer/new',
@@ -20,6 +21,7 @@ export const actions = {
             response: {
                 username: username,
                 amount: amount,
+                createdAt: moment().toDate().toUTCString()
             }
         };
     },

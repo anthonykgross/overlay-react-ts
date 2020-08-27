@@ -18,6 +18,7 @@ export const reducer = (state: State = initialState, action: Action): State => {
                 ...state.tips, {
                     username: a.response.data.username,
                     amount: a.response.data.amount,
+                    createdAt: a.response.createdAt
                 }
             ]
         };
@@ -31,6 +32,7 @@ export const reducer = (state: State = initialState, action: Action): State => {
                 ...state.tips, {
                     username: a.response.username,
                     amount: a.response.amount,
+                    createdAt: a.response.createdAt
                 }
             ]
         };

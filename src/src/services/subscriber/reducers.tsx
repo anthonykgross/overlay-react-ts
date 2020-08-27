@@ -18,7 +18,8 @@ export const reducer = (state: State = initialState, action: Action): State => {
                 ...state.subscribers, {
                     username: a.response.data.username,
                     amount: a.response.data.amount,
-                    tier: a.response.data.tier
+                    tier: a.response.data.tier,
+                    createdAt: a.response.createdAt
                 }
             ]
         };
@@ -33,6 +34,7 @@ export const reducer = (state: State = initialState, action: Action): State => {
                     username: a.response.username,
                     amount: a.response.amount,
                     tier: a.response.tier,
+                    createdAt: a.response.createdAt
                 }
             ]
         };

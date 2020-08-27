@@ -2,8 +2,12 @@
 @import "src/app/scss/mixins";
 
 .taskbar {
-  .socials {
+  .social, .live {
     float: left;
+
+    svg {
+      font-size: 16px;
+    }
   }
   .date {
     float: right;

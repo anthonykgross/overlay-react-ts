@@ -1,5 +1,6 @@
 import {EventSubscriberResponse} from "../../api/streamelements/websocket/schema/event";
 import {InitSubscriberAction, NewSubscriberAction, Subscriber, TestSubscriberAction} from "./schema";
+import moment from "moment";
 
 export const channels = {
     SUBSCRIBER_NEW: 'services/subscriber/new',
@@ -21,6 +22,7 @@ export const actions = {
                 username: username,
                 amount: amount,
                 tier: tier,
+                createdAt: moment().toDate().toUTCString()
             }
         };
     },

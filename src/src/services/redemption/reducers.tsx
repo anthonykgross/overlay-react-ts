@@ -16,7 +16,7 @@ export const reducer = (state: State = initialState, action: Action): State => {
             count: state.count + 1,
             redemptions: [
                 ...state.redemptions,
-                a.response.redemption
+                a.response
             ]
         };
     }

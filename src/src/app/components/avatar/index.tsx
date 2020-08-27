@@ -48,9 +48,9 @@ function AvatarComponent(props: State) {
                 backgroundImage: 'url("' + rightHand + '")'
             }}/>
             {
-                props.accessories.map((accessory) => {
+                props.accessories.map((accessory, index) => {
                     return (
-                        <div className="accessories" style={{
+                        <div key={index} className="accessories" style={{
                             backgroundImage: 'url("' + path + 'accessories/' + accessory + '.png")'
                         }}/>
                     )

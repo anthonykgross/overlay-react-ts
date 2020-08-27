@@ -105,7 +105,5 @@ export interface State {
 }
 
 export interface NewRedemptionAction extends Action {
-    response: {
-        redemption: Redemption
-    }
+    response: Redemption
 }

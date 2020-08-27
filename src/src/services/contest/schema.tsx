@@ -60,6 +60,12 @@ export interface State {
     contests: Contest[]
 }
 
+export interface Bet {
+    username: string
+    amount: number
+    optionId: string
+}
+
 export interface NewContestAction extends Action {
     response: Contest
 }
@@ -80,9 +86,5 @@ export interface WinnerContestAction extends Action {
     response: string
 }
 export interface BetContestAction extends Action {
-    response: {
-        username: string
-        amount: number
-        optionId: string
-    }
+    response: Bet
 }

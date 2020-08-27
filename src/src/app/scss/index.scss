@@ -1,10 +1,12 @@
 @import "variables";
 @import "node_modules/bootstrap/scss/bootstrap-reboot";
+@import "node_modules/@fortawesome/fontawesome-free/scss/fontawesome";
 
 #root {
   background-color: $dark-blue;
   height: $height + px;
   width: $width + px;
   position: relative;
-  font-family: 'Hello World';
+  //font-family: 'Ubuntu Mono';
+  font-size: 16px;
 }

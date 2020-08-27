@@ -4,6 +4,7 @@ import {EventCheerResponse} from "../../api/streamelements/websocket/schema/even
 export interface Cheer {
     username: string
     amount: number
+    createdAt: string
 }
 
 export interface State {
@@ -11,17 +12,14 @@ export interface State {
     cheers: Cheer[]
 }
 
-export interface NewCheerAction extends Action{
+export interface NewCheerAction extends Action {
     response: EventCheerResponse
 }
 
-export interface TestCheerAction extends Action{
-    response: {
-        username: string
-        amount: number
-    }
+export interface TestCheerAction extends Action {
+    response: Cheer
 }
 
-export interface InitCheerAction extends Action{
+export interface InitCheerAction extends Action {
     response: State
 }

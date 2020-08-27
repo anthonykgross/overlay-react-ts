@@ -4,6 +4,7 @@ import {EventTipResponse} from "../../api/streamelements/websocket/schema/event"
 export interface Tip {
     username: string
     amount: number
+    createdAt: string
 }
 
 export interface State {
@@ -16,10 +17,7 @@ export interface NewTipAction extends Action {
 }
 
 export interface TestTipAction extends Action {
-    response: {
-        username: string
-        amount: number
-    }
+    response: Tip
 }
 
 export interface InitTipAction extends Action {

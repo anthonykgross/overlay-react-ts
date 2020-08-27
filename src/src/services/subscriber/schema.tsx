@@ -5,6 +5,7 @@ export interface Subscriber {
     username: string
     tier: string
     amount: number
+    createdAt: string
 }
 
 export interface State {
@@ -17,11 +18,7 @@ export interface NewSubscriberAction extends Action{
 }
 
 export interface TestSubscriberAction extends Action{
-    response: {
-        username: string
-        amount: number
-        tier: string
-    }
+    response: Subscriber
 }
 
 export interface InitSubscriberAction extends Action{

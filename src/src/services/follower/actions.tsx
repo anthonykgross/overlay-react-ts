@@ -1,5 +1,6 @@
 import {EventFollowResponse} from "../../api/streamelements/websocket/schema/event";
-import {InitFollowAction, NewFollowAction, TestFollowAction} from "./schema";
+import {Follower, InitFollowAction, NewFollowAction, TestFollowAction} from "./schema";
+import moment from "moment";
 
 export const channels = {
     FOLLOW_NEW: 'services/follow/new',
@@ -18,11 +19,12 @@ export const actions = {
         return {
             type: channels.FOLLOW_TEST,
             response: {
-                username: username
+                username: username,
+                createdAt: moment().toDate().toUTCString()
             }
         };
     },
-    initFollow: (count: number, followers: string[]): InitFollowAction => {
+    initFollow: (count: number, followers: Follower[]): InitFollowAction => {
         return {
             type: channels.FOLLOW_INIT,
             response: {

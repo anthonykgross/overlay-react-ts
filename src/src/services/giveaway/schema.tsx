@@ -52,7 +52,7 @@ export const GiveawaySchema = Joi.object({
     "endedAt": Joi.string(),
     "createdAt": Joi.string().required(),
     "updatedAt": Joi.string().required(),
-    "winners":  Joi.array().items(
+    "winners": Joi.array().items(
         Joi.object().keys({
             "_id": Joi.string().required(),
             "username": Joi.string().required(),
@@ -68,6 +68,11 @@ export const GiveawaySchema = Joi.object({
 export interface State {
     active?: Giveaway
     giveaways: Giveaway[]
+}
+
+export interface User {
+    username: string
+    amount: number
 }
 
 export interface NewGiveawayAction extends Action {
@@ -89,9 +94,7 @@ export interface CompleteGiveawayAction extends Action {
 export interface WinnerGiveawayAction extends Action {
     response: string
 }
+
 export interface EnterGiveawayAction extends Action {
-    response: {
-        username: string
-        amount: number
-    }
+    response: User
 }

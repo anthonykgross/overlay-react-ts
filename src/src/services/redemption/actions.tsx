@@ -8,9 +8,7 @@ export const actions = {
     newRedemption: (redemption: Redemption): NewRedemptionAction => {
         return {
             type: channels.REDEMPTION_NEW,
-            response: {
-                redemption: redemption
-            }
+            response: redemption
         };
     }
 }

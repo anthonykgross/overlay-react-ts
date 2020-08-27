@@ -17,7 +17,8 @@ export const reducer = (state: State = initialState, action: Action): State => {
             cheers: [
                 ...state.cheers, {
                     username: a.response.data.username,
-                    amount: a.response.data.amount
+                    amount: a.response.data.amount,
+                    createdAt: a.response.createdAt
                 }
             ]
         };
@@ -30,7 +31,8 @@ export const reducer = (state: State = initialState, action: Action): State => {
             cheers: [
                 ...state.cheers, {
                     username: a.response.username,
-                    amount: a.response.amount
+                    amount: a.response.amount,
+                    createdAt: a.response.createdAt
                 }
             ]
         };

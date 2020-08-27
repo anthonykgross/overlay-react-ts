@@ -5,7 +5,5 @@ export interface State {
 }
 
 export interface UpdateNbViewerAction extends Action {
-    response: {
-        count: number
-    }
+    response: State
 }

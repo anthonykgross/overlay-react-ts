@@ -14,7 +14,12 @@ export const reducer = (state: State = initialState, action: Action): State => {
         return {
             ...state,
             count: state.count + 1,
-            followers: [...state.followers, a.response.data.username]
+            followers: [
+                ...state.followers, {
+                    username: a.response.data.username,
+                    createdAt: a.response.createdAt
+                }
+            ]
         };
     }
     if (action.type === channels.FOLLOW_TEST) {
@@ -22,7 +27,12 @@ export const reducer = (state: State = initialState, action: Action): State => {
         return {
             ...state,
             count: state.count + 1,
-            followers: [...state.followers, a.response.username]
+            followers: [
+                ...state.followers, {
+                    username: a.response.username,
+                    createdAt: a.response.createdAt
+                }
+            ]
         };
     }
     if (action.type === channels.FOLLOW_INIT) {
