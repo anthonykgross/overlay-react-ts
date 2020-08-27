@@ -1,0 +1,62 @@
+@import "src/app/scss/variables";
+@import "src/app/scss/mixins";
+@import "src/app/scenes/opening/variables";
+
+#opening {
+  .chatbox {
+    @extend .window;
+    position: absolute;
+    height: $avatar_height + $customisation_height + px;
+    width: $avatar_width + px;
+    margin: 3px;
+    border: 0;
+    left: $avatar_left + $avatar_width + px;
+    top: $message_top + $message_height + px;
+  }
+
+  .avatar {
+    @extend .window;
+    position: absolute;
+    height: $avatar_height + px;
+    width: $avatar_width + px;
+    top: $message_top + $message_height + px;
+    left: $avatar_left + px;
+    background-size: 300%;
+    border: 0;
+
+    > * {
+      height: $avatar_height + px;
+      width: $avatar_width + px;
+      background-size: 300%;
+    }
+  }
+
+  .welcome {
+    @extend .window;
+    position: absolute;
+    top: $message_top + px;
+    left: $avatar_left + px;
+    height: $message_height + px;
+    width: $message_width + px;
+    border: 0;
+    text-align: center;
+    font-size: 36px;
+
+    .countdown {
+      font-size: 70px;
+    }
+  }
+
+  .customisation {
+    @extend .window;
+    position: absolute;
+    top: $avatar_height + $message_top + $message_height + px;
+    left: $avatar_left + px;
+    height: $customisation_height + px;
+    width: $avatar_width + px;
+    text-align: center;
+    font-size: 36px;
+    border: 0;
+  }
+}
+

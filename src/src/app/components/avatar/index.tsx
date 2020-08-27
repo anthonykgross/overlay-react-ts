@@ -32,7 +32,6 @@ function AvatarComponent(props: State) {
     let pants = path + 'body/pants/' + props.body.pants + '.png';
     let bodyTop = path + 'body/top/' + props.body.top + '.png';
 
-
     return (
         <div className={'avatar'}>
             <div className="body" style={{

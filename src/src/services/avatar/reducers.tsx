@@ -1,7 +1,8 @@
 import {Action} from "../../app/schema";
-import {channels} from "../redemption/actions";
+import {channels as redemptionChannels} from "../redemption/actions";
 import {NewRedemptionAction, Redemption} from "../redemption/schema";
 import {State} from "./schema";
+import {channels} from "./actions";
 
 let initialState: State = {
     body: {
@@ -26,7 +27,7 @@ let initialState: State = {
 };
 
 export const reducer = (state: State = initialState, action: Action): State => {
-    if (action.type === channels.REDEMPTION_NEW) {
+    if (action.type === redemptionChannels.REDEMPTION_NEW) {
         let a : NewRedemptionAction = action as NewRedemptionAction;
         let redemption: Redemption = a.response;
 
@@ -339,6 +340,15 @@ export const reducer = (state: State = initialState, action: Action): State => {
             };
         }
     }
-
+    if (action.type === channels.AVATAR_NAKED) {
+        return {
+            ...state,
+            body: {
+                ...state.body,
+                top: '',
+                pants: ''
+            }
+        };
+    }
     return state;
 };

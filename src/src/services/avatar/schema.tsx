@@ -1,3 +1,5 @@
+import {Action} from "../../app/schema";
+
 export interface State {
     body: {
         body: string
@@ -14,4 +16,8 @@ export interface State {
     skin: string
     top: string
     accessories: string[]
+}
+
+export interface NakedAction extends Action{
+    response: {}
 }

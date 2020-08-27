@@ -1,0 +1,12 @@
+@import "src/app/scss/variables";
+
+$avatar_width: 800;
+$avatar_height: 600;
+
+$avatar_left: $width / 2 - $avatar_width;
+
+$message_top: 30;
+$message_height: 200;
+$message_width: $avatar_width*2;
+
+$customisation_height: 120;
