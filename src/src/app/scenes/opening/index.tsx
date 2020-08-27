@@ -34,7 +34,7 @@ function OpeningComponent(props: Props) {
         <div id={'opening'}>
             <div className={'welcome'}>
                 <span>Je mets un slip et j'arrive ! </span>
-                <CountDownComponent/>
+                <CountDownComponent message={"Je l'ai !!!!"}/>
             </div>
             <ChatBoxComponent/>
             <AvatarComponent/>

@@ -1,66 +1,56 @@
 @import "src/app/scss/variables";
 @import "src/app/scss/mixins";
 
-.avatar-layer {
-  overflow: hidden;
-  position: absolute;
-  background-position: center center;
-}
-
 .avatar {
   overflow: hidden;
 
-  .body {
-    @extend .avatar-layer;
-    z-index: 0;
-  }
+  .layer {
+    overflow: hidden;
+    position: absolute;
+    background-position: center center;
 
-  .body-shoes {
-    @extend .avatar-layer;
-    z-index: 10;
-  }
+    &.body {
+      z-index: 0;
+    }
 
-  .body-pants {
-    @extend .avatar-layer;
-    z-index: 20;
-  }
+    &.body-shoes {
+      z-index: 10;
+    }
 
-  .body-top {
-    @extend .avatar-layer;
-    z-index: 30;
-  }
+    &.body-pants {
+      z-index: 20;
+    }
 
-  .head-skin {
-    @extend .avatar-layer;
-    z-index: 80;
-  }
+    &.body-top {
+      z-index: 30;
+    }
 
-  .head-hair {
-    @extend .avatar-layer;
-    z-index: 90;
-  }
-  .head-hat {
-    @extend .avatar-layer;
-    z-index: 100;
-  }
+    &.head-skin {
+      z-index: 80;
+    }
 
-  .accessories {
-    @extend .avatar-layer;
-    z-index: 110;
-  }
+    &.head-hair {
+      z-index: 90;
+    }
 
-  .right-hand {
-    @extend .avatar-layer;
-    z-index: 90;
-  }
+    &.head-hat {
+      z-index: 100;
+    }
 
-  .left-hand {
-    @extend .avatar-layer;
-    z-index: 90;
-  }
+    &.accessories {
+      z-index: 110;
+    }
 
-  .top {
-    @extend .avatar-layer;
-    z-index: 120;
+    &.right-hand {
+      z-index: 90;
+    }
+
+    &.left-hand {
+      z-index: 90;
+    }
+
+    &.top {
+      z-index: 120;
+    }
   }
 }

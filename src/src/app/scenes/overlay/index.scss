@@ -4,7 +4,7 @@
 
 #overlay {
   .display {
-    // background-color: $green;
+    background-color: $magenta;
     height: $display_height+px;
     width: $display_width+px;
     position: absolute;
@@ -39,6 +39,10 @@
     > * {
       height: $avatar_height + px;
       width: $avatar_width + px;
+    }
+
+    .layer {
+      background-position: center 940px;
     }
   }
 

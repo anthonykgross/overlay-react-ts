@@ -1,6 +1,7 @@
 import {Action} from "../../app/schema";
 
 export interface State {
+    webcam: boolean,
     body: {
         body: string
         pants: string

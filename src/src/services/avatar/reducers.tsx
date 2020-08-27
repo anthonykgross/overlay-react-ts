@@ -5,6 +5,7 @@ import {State} from "./schema";
 import {channels} from "./actions";
 
 let initialState: State = {
+    webcam: false,
     body: {
         body: 'body',
         pants: 'white_short',
@@ -30,6 +31,16 @@ export const reducer = (state: State = initialState, action: Action): State => {
     if (action.type === redemptionChannels.REDEMPTION_NEW) {
         let a : NewRedemptionAction = action as NewRedemptionAction;
         let redemption: Redemption = a.response;
+
+        state.webcam = false;
+
+        // Webcam
+        if(redemption._id === '5efef97ffe97b9296f4c7513') {
+            return {
+                ...state,
+                webcam: true
+            };
+        }
 
         // top : Topless
         if (redemption._id === '5ee61a5e2fbe3012726b7600') {

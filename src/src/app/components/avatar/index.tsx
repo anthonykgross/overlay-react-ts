@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {connect} from "react-redux";
 import {Dispatch} from "redux";
 import './index.scss'
@@ -21,57 +21,86 @@ const connector = connect(
 function AvatarComponent(props: State) {
     let path = 'images/avatar/'
 
-    let body = path + props.body.body + '.png';
-    let top = path + 'top/' + props.top + '.png';
-    let leftHand = path + 'left_hand/' + props.leftHand + '.png';
-    let rightHand = path + 'right_hand/' + props.rightHand + '.png';
-    let headHat = path + 'head/hat/' + props.head.hat + '.png';
-    let headHair = path + 'head/hair/' + props.head.hair + '.png';
-    let skin = path + 'skin/' + props.skin + '.png';
-    let shoes = path + 'body/shoes/' + props.body.shoes + '.png';
-    let pants = path + 'body/pants/' + props.body.pants + '.png';
-    let bodyTop = path + 'body/top/' + props.body.top + '.png';
+    let [body, setBody] = useState(props.body.body);
+    let [top, setTop] = useState(props.top);
+    let [leftHand, setLeftHand] = useState(props.leftHand);
+    let [rightHand, setRightHand] = useState(props.rightHand);
+    let [headHat, setHeadHat] = useState(props.head.hat);
+    let [headHair, setHeadHair] = useState(props.head.hair);
+    let [skin, setSkin] = useState(props.skin);
+    let [shoes, setShoes] = useState(props.body.shoes);
+    let [pants, setPants] = useState(props.body.pants);
+    let [bodyTop, setBodyTop] = useState(props.body.top);
 
+    useEffect(() => {
+        let interval = setInterval(() => {
+            let i = Math.random() * 100;
+
+            if (i > 0) {
+                setSkin('happy')
+            }
+            if (i > 33) {
+                setSkin('normal')
+            }
+            if (i > 66) {
+                setSkin('speak')
+            }
+            setBody(props.body.body);
+            setTop(props.top);
+            setLeftHand(props.leftHand);
+            setRightHand(props.rightHand);
+            setHeadHat(props.head.hat);
+            setHeadHair(props.head.hair);
+            setShoes(props.body.shoes);
+            setPants(props.body.pants);
+            setBodyTop(props.body.top);
+        }, 200);
+        return function cleanUp() {
+            clearInterval(interval);
+        }
+    }, [props])
+
+    let extraClass = props.webcam ? 'webcam' : '';
     return (
-        <div className={'avatar'}>
-            <div className="body" style={{
-                backgroundImage: 'url("' + body + '")'
+        <div className={'avatar ' + extraClass}>
+            <div className="layer body" style={{
+                backgroundImage: 'url("images/avatar/' + body + '.png")'
             }}/>
-            <div className="top" style={{
-                backgroundImage: 'url("' + top + '")'
+            <div className="layer top" style={{
+                backgroundImage: 'url("' + path + 'top/' + top + '.png")'
             }}/>
-            <div className="left-hand" style={{
-                backgroundImage: 'url("' + leftHand + '")'
+            <div className="layer left-hand" style={{
+                backgroundImage: 'url("' + path + 'left_hand/' + leftHand + '.png")'
             }}/>
-            <div className="right-hand" style={{
-                backgroundImage: 'url("' + rightHand + '")'
+            <div className="layer right-hand" style={{
+                backgroundImage: 'url("' + path + 'right_hand/' + rightHand + '.png")'
             }}/>
             {
                 props.accessories.map((accessory, index) => {
                     return (
-                        <div key={index} className="accessories" style={{
+                        <div key={index} className="layer accessories" style={{
                             backgroundImage: 'url("' + path + 'accessories/' + accessory + '.png")'
                         }}/>
                     )
                 })
             }
-            <div className="head-hat" style={{
-                backgroundImage: 'url("' + headHat + '")'
+            <div className="layer head-hat" style={{
+                backgroundImage: 'url("' + path + 'head/hat/' + headHat + '.png")'
             }}/>
-            <div className="head-hair" style={{
-                backgroundImage: 'url("' + headHair + '")'
+            <div className="layer head-hair" style={{
+                backgroundImage: 'url("' + path + 'head/hair/' + headHair + '.png")'
             }}/>
-            <div className="head-skin" style={{
-                backgroundImage: 'url("' + skin + '")'
+            <div className="layer head-skin" style={{
+                backgroundImage: 'url("' + path + 'skin/' + skin + '.png")'
             }}/>
-            <div className="body-shoes" style={{
-                backgroundImage: 'url("' + shoes + '")'
+            <div className="layer body-shoes" style={{
+                backgroundImage: 'url("' + path + 'body/shoes/' + shoes + '.png")'
             }}/>
-            <div className="body-pants" style={{
-                backgroundImage: 'url("' + pants + '")'
+            <div className="layer body-pants" style={{
+                backgroundImage: 'url("' + path + 'body/pants/' + pants + '.png")'
             }}/>
-            <div className="body-top" style={{
-                backgroundImage: 'url("' + bodyTop + '")'
+            <div className="layer body-top" style={{
+                backgroundImage: 'url("' + path + 'body/top/' + bodyTop + '.png")'
             }}/>
         </div>
     )
