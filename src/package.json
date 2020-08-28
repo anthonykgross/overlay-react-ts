@@ -19,6 +19,7 @@
     "@types/socket.io": "^2.1.10",
     "@types/socket.io-client": "^1.4.33",
     "@types/tmi.js": "^1.4.1",
+    "@types/uuid": "^8.3.0",
     "bootstrap": "^4.5.2",
     "connected-react-router": "^6.8.0",
     "cra-template-typescript": "1.0.3",
@@ -26,6 +27,7 @@
     "moment": "^2.27.0",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
+    "react-awesome-reveal": "^3.0.0",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.1",
     "react-router": "^5.2.0",
@@ -35,7 +37,8 @@
     "reselect": "^4.0.0",
     "socket.io": "^2.3.0",
     "tmi.js": "^1.5.0",
-    "typescript": "^3.9.7"
+    "typescript": "^3.9.7",
+    "uuid": "^8.3.0"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -21,7 +21,7 @@ export interface User {
     "client-nonce"?: string
     "color": string
     "display-name": string
-    "emotes": {}
+    "emotes": any
     "flags": string
     "id": string
     "mod": boolean
@@ -80,11 +80,21 @@ export const UserSchema = Joi.object({
 });
 
 export interface Message {
-    user: User
+    user: User,
+    id: string,
     message: string
 }
 
 export interface MessageAction extends Action {
     type: string
     response: Message
+}
+
+export interface Emote {
+    user: User
+    emote: string
+}
+export interface EmoteAction extends Action {
+    type: string
+    response: Emote
 }

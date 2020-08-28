@@ -1,0 +1,22 @@
+@import "src/app/scss/variables";
+@import "src/app/scss/mixins";
+@import "src/app/scenes/ending/variables";
+
+#ending {
+  .credit {
+    @extend .window;
+    font-size: 26px;
+    width: $credit_width + px;
+    // height: $credit_height + px;
+    overflow: hidden;
+
+    h3 {
+      margin-top: 20px;
+      color: $gray;
+    }
+    div {
+      padding-left: 20px;
+    }
+  }
+}
+

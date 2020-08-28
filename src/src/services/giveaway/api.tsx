@@ -1,4 +1,4 @@
-import {Api as BaseApi, endpoints} from "../api";
+import {StreamElementApi as BaseApi, endpoints} from "../api";
 
 export class Api extends BaseApi {
     getGiveaways(channelId: string) {

@@ -1,6 +1,6 @@
-import {Api as BaseApi, endpoints} from "../api";
+import {endpoints} from "../api";
 
-export class Api extends BaseApi {
+export class Api {
     getAvatar(username: string) {
         let url = endpoints.decapi.avatar.get;
         url = url.replace('{username}', username)

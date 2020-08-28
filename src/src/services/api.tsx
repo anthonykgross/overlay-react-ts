@@ -30,7 +30,7 @@ export const endpoints = {
     }
 }
 
-export class Api {
+export class StreamElementApi {
     getHeaders() {
         return {
             headers: {
@@ -39,5 +39,40 @@ export class Api {
                 'Content-Type': 'application/json'
             }
         }
+    }
+}
+
+export class TwitchOAuthApi {
+    authorizeUrl = 'https://id.twitch.tv/oauth2/authorize' +
+        '?client_id=' + process.env.REACT_APP_TWITCH_CLIENT_ID +
+        '&redirect_uri=http://localhost' +
+        '&response_type=code' +
+        '&scope=' + process.env.REACT_APP_TWITCH_SCOPE;
+
+    accessTokenUrl = 'https://id.twitch.tv/oauth2/token' +
+        '?client_id=' + process.env.REACT_APP_TWITCH_CLIENT_ID +
+        '&client_secret=' + process.env.REACT_APP_TWITCH_SECRET_ID +
+        '&code={code}' +
+        '&grant_type=authorization_code' +
+        '&redirect_uri=http://localhost'
+
+    refreshTokenUrl = 'https://id.twitch.tv/oauth2/token--data-urlencode' +
+        '?grant_type=refresh_token' +
+        '&refresh_token={refreshToken}' +
+        '&client_id=' + process.env.REACT_APP_TWITCH_CLIENT_ID +
+        '&client_secret=' + process.env.REACT_APP_TWITCH_SECRET_ID
+
+    getAuthorizeUrl = () => {
+        return this.authorizeUrl;
+    }
+
+    getAccessToken = (code: string) => {
+        let url = this.accessTokenUrl.replace('{code}', code);
+        return fetch(url, {method: 'POST'})
+    }
+
+    getRefreshToken = (refreshToken: string) => {
+        let url = this.refreshTokenUrl.replace('{refreshToken}', refreshToken);
+        return fetch(url, {method: 'POST'})
     }
 }
