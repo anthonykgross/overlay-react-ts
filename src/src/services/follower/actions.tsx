@@ -20,7 +20,7 @@ export const actions = {
             type: channels.FOLLOW_TEST,
             response: {
                 username: username,
-                createdAt: moment().toDate().toUTCString()
+                createdAt: moment()
             }
         };
     },

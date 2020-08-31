@@ -22,7 +22,7 @@ export const actions = {
                 username: username,
                 amount: amount,
                 tier: tier,
-                createdAt: moment().toDate().toUTCString()
+                createdAt: moment()
             }
         };
     },

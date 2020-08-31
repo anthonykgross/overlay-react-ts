@@ -3,20 +3,46 @@
 @import "src/app/scenes/ending/variables";
 
 #ending {
-  .credit {
+  .thank-you {
     @extend .window;
+    position: absolute;
+    font-size: 52px;
+    width: $width + px;
+    top: $thank_you_top+ px;
+    text-align: center;
+    border: 0;
+  }
+
+  .credit {
     font-size: 26px;
-    width: $credit_width + px;
-    // height: $credit_height + px;
-    overflow: hidden;
 
     h3 {
-      margin-top: 20px;
       color: $gray;
+      font-size: 32px;
     }
-    div {
-      padding-left: 20px;
+
+    > div {
+      @extend .window;
+      border: 0;
+      position: absolute;
+      top: $thank_you_top + 100 + px;
+      overflow: hidden;
+      height: $part_height + px;
+      width: $part_width+ px;
+      text-align: center;
+    }
+
+    .follower {
+      left: 0px;
+    }
+    .subscriber {
+      left: $part_width+px;
+    }
+    .cheers {
+      left: $part_width*2+px;
     }
   }
+
+
 }
 

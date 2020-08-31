@@ -1,9 +1,10 @@
 import {Action} from "../../app/schema";
 import {EventFollowResponse} from "../../api/streamelements/websocket/schema/event";
+import {Moment} from "moment";
 
 export interface Follower {
     username: string
-    createdAt: string
+    createdAt: Moment
 }
 
 export interface State {

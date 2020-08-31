@@ -1,7 +1,7 @@
 import {Action} from "../../app/schema";
 import Joi from "@hapi/joi";
 
-interface Option {
+export interface Option {
     totalAmount: number
     totalUsers: number
     _id: string

@@ -1,6 +1,7 @@
 import {Action} from "../../app/schema";
 import {channels} from "./actions";
 import {InitFollowAction, NewFollowAction, State, TestFollowAction} from "./schema";
+import moment from "moment";
 
 let initialState: State = {
     count: 0,
@@ -17,7 +18,7 @@ export const reducer = (state: State = initialState, action: Action): State => {
             followers: [
                 ...state.followers, {
                     username: a.response.data.username,
-                    createdAt: a.response.createdAt
+                    createdAt: moment(a.response.createdAt)
                 }
             ]
         };
@@ -30,7 +31,7 @@ export const reducer = (state: State = initialState, action: Action): State => {
             followers: [
                 ...state.followers, {
                     username: a.response.username,
-                    createdAt: a.response.createdAt
+                    createdAt: moment(a.response.createdAt)
                 }
             ]
         };

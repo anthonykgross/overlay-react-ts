@@ -3,8 +3,12 @@
 $avatar_width: 256;
 $avatar_height: 256;
 
+$display_width: $width - $avatar_width - 6;
+$display_height: $display_width * $s16_9;
+
 $taskbar_height: 35;
 $taskbar_width: $width - $avatar_width - 6;
 
-$display_width: $width - $avatar_width - 6;
-$display_height: $display_width * $s16_9;
+$contest_height: 35;
+$contest_width: $width - $avatar_width - 6;
+

@@ -1,10 +1,11 @@
 import {Action} from "../../app/schema";
 import {EventCheerResponse} from "../../api/streamelements/websocket/schema/event";
+import {Moment} from "moment";
 
 export interface Cheer {
     username: string
     amount: number
-    createdAt: string
+    createdAt: Moment
 }
 
 export interface State {

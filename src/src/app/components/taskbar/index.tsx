@@ -7,9 +7,9 @@ import LiveComponent from "../live";
 function TaskBarComponent() {
     return (
         <div className={'taskbar'}>
-            <SocialComponent />
-            <LiveComponent />
             <TimeComponent />
+            <LiveComponent />
+            <SocialComponent />
         </div>
     )
 }

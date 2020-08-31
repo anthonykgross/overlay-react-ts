@@ -2,10 +2,10 @@ import React, {useEffect} from "react";
 import ChatBoxComponent from "../../components/chatbox";
 import "./index.scss"
 import AvatarComponent from "../../components/avatar";
-import CountDownComponent from "./components/countdown";
 import {Dispatch} from "redux";
 import {connect} from "react-redux";
 import {actions} from "../../../services/avatar/actions";
+import CountDownComponent from "../../components/countdown";
 
 
 interface Props {

@@ -21,7 +21,7 @@ export const actions = {
             response: {
                 username: username,
                 amount: amount,
-                createdAt: moment().toDate().toUTCString()
+                createdAt: moment()
             }
         };
     },

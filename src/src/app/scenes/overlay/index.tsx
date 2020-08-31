@@ -1,19 +1,59 @@
 import React from "react";
-import DisplayComponent from "./components/display";
 import ChatBoxComponent from "../../components/chatbox";
 import "./index.scss"
 import AvatarComponent from "../../components/avatar";
 import TaskBarComponent from "../../components/taskbar";
+import {selector as giveawaySelector} from "../../../services/giveaway/selectors";
+import {selector as contestSelector} from "../../../services/contest/selectors";
+import {State as contestState} from "../../../services/contest/schema";
+import {State as giveawayState} from "../../../services/giveaway/schema";
 
-function OverlayComponent() {
+import {Dispatch} from "redux";
+import {connect} from "react-redux";
+import DisplayComponent from "../../components/display";
+import ContestComponent from "../../components/contest";
+
+interface State {
+    contestState: contestState
+    giveawayState: giveawayState
+}
+
+const mapStateToProps = (state: any): State => {
+    return {
+        contestState: contestSelector.getState(state),
+        giveawayState: giveawaySelector.getState(state),
+    }
+};
+
+const mapDispatchToProps = (dispatch: Dispatch) => {
+    return {};
+};
+
+const connector = connect(
+    mapStateToProps,
+    mapDispatchToProps
+);
+
+function OverlayComponent(props: State) {
     return (
         <div id={'overlay'}>
             <ChatBoxComponent/>
             <AvatarComponent/>
             <DisplayComponent/>
-            <TaskBarComponent/>
+            {
+                !props.contestState.active && !props.giveawayState.active &&
+                <TaskBarComponent/>
+            }
+            {
+                props.contestState.active &&
+                <ContestComponent/>
+            }
+            {/*{*/}
+            {/*    props.giveawayState.active &&*/}
+            {/*    <TaskBarComponent/>*/}
+            {/*}*/}
         </div>
     )
 }
 
-export default OverlayComponent;
+export default connector(OverlayComponent);

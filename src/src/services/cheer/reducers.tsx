@@ -1,6 +1,7 @@
 import {Action} from "../../app/schema";
 import {channels} from "./actions";
 import {InitCheerAction, NewCheerAction, State, TestCheerAction} from "./schema";
+import moment from "moment";
 
 let initialState: State = {
     count: 0,
@@ -18,7 +19,7 @@ export const reducer = (state: State = initialState, action: Action): State => {
                 ...state.cheers, {
                     username: a.response.data.username,
                     amount: a.response.data.amount,
-                    createdAt: a.response.createdAt
+                    createdAt: moment(a.response.createdAt)
                 }
             ]
         };
@@ -32,7 +33,7 @@ export const reducer = (state: State = initialState, action: Action): State => {
                 ...state.cheers, {
                     username: a.response.username,
                     amount: a.response.amount,
-                    createdAt: a.response.createdAt
+                    createdAt: moment(a.response.createdAt)
                 }
             ]
         };

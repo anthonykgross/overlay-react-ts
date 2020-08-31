@@ -1,11 +1,12 @@
 import {Action} from "../../app/schema";
 import {EventSubscriberResponse} from "../../api/streamelements/websocket/schema/event";
+import {Moment} from "moment";
 
 export interface Subscriber {
     username: string
     tier: string
     amount: number
-    createdAt: string
+    createdAt: Moment
 }
 
 export interface State {

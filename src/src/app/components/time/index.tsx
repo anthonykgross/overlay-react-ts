@@ -7,10 +7,10 @@ function TimeComponent() {
     useEffect(() => {
         let interval = setInterval(() => {
             setTime(moment());
-            return function cleanUp() {
-                clearInterval(interval);
-            }
         }, 1000);
+        return function cleanUp() {
+            clearInterval(interval);
+        }
     }, [])
 
     return (

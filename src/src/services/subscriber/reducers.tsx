@@ -1,6 +1,7 @@
 import {Action} from "../../app/schema";
 import {channels} from "./actions";
 import {InitSubscriberAction, NewSubscriberAction, State, TestSubscriberAction} from "./schema";
+import moment from "moment";
 
 let initialState: State = {
     count: 0,
@@ -19,7 +20,7 @@ export const reducer = (state: State = initialState, action: Action): State => {
                     username: a.response.data.username,
                     amount: a.response.data.amount,
                     tier: a.response.data.tier,
-                    createdAt: a.response.createdAt
+                    createdAt: moment(a.response.createdAt)
                 }
             ]
         };
@@ -34,7 +35,7 @@ export const reducer = (state: State = initialState, action: Action): State => {
                     username: a.response.username,
                     amount: a.response.amount,
                     tier: a.response.tier,
-                    createdAt: a.response.createdAt
+                    createdAt: moment(a.response.createdAt)
                 }
             ]
         };

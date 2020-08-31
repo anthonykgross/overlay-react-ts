@@ -3,13 +3,29 @@
 
 .taskbar {
   .social, .live {
-    float: left;
-
+    overflow: hidden;
     svg {
       font-size: 16px;
     }
   }
+
+  .social {
+    float: left;
+    text-align: center;
+    width: 1240px;
+  }
   .date {
     float: right;
+    width: 200px;
+    text-align: right;
+  }
+  .live {
+    float: left;
+    width: 200px;
+    text-align: left;
+
+    svg {
+      color: $yellow;
+    }
   }
 }

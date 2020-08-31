@@ -6,7 +6,7 @@ import {selector} from "../../../services/chat/selectors";
 import {Message} from "../../../api/twitch/chat/schema";
 import {State} from "../../../services/chat/schema";
 import './index.scss'
-import {Fade} from "react-awesome-reveal";
+import {Slide} from "react-awesome-reveal";
 
 const mapStateToProps = (state: any) : State => {
     return selector.getState(state);
@@ -29,9 +29,9 @@ function ChatBoxComponent(props: State) {
             {
                 messages.map((message: Message) => {
                     return (
-                        <Fade key={message.id} >
+                        <Slide direction={'left'} duration={300} key={message.id} >
                             <MessageComponent message={message} />
-                        </Fade>
+                        </Slide>
                     )
                 })
             }

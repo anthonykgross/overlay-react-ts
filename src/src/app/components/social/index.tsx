@@ -3,6 +3,7 @@ import {IconDefinition} from "@fortawesome/fontawesome-svg-core";
 import {findIcon} from "../../../tools/fontawesome";
 
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {Slide} from "react-awesome-reveal";
 
 interface Social {
     icon: IconDefinition
@@ -55,7 +56,11 @@ function SocialComponent() {
 
     return (
         <div className={'social'}>
-            <FontAwesomeIcon icon={social.icon}/> {social.message}
+            <Slide direction={'up'} key={Math.random()}>
+                <>
+                    <FontAwesomeIcon icon={social.icon}/> {social.message}
+                </>
+            </Slide>
         </div>
     )
 }

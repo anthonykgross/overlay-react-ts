@@ -69,5 +69,17 @@
       color: #F98215;
     }
   }
+
+  .contest {
+    @extend .window;
+    position: absolute;
+    height: $height - $display_height -3 + px;
+    width: $contest_width + px;
+    bottom: 0;
+    right: 0;
+    margin: 3px;
+    padding-right: 0;
+    border: 0;
+  }
 }
 
