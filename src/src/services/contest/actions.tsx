@@ -4,7 +4,8 @@ import {
     CompleteContestAction, Contest,
     NewContestAction,
     RefundContestAction,
-    WinnerContestAction
+    WinnerContestAction,
+    SwitchContestAction
 } from "./schema";
 
 export const channels = {
@@ -14,6 +15,7 @@ export const channels = {
     CONTEST_COMPLETE: 'services/contest/complete',
     CONTEST_WINNER: 'services/contest/winner',
     CONTEST_BET: 'services/contest/bet',
+    CONTEST_SWITCH: 'services/contest/switch',
 };
 
 export const actions = {
@@ -56,6 +58,12 @@ export const actions = {
                 username: username
             }
         };
+    },
+    switchContest: () : SwitchContestAction => {
+        return {
+            type: channels.CONTEST_SWITCH,
+            response: {}
+        }
     }
 
 }

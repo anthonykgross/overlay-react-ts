@@ -1,4 +1,4 @@
-import {takeLatest, put, select} from 'redux-saga/effects';
+import {takeLatest, put, select, race, delay} from 'redux-saga/effects';
 import {channels as websocketChannels} from "../api/streamelements/websocket/actions";
 import {actions as followActions} from "../services/follower/actions";
 import {actions as cheerActions} from "../services/cheer/actions";
@@ -247,14 +247,20 @@ function* onContestState(action: ContestStateAction) {
     if (action.response.state === "closed") {
         checkSchema(ContestStateResponseSchema, action.response);
         yield put(contestActions.closeContest());
+        yield delay(5000);
+        yield put(contestActions.switchContest());
     }
     if (action.response.state === "refunded") {
         checkSchema(ContestStateResponseSchema, action.response)
-        yield put(contestActions.refundContest())
+        yield put(contestActions.refundContest());
+        yield delay(5000);
+        yield put(contestActions.switchContest());
     }
     if (action.response.state === "completed") {
         checkSchema(ContestStateResponseSchema, action.response);
         yield put(contestActions.completeContest());
+        yield delay(5000);
+        yield put(contestActions.switchContest());
     }
 }
 

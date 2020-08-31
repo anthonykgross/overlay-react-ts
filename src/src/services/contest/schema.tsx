@@ -85,6 +85,11 @@ export interface CompleteContestAction extends Action {
 export interface WinnerContestAction extends Action {
     response: string
 }
+
 export interface BetContestAction extends Action {
     response: Bet
+}
+
+export interface SwitchContestAction extends Action {
+    response: {}
 }

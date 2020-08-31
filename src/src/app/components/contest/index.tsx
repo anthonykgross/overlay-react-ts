@@ -32,17 +32,21 @@ function ContestComponent(props: State) {
     useEffect(() => {
         let interval = setInterval(() => {
             if(props.contestState.active) {
-                let createdAt = moment(props.contestState.active.startedAt)
-                let finishAt = moment(props.contestState.active.startedAt)
-                    .add(
-                        props.contestState.active.duration, 'minutes'
-                    )
-                let nbSeconds = finishAt.unix() - moment().unix();
-                let maxSeconds = finishAt.unix() - createdAt.unix();
-                let width = nbSeconds / maxSeconds * 100;
-                setProgressBarWidth(width);
+                if(props.contestState.active.state === 'running') {
+                    let createdAt = moment(props.contestState.active.startedAt)
+                    let finishAt = moment(props.contestState.active.startedAt)
+                        .add(
+                            props.contestState.active.duration, 'minutes'
+                        )
+                    let nbSeconds = finishAt.unix() - moment().unix();
+                    let maxSeconds = finishAt.unix() - createdAt.unix();
+                    let width = nbSeconds / maxSeconds * 100;
+                    setProgressBarWidth(width);
 
-                if (width <= 0) {
+                    if (width <= 0) {
+                        clearInterval(interval);
+                    }
+                } else {
                     clearInterval(interval);
                 }
             }
@@ -56,14 +60,14 @@ function ContestComponent(props: State) {
         <div className={'contest'}>
             <div className={'progress'}>
                 <div style={{'width': progressBarWidth+'%'}} className={'bar'} />
-                <div className={'question'}>{props.contestState.active?.title}</div>
+                <div className={'question'}>{props.contestState.active?.state} {props.contestState.active?.totalUsers} {props.contestState.active?.totalAmount} {props.contestState.active?.title}</div>
 
                 <div className={'options'}>
                 {
                     props.contestState.active?.options.map((option: Option) => {
                         return (
-                            <div className={option.winner ? 'winner': ''}>
-                                !bet {option.command} : {option.title}
+                            <div key={option._id} className={option.winner ? 'winner': ''}>
+                                !bet {option.command} : {option.title} {option.totalUsers} {option.totalAmount}
                             </div>
                         )
                     })
