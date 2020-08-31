@@ -2,8 +2,11 @@
 @import "src/app/scss/mixins";
 
 .contest {
+  text-align: center;
+
   .progress {
     @extend .window;
+    margin-bottom: 10px;
 
     .bar {
       background-color: $orange;
@@ -11,6 +14,9 @@
     }
   }
 
+  .question {
+    font-size: 24px;
+  }
   .options {
     .winner {
       color: $green;

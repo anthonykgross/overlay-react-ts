@@ -1,4 +1,4 @@
-import {takeLatest, put, select, race, delay} from 'redux-saga/effects';
+import {takeLatest, put, select, delay} from 'redux-saga/effects';
 import {channels as websocketChannels} from "../api/streamelements/websocket/actions";
 import {actions as followActions} from "../services/follower/actions";
 import {actions as cheerActions} from "../services/cheer/actions";
@@ -7,6 +7,7 @@ import {actions as tipActions} from "../services/tip/actions";
 import {actions as redemptionActions} from "../services/redemption/actions";
 import {actions as contestActions} from "../services/contest/actions";
 import {actions as giveawayActions} from "../services/giveaway/actions";
+import {actions as alertActions} from "../services/alert/actions";
 import {
     AuthenticatedAction,
     ContestStateAction,
@@ -55,6 +56,7 @@ import {Api as ApiContest} from "../services/contest/api";
 import {Api as ApiGiveaway} from "../services/giveaway/api";
 import {Api as ApiRedemption} from "../services/redemption/api";
 import {Api as ApiSession} from "../services/session/api";
+import {Api as ApiViewer} from "../services/viewer/api";
 
 import {Session, SessionSchema} from "../services/session/schema";
 import {Cheer} from "../services/cheer/schema";
@@ -179,6 +181,16 @@ function* onEventUpdate(action: EventUpdateAction) {
             let redemption: Redemption = yield responseItem.json();
             checkSchema(RedemptionSchema, redemption);
             yield put(redemptionActions.newRedemption(redemption));
+
+            let apiViewer = new ApiViewer();
+            let responseAvatar = yield apiViewer.getAvatar(response.data.name);
+            if (responseAvatar.ok) {
+                yield put(alertActions.newAlertRedemption(
+                    response.data.name,
+                    yield responseAvatar.text(),
+                ));
+            }
+
         }
     }
     yield;
@@ -189,21 +201,57 @@ function* onEvent(action: EventAction) {
         let response: EventCheerResponse = action.response as EventCheerResponse;
         checkSchema(EventCheerResponseSchema, response);
         yield put(cheerActions.newCheer(response));
+
+        let apiViewer = new ApiViewer();
+        let responseAvatar = yield apiViewer.getAvatar(response.data.username);
+        if (responseAvatar.ok) {
+            yield put(alertActions.newAlertCheer(
+                response.data.username,
+                yield responseAvatar.text(),
+            ));
+        }
     }
     if (action.response.type === 'follow') {
         let response: EventFollowResponse = action.response as EventFollowResponse;
         checkSchema(EventFollowResponseSchema, response);
         yield put(followActions.newFollow(response));
+
+        let apiViewer = new ApiViewer();
+        let responseAvatar = yield apiViewer.getAvatar(response.data.username);
+        if (responseAvatar.ok) {
+            yield put(alertActions.newAlertFollow(
+                response.data.username,
+                yield responseAvatar.text(),
+            ));
+        }
     }
     if (action.response.type === 'subscriber') {
         let response: EventSubscriberResponse = action.response as EventSubscriberResponse;
         checkSchema(EventSubscriberResponseSchema, response);
         yield put(subscriberActions.newSubscriber(response));
+
+        let apiViewer = new ApiViewer();
+        let responseAvatar = yield apiViewer.getAvatar(response.data.username);
+        if (responseAvatar.ok) {
+            yield put(alertActions.newAlertSubscriber(
+                response.data.username,
+                yield responseAvatar.text(),
+            ));
+        }
     }
     if (action.response.type === 'tip') {
         let response: EventTipResponse = action.response as EventTipResponse;
         checkSchema(EventTipResponseSchema, response);
         yield put(tipActions.newTip(response));
+
+        let apiViewer = new ApiViewer();
+        let responseAvatar = yield apiViewer.getAvatar(response.data.username);
+        if (responseAvatar.ok) {
+            yield put(alertActions.newAlertTip(
+                response.data.username,
+                yield responseAvatar.text(),
+            ));
+        }
     }
     yield;
 }
@@ -212,18 +260,54 @@ function* onEventTest(action: EventTestAction) {
     if (action.response.listener === 'follower-latest') {
         let response: any = action.response;
         yield put(followActions.testFollow(response.event.name));
+
+        // let apiViewer = new ApiViewer();
+        // let responseAvatar = yield apiViewer.getAvatar(response.event.name);
+        // if (responseAvatar.ok) {
+        //     yield put(alertActions.newAlertFollow(
+        //         response.event.name,
+        //         yield responseAvatar.text(),
+        //     ));
+        // }
     }
     if (action.response.listener === 'tip-latest') {
         let response: any = action.response;
         yield put(tipActions.testTip(response.event.name, response.event.amount));
+
+        // let apiViewer = new ApiViewer();
+        // let responseAvatar = yield apiViewer.getAvatar(response.event.name);
+        // if (responseAvatar.ok) {
+        //     yield put(alertActions.newAlertTip(
+        //         response.event.name,
+        //         yield responseAvatar.text(),
+        //     ));
+        // }
     }
     if (action.response.listener === 'cheer-latest') {
         let response: any = action.response;
         yield put(cheerActions.testCheer(response.event.name, response.event.amount));
+
+        // let apiViewer = new ApiViewer();
+        // let responseAvatar = yield apiViewer.getAvatar(response.event.name);
+        // if (responseAvatar.ok) {
+        //     yield put(alertActions.newAlertCheer(
+        //         response.event.name,
+        //         yield responseAvatar.text(),
+        //     ));
+        // }
     }
     if (action.response.listener === 'subscriber-latest') {
         let response: any = action.response;
         yield put(subscriberActions.testSubscriber(response.event.name, response.event.amount, response.event.tier));
+
+        // let apiViewer = new ApiViewer();
+        // let responseAvatar = yield apiViewer.getAvatar(response.event.name);
+        // if (responseAvatar.ok) {
+        //     yield put(alertActions.newAlertSubscriber(
+        //         response.event.name,
+        //         yield responseAvatar.text(),
+        //     ));
+        // }
     }
     yield;
 }

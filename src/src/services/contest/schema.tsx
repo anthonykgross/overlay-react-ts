@@ -16,6 +16,7 @@ export interface Contest {
     totalUsers: number
     _id: string
     title: string
+    description: string
     minBet: number
     maxBet: number
     duration: number
@@ -34,6 +35,7 @@ export const ContestSchema = Joi.object({
     totalUsers: Joi.number().required(),
     _id: Joi.string().required(),
     title: Joi.string().required(),
+    description: Joi.string().empty(''),
     minBet: Joi.number().required(),
     maxBet: Joi.number().required(),
     duration: Joi.number().required(),

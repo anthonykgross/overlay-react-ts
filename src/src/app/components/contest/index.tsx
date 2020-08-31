@@ -27,9 +27,12 @@ const connector = connect(
 );
 
 function ContestComponent(props: State) {
-    const [progressBarWidth, setProgressBarWidth] = useState(100);
+    const [progressBarWidth, setProgressBarWidth] = useState(0);
+    const [view, setView] = useState('label');
 
     useEffect(() => {
+        let i = 0;
+
         let interval = setInterval(() => {
             if(props.contestState.active) {
                 if(props.contestState.active.state === 'running') {
@@ -47,7 +50,18 @@ function ContestComponent(props: State) {
                         clearInterval(interval);
                     }
                 } else {
+                    setView('label');
                     clearInterval(interval);
+                }
+
+                i++;
+                if (i > 5) {
+                    setView('stats');
+
+                    if (i > 7) {
+                        i = 0;
+                        setView('label');
+                    }
                 }
             }
         }, 1000);
@@ -60,19 +74,25 @@ function ContestComponent(props: State) {
         <div className={'contest'}>
             <div className={'progress'}>
                 <div style={{'width': progressBarWidth+'%'}} className={'bar'} />
-                <div className={'question'}>{props.contestState.active?.state} {props.contestState.active?.totalUsers} {props.contestState.active?.totalAmount} {props.contestState.active?.title}</div>
-
-                <div className={'options'}>
-                {
-                    props.contestState.active?.options.map((option: Option) => {
-                        return (
-                            <div key={option._id} className={option.winner ? 'winner': ''}>
-                                !bet {option.command} : {option.title} {option.totalUsers} {option.totalAmount}
-                            </div>
-                        )
-                    })
-                }
-                </div>
+            </div>
+            <div className={'question'}>{props.contestState.active?.title}</div>
+            <div className={'options'}>
+            {
+                props.contestState.active?.options.map((option: Option) => {
+                    return (
+                        <div key={option._id} className={option.winner ? 'winner': ''}>
+                            {
+                                view === 'label' &&
+                                <>!bet {option.command} : {option.title}</>
+                            }
+                            {
+                                view !== 'label' &&
+                                <>{option.totalAmount} pts pour {option.totalUsers}</>
+                            }
+                        </div>
+                    )
+                })
+            }
             </div>
         </div>
     )

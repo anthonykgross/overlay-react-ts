@@ -80,6 +80,19 @@
     margin: 3px;
     padding-right: 0;
     border: 0;
+
+    .stats {
+      @extend .window;
+      position: absolute;
+      height: $height - $display_height - 60 + px;
+      width: 500px;
+      bottom: 0;
+      left: 0;
+      margin: 3px;
+      border: 0;
+      text-align: left;
+      font-size: 12px;
+    }
   }
 }
 

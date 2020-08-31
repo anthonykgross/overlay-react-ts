@@ -3,6 +3,7 @@ import {connectRouter} from 'connected-react-router'
 import {BrowserHistory} from "history";
 import {reducer as appReducer} from "../app/reducers";
 
+import {reducer as alertReducer} from "../services/alert/reducers";
 import {reducer as avatarReducer} from "../services/avatar/reducers";
 import {reducer as chatReducer} from "../services/chat/reducers";
 import {reducer as cheerReducer} from "../services/cheer/reducers";
@@ -17,6 +18,7 @@ import {reducer as viewerReducer} from "../services/viewer/reducers";
 export const rootReducer = (history: BrowserHistory) => combineReducers({
     app: appReducer,
     // services
+    alert: alertReducer,
     avatar: avatarReducer,
     chat: chatReducer,
     cheer: cheerReducer,

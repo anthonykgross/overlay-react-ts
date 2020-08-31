@@ -6,8 +6,8 @@ import {
     Contest,
     WinnerContestAction,
     Option,
-    CompleteContestAction,
-    BetContestAction, Bet
+    BetContestAction,
+    Bet
 } from "./schema";
 
 let initialState: State = {
