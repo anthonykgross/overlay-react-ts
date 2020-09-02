@@ -4,33 +4,35 @@
 
 #overlay {
   .display {
+    position: absolute;
     background-color: $magenta;
     height: $display_height+px;
     width: $display_width+px;
-    position: absolute;
-    right: 0;
+    right: $display_right+px;
+    top: $display_top+px;
   }
 
   .chatbox {
     @extend .window;
     position: absolute;
-    height: $height - $avatar_height - 9 + px;
-    width: $avatar_width + px;
-    margin: 3px;
-    border: 0;
+    height: $chat_height + px;
+    width: $chat_width + px;
+    top: $chat_top + px;
+    left: $chat_left + px;
   }
 
   .avatar {
     @extend .window;
-    background-color: $purple;
     position: absolute;
+    background-color: $purple;
     height: $avatar_height + px;
     width: $avatar_width + px;
-    top: $height - $avatar_height - 6 + px;
-    margin: 3px;
+    bottom: $avatar_bottom + px;
+    left: $avatar_left + px;
 
     &.webcam {
       background-color: magenta;
+
       & > div {
         display: none;
       }
@@ -42,7 +44,8 @@
     }
 
     .layer {
-      background-position: center 940px;
+      background-position: center 675px;
+      background-size: 550%;
     }
   }
 
@@ -51,20 +54,23 @@
     position: absolute;
     height: $taskbar_height + px;
     width: $taskbar_width + px;
-    bottom: 0;
-    right: 0;
-    margin: 3px;
-    border-left: 0;
+    bottom: $taskbar_bottom + px;
+    left: $taskbar_left + px;
+    padding: 5px;
+    padding-left: $avatar_width + 25 + px;
 
     .fa-twitter {
       color: #1da1f2;
     }
+
     .fa-youtube {
       color: #e52d27;
     }
+
     .fa-discord {
       color: #7289da;
     }
+
     .fa-store {
       color: #F98215;
     }
@@ -73,26 +79,20 @@
   .contest {
     @extend .window;
     position: absolute;
-    height: $height - $display_height -3 + px;
+    height: $contest_height + px;
     width: $contest_width + px;
-    bottom: 0;
-    right: 0;
-    margin: 3px;
-    padding-right: 0;
-    border: 0;
+    bottom: $contest_bottom + px;
+    left: $contest_left + px;
+    padding: 0;
+    padding-left: $avatar_width + 12 + px;
+  }
 
-    .stats {
-      @extend .window;
-      position: absolute;
-      height: $height - $display_height - 60 + px;
-      width: 500px;
-      bottom: 0;
-      left: 0;
-      margin: 3px;
-      border: 0;
-      text-align: left;
-      font-size: 12px;
-    }
+  .alert {
+    position: absolute;
+    height: $alert_height + px;
+    width: $alert_width + px;
+    bottom: $alert_bottom + px;
+    left: $alert_left + px;
   }
 }
 

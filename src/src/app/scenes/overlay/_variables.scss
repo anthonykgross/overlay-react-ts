@@ -1,14 +1,32 @@
 @import "src/app/scss/variables";
 
-$avatar_width: 256;
-$avatar_height: 256;
+$avatar_width: 200;
+$avatar_height: 200;
+$avatar_left: 30;
+$avatar_bottom: 15;
 
-$display_width: $width - $avatar_width - 6;
-$display_height: $display_width * $s16_9;
+$display_height: 900;
+$display_width: $display_height / $s16_9;
+$display_top: 0;
+$display_right: 0;
 
-$taskbar_height: 35;
-$taskbar_width: $width - $avatar_width - 6;
+$chat_height: 835;
+$chat_width: 285;
+$chat_top: 15;
+$chat_left: 15;
 
-$contest_height: 35;
-$contest_width: $width - $avatar_width - 6;
+$taskbar_height: $avatar_height - 30;
+$taskbar_width: $width - 30;
+$taskbar_left: 15;
+$taskbar_bottom: 30;
+
+$alert_height: 200;
+$alert_width: 300;
+$alert_bottom: 230;
+$alert_left: 0;
+
+$contest_height: $taskbar_height;
+$contest_width: $taskbar_width;
+$contest_left: $taskbar_left;
+$contest_bottom: $taskbar_bottom;
 

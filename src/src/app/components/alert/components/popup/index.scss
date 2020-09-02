@@ -1,0 +1,46 @@
+@import "src/app/scss/variables";
+@import "src/app/scss/mixins";
+
+.popup {
+  img {
+    width: 100px;
+    height: 100px;
+  }
+
+  &.slideRight {
+    animation-duration: 1000ms;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: both;
+    animation-name: slideRight;
+  }
+  &.slideLeft {
+    animation-duration: 1000ms;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: both;
+    animation-name: slideLeft;
+  }
+
+  @keyframes slideLeft {
+    0% {
+      margin-left: 0;
+      opacity: 1;
+    }
+    100% {
+      margin-left: -400px;
+      opacity: 0;
+    }
+  }
+
+  @keyframes slideRight {
+    0% {
+      margin-left: -400px;
+      opacity: 0;
+    }
+    100% {
+      margin-left: 0;
+      opacity: 1;
+    }
+  }
+}

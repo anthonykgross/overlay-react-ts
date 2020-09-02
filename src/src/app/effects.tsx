@@ -1,4 +1,4 @@
-import {takeLatest, put, select, delay} from 'redux-saga/effects';
+import {takeEvery, put, select, delay} from 'redux-saga/effects';
 import {channels as websocketChannels} from "../api/streamelements/websocket/actions";
 import {actions as followActions} from "../services/follower/actions";
 import {actions as cheerActions} from "../services/cheer/actions";
@@ -164,7 +164,6 @@ function* onAuthenticated(action: AuthenticatedAction) {
             }
         }
     }
-    yield;
 }
 
 function* onEventUpdate(action: EventUpdateAction) {
@@ -181,19 +180,13 @@ function* onEventUpdate(action: EventUpdateAction) {
             let redemption: Redemption = yield responseItem.json();
             checkSchema(RedemptionSchema, redemption);
             yield put(redemptionActions.newRedemption(redemption));
-
-            let apiViewer = new ApiViewer();
-            let responseAvatar = yield apiViewer.getAvatar(response.data.name);
-            if (responseAvatar.ok) {
-                yield put(alertActions.newAlertRedemption(
-                    response.data.name,
-                    yield responseAvatar.text(),
-                ));
-            }
-
+            yield put(alertActions.newAlertRedemption(
+                response.data.name,
+                redemption.name,
+                redemption.alert.graphics.src,
+            ));
         }
     }
-    yield;
 }
 
 function* onEvent(action: EventAction) {
@@ -207,6 +200,7 @@ function* onEvent(action: EventAction) {
         if (responseAvatar.ok) {
             yield put(alertActions.newAlertCheer(
                 response.data.username,
+                response.data.amount,
                 yield responseAvatar.text(),
             ));
         }
@@ -235,6 +229,7 @@ function* onEvent(action: EventAction) {
         if (responseAvatar.ok) {
             yield put(alertActions.newAlertSubscriber(
                 response.data.username,
+                response.data.amount,
                 yield responseAvatar.text(),
             ));
         }
@@ -249,11 +244,11 @@ function* onEvent(action: EventAction) {
         if (responseAvatar.ok) {
             yield put(alertActions.newAlertTip(
                 response.data.username,
+                response.data.amount,
                 yield responseAvatar.text(),
             ));
         }
     }
-    yield;
 }
 
 function* onEventTest(action: EventTestAction) {
@@ -261,55 +256,58 @@ function* onEventTest(action: EventTestAction) {
         let response: any = action.response;
         yield put(followActions.testFollow(response.event.name));
 
-        // let apiViewer = new ApiViewer();
-        // let responseAvatar = yield apiViewer.getAvatar(response.event.name);
-        // if (responseAvatar.ok) {
-        //     yield put(alertActions.newAlertFollow(
-        //         response.event.name,
-        //         yield responseAvatar.text(),
-        //     ));
-        // }
+        let apiViewer = new ApiViewer();
+        let responseAvatar = yield apiViewer.getAvatar(response.event.name);
+        if (responseAvatar.ok) {
+            yield put(alertActions.newAlertFollow(
+                response.event.name,
+                yield responseAvatar.text(),
+            ));
+        }
     }
+
     if (action.response.listener === 'tip-latest') {
         let response: any = action.response;
         yield put(tipActions.testTip(response.event.name, response.event.amount));
 
-        // let apiViewer = new ApiViewer();
-        // let responseAvatar = yield apiViewer.getAvatar(response.event.name);
-        // if (responseAvatar.ok) {
-        //     yield put(alertActions.newAlertTip(
-        //         response.event.name,
-        //         yield responseAvatar.text(),
-        //     ));
-        // }
+        let apiViewer = new ApiViewer();
+        let responseAvatar = yield apiViewer.getAvatar(response.event.name);
+        if (responseAvatar.ok) {
+            yield put(alertActions.newAlertTip(
+                response.event.name,
+                response.event.amount,
+                yield responseAvatar.text(),
+            ));
+        }
     }
     if (action.response.listener === 'cheer-latest') {
         let response: any = action.response;
         yield put(cheerActions.testCheer(response.event.name, response.event.amount));
 
-        // let apiViewer = new ApiViewer();
-        // let responseAvatar = yield apiViewer.getAvatar(response.event.name);
-        // if (responseAvatar.ok) {
-        //     yield put(alertActions.newAlertCheer(
-        //         response.event.name,
-        //         yield responseAvatar.text(),
-        //     ));
-        // }
+        let apiViewer = new ApiViewer();
+        let responseAvatar = yield apiViewer.getAvatar(response.event.name);
+        if (responseAvatar.ok) {
+            yield put(alertActions.newAlertCheer(
+                response.event.name,
+                response.event.amount,
+                yield responseAvatar.text(),
+            ));
+        }
     }
     if (action.response.listener === 'subscriber-latest') {
         let response: any = action.response;
         yield put(subscriberActions.testSubscriber(response.event.name, response.event.amount, response.event.tier));
 
-        // let apiViewer = new ApiViewer();
-        // let responseAvatar = yield apiViewer.getAvatar(response.event.name);
-        // if (responseAvatar.ok) {
-        //     yield put(alertActions.newAlertSubscriber(
-        //         response.event.name,
-        //         yield responseAvatar.text(),
-        //     ));
-        // }
+        let apiViewer = new ApiViewer();
+        let responseAvatar = yield apiViewer.getAvatar(response.event.name);
+        if (responseAvatar.ok) {
+            yield put(alertActions.newAlertSubscriber(
+                response.event.name,
+                response.event.amount,
+                yield responseAvatar.text(),
+            ));
+        }
     }
-    yield;
 }
 
 function* onContestState(action: ContestStateAction) {
@@ -405,15 +403,15 @@ function* onGiveawayEntry(action: GiveawayEntryAction) {
 }
 
 export const MainEffects = [
-    takeLatest('*', onAll),
-    takeLatest(websocketChannels.AUTHENTICATED, onAuthenticated),
-    takeLatest(websocketChannels.EVENT_UPDATE, onEventUpdate),
-    takeLatest(websocketChannels.EVENT, onEvent),
-    takeLatest(websocketChannels.EVENT_TEST, onEventTest),
-    takeLatest(websocketChannels.CONTEST_STATE, onContestState),
-    takeLatest(websocketChannels.CONTEST_UPDATE, onContestUpdate),
-    takeLatest(websocketChannels.CONTEST_WINNER, onContestWinner),
-    takeLatest(websocketChannels.GIVEAWAY_STATE, onGiveawayState),
-    takeLatest(websocketChannels.GIVEAWAY_WINNER, onGiveawayWinner),
-    takeLatest(websocketChannels.GIVEAWAY_ENTRY, onGiveawayEntry),
+    takeEvery('*', onAll),
+    takeEvery(websocketChannels.AUTHENTICATED, onAuthenticated),
+    takeEvery(websocketChannels.EVENT_UPDATE, onEventUpdate),
+    takeEvery(websocketChannels.EVENT, onEvent),
+    takeEvery(websocketChannels.EVENT_TEST, onEventTest),
+    takeEvery(websocketChannels.CONTEST_STATE, onContestState),
+    takeEvery(websocketChannels.CONTEST_UPDATE, onContestUpdate),
+    takeEvery(websocketChannels.CONTEST_WINNER, onContestWinner),
+    takeEvery(websocketChannels.GIVEAWAY_STATE, onGiveawayState),
+    takeEvery(websocketChannels.GIVEAWAY_WINNER, onGiveawayWinner),
+    takeEvery(websocketChannels.GIVEAWAY_ENTRY, onGiveawayEntry),
 ];

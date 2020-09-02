@@ -12,6 +12,7 @@ import {Dispatch} from "redux";
 import {connect} from "react-redux";
 import DisplayComponent from "../../components/display";
 import ContestComponent from "../../components/contest";
+import AlertComponent from "../../components/alert";
 
 interface State {
     contestState: contestState
@@ -38,7 +39,6 @@ function OverlayComponent(props: State) {
     return (
         <div id={'overlay'}>
             <ChatBoxComponent/>
-            <AvatarComponent/>
             <DisplayComponent/>
             {
                 !props.contestState.active && !props.giveawayState.active &&
@@ -48,6 +48,9 @@ function OverlayComponent(props: State) {
                 props.contestState.active &&
                 <ContestComponent/>
             }
+            <AvatarComponent/>
+            <AlertComponent/>
+
             {/*{*/}
             {/*    props.giveawayState.active &&*/}
             {/*    <TaskBarComponent/>*/}

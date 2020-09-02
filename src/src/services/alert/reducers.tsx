@@ -9,13 +9,19 @@ let initialState: State = {
 export const reducer = (state: State = initialState, action: Action): State => {
     if (action.type === channels.ALERT_NEW) {
         let a: NewAlertAction = action as NewAlertAction;
+        let current = state.current;
+        let alerts = state.alerts;
+
+        if (!current) {
+            current = a.response
+        } else {
+            alerts.push(a.response);
+        }
 
         return {
             ...state,
-            alerts: [
-                ...state.alerts,
-                a.response
-            ]
+            alerts: alerts,
+            current: current
         };
     }
     if (action.type === channels.ALERT_NEXT) {
@@ -26,7 +32,11 @@ export const reducer = (state: State = initialState, action: Action): State => {
                 alerts: state.alerts.slice(1)
             };
         } else {
-            return initialState
+            return {
+                ...state,
+                current: undefined,
+                alerts: []
+            };
         }
     }
 

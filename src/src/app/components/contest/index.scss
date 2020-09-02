@@ -6,7 +6,8 @@
 
   .progress {
     @extend .window;
-    margin-bottom: 10px;
+    border-left: 0;
+    border-right: 0;
 
     .bar {
       background-color: $orange;
@@ -16,10 +17,49 @@
 
   .question {
     font-size: 24px;
+    padding: 10px;
   }
+
   .options {
-    .winner {
+    background-color: $black;
+  }
+
+  .command {
+    @extend .window;
+    border-bottom: 0;
+    border-right: 0;
+  }
+
+  &.completed, &.closed, &.refunded {
+    .option {
+      color: $gray;
+      border-color: $gray;
+
+      .progress {
+        border-color: $gray;
+      }
+
+      .command {
+        border-color: $gray;
+        color: $gray;
+      }
+    }
+  }
+
+  .option {
+    background-color: $dark-blue;
+    &.winner {
       color: $green;
+      border-color: $green;
+
+      .progress {
+        border-color: $green;
+      }
+
+      .command {
+        border-color: $green;
+        color: $green;
+      }
     }
   }
 }

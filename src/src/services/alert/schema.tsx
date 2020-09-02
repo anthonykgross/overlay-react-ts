@@ -1,6 +1,7 @@
 import {Action} from "../../app/schema";
 
 export interface Alert {
+    id: string
     message: string
     image: string
     type: string
