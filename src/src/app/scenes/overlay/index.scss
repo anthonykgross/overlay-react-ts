@@ -3,6 +3,14 @@
 @import "src/app/scenes/overlay/variables";
 
 #overlay {
+  background-color: $black;
+  height: $height + px;
+  width: $width + px;
+  position: relative;
+  font-family: 'Ubuntu Mono';
+  font-size: 16px;
+  overflow: hidden;
+
   .display {
     position: absolute;
     background-color: $magenta;
@@ -89,10 +97,31 @@
 
   .alert {
     position: absolute;
+    padding: 0;
+    margin: 0;
     height: $alert_height + px;
     width: $alert_width + px;
     bottom: $alert_bottom + px;
     left: $alert_left + px;
+
+    b {
+      color: $yellow;
+    }
+  }
+
+  .levelup {
+    position: absolute;
+    width: $levelup_width + px;
+    bottom: $levelup_bottom + px;
+    left: $levelup_left + px;
+
+    .progress {
+      height: $levelup_height+ px;
+    }
+
+    b {
+      color: $gray;
+    }
   }
 }
 

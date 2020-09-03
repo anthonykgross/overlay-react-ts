@@ -13,6 +13,7 @@ import {connect} from "react-redux";
 import DisplayComponent from "../../components/display";
 import ContestComponent from "../../components/contest";
 import AlertComponent from "../../components/alert";
+import LevelUpComponent from "../../components/levelup";
 
 interface State {
     contestState: contestState
@@ -49,6 +50,7 @@ function OverlayComponent(props: State) {
                 <ContestComponent/>
             }
             <AvatarComponent/>
+            <LevelUpComponent/>
             <AlertComponent/>
 
             {/*{*/}

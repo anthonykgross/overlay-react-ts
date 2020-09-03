@@ -3,6 +3,14 @@
 @import "src/app/scenes/opening/variables";
 
 #opening {
+  background-color: $dark-blue;
+  height: $height + px;
+  width: $width + px;
+  position: relative;
+  font-family: 'Ubuntu Mono';
+  font-size: 16px;
+  overflow: hidden;
+
   .chatbox {
     @extend .window;
     position: absolute;

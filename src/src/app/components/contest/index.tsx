@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {Dispatch} from "redux";
 import {connect} from "react-redux";
 
@@ -10,6 +10,7 @@ import './index.scss'
 import moment from "moment";
 import {Row} from "react-bootstrap";
 import OptionComponent from "./components/option";
+import {ProgressBarHorizontalComponent} from "../ui/progressbar";
 
 interface State {
     active?: Contest
@@ -31,34 +32,21 @@ const connector = connect(
 );
 
 function ContestComponent(props: State) {
-    const [progressBarWidth, setProgressBarWidth] = useState(0);
+    let from = 100;
+    let nbSeconds = 0;
 
-    useEffect(() => {
-        let interval = setInterval(() => {
-            if(props.active) {
-                if(props.active.state === 'running') {
-                    let createdAt = moment(props.active.startedAt)
-                    let finishAt = moment(props.active.startedAt)
-                        .add(
-                            props.active.duration, 'minutes'
-                        )
-                    let nbSeconds = finishAt.unix() - moment().unix();
-                    let maxSeconds = finishAt.unix() - createdAt.unix();
-                    let width = nbSeconds / maxSeconds * 100;
-                    setProgressBarWidth(width);
-
-                    if (width <= 0) {
-                        clearInterval(interval);
-                    }
-                } else {
-                    clearInterval(interval);
-                }
-            }
-        }, 1000);
-        return function cleanUp() {
-            clearInterval(interval);
+    if(props.active) {
+        if (props.active.state === 'running') {
+            let createdAt = moment(props.active.startedAt)
+            let finishAt = moment(props.active.startedAt)
+                .add(
+                    props.active.duration, 'minutes'
+                )
+            let maxSeconds = finishAt.unix() - createdAt.unix();
+            nbSeconds = finishAt.unix() - moment().unix();
+            from = nbSeconds / maxSeconds * 100;
         }
-    });
+    }
 
     return (
         <>
@@ -68,9 +56,8 @@ function ContestComponent(props: State) {
                     <div className={'question'}>
                         {props.active.title}
                     </div>
-                    <div className={'progress'}>
-                        <div style={{'width': progressBarWidth+'%'}} className={'bar'} />
-                    </div>
+                    <ProgressBarHorizontalComponent from={from} to={0} timingFunction={'linear'} duration={nbSeconds * 1000} />
+
                     <Row noGutters={true} className={'options'}>
                         {
                             props.active.options.map((option: Option) => {

@@ -12,29 +12,34 @@ export const actions = {
             type: channels.ALERT_NEW,
             response: {
                 id: uuidv4(),
-                message: `<b>${username}</b>`,
+                message: `<h3>Follow !</h3><b>+20pts</b> pour <b>${username}</b>!<br/>Merci !`,
                 image: image,
                 type: 'follow'
             }
         };
     },
     newAlertTip: (username: string, amount: number, image: string): NewAlertAction => {
+        let points = Math.floor(amount) * 100;
         return {
             type: channels.ALERT_NEW,
             response: {
                 id: uuidv4(),
-                message: `${username} ${amount}€`,
+                message: `<h3>Tips !</h3><b>+${points}pts</b> pour <b>${username}</b>!<br/>Merci !`,
                 image: image,
                 type: 'tip'
             }
         };
     },
     newAlertCheer: (username: string, amount: number , image: string): NewAlertAction => {
+        let points = Math.floor(amount / 100) * 50;
+        if (points === 0) {
+            points = 1;
+        }
         return {
             type: channels.ALERT_NEW,
             response: {
                 id: uuidv4(),
-                message: `${username} ${amount}bits`,
+                message: `<h3>Cheers !</h3><b>+${points}pts</b> pour <b>${username}</b>!<br/>Merci !`,
                 image: image,
                 type: 'cheer'
             }
@@ -45,7 +50,7 @@ export const actions = {
             type: channels.ALERT_NEW,
             response: {
                 id: uuidv4(),
-                message: `${username} ${amount}mois`,
+                message: `<h3>Sub !</h3><b>+250pts</b> pour <b>${username}</b>!<br/>Merci !`,
                 image: image,
                 type: 'subscriber'
             }
@@ -56,9 +61,20 @@ export const actions = {
             type: channels.ALERT_NEW,
             response: {
                 id: uuidv4(),
-                message: `${username} ${item}`,
+                message: `<h3>Achat !</h3><b>${username}</b> achete <b>${item}</b>`,
                 image: image,
                 type: 'redemption'
+            }
+        };
+    },
+    nextAlertLevelUp: (): NewAlertAction => {
+        return {
+            type: channels.ALERT_NEW,
+            response: {
+                id: uuidv4(),
+                message: `Level up`,
+                image: 'https://www.google.fr/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
+                type: 'levelup'
             }
         };
     },

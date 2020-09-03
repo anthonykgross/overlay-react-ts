@@ -9,27 +9,30 @@ let initialState: State = {
 export const reducer = (state: State = initialState, action: Action): State => {
     if (action.type === channels.ALERT_NEW) {
         let a: NewAlertAction = action as NewAlertAction;
-        let current = state.current;
-        let alerts = state.alerts;
 
-        if (!current) {
-            current = a.response
+        if (!state.current) {
+            state.current = a.response
         } else {
-            alerts.push(a.response);
+            state.alerts = [
+                ...state.alerts,
+                a.response
+            ]
         }
 
         return {
-            ...state,
-            alerts: alerts,
-            current: current
+            ...state
         };
     }
     if (action.type === channels.ALERT_NEXT) {
         if (state.alerts.length > 0) {
             return {
                 ...state,
-                current: state.alerts[0],
-                alerts: state.alerts.slice(1)
+                current: {
+                    ...state.alerts[0]
+                },
+                alerts: [
+                    ...state.alerts.slice(1)
+                ]
             };
         } else {
             return {

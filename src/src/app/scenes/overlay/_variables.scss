@@ -20,13 +20,17 @@ $taskbar_width: $width - 30;
 $taskbar_left: 15;
 $taskbar_bottom: 30;
 
-$alert_height: 200;
-$alert_width: 300;
-$alert_bottom: 230;
-$alert_left: 0;
+$alert_height: 84;
+$alert_width: 400;
+$alert_bottom: 57;
+$alert_left: 870;
 
 $contest_height: $taskbar_height;
 $contest_width: $taskbar_width;
 $contest_left: $taskbar_left;
 $contest_bottom: $taskbar_bottom;
 
+$levelup_height: 170;
+$levelup_width: 18;
+$levelup_bottom: 30;
+$levelup_left: 15;

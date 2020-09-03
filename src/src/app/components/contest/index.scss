@@ -22,13 +22,33 @@
 
   .options {
     background-color: $black;
+
+    .command {
+      @extend .window;
+      border-bottom: 0;
+      border-right: 0;
+    }
+
+    .option {
+      background-color: $dark-blue;
+
+      &.winner {
+        color: $green;
+        border-color: $green;
+
+        .progress {
+          border-color: $green;
+        }
+
+        .command {
+          border-color: $green;
+          color: $green;
+        }
+      }
+    }
   }
 
-  .command {
-    @extend .window;
-    border-bottom: 0;
-    border-right: 0;
-  }
+
 
   &.completed, &.closed, &.refunded {
     .option {
@@ -42,23 +62,6 @@
       .command {
         border-color: $gray;
         color: $gray;
-      }
-    }
-  }
-
-  .option {
-    background-color: $dark-blue;
-    &.winner {
-      color: $green;
-      border-color: $green;
-
-      .progress {
-        border-color: $green;
-      }
-
-      .command {
-        border-color: $green;
-        color: $green;
       }
     }
   }

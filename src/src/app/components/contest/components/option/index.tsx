@@ -1,10 +1,9 @@
 import {Col, Row} from "react-bootstrap";
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 
 import {Contest, Option} from "../../../../../services/contest/schema";
 import './index.scss'
-import ProgressBarComponent from "../../../ui/progressbar";
-import moment from "moment";
+import {ProgressBarVerticalComponent} from "../../../ui/progressbar";
 
 interface Props {
     option: Option
@@ -14,28 +13,30 @@ interface Props {
 
 function OptionComponent(props: Props) {
     const [from, setFrom] = useState(0);
-    const [to, setTo] = useState(0);
+    let to = props.option.totalUsers / props.contest.totalUsers * 100;
 
-    useEffect(() => {
-        let interval = setInterval(() => {
-            setFrom(to);
-            setTo(Math.random() * 100);
-        }, 1000);
-        return function cleanUp() {
-            clearInterval(interval);
-        }
-    }, [props]);
+    let points = props.option.totalAmount;
+    let totalAmount: string = points.toString();
+
+    if (points >= 1000) {
+        totalAmount = parseFloat((points/1000).toPrecision(4))+'k';
+    }
+    if (points >= 999950) {
+        totalAmount = parseFloat((points/1000000).toPrecision(4))+'M';
+    }
 
     return (
         <Col>
-            <Row noGutters={true} className={'option align-items-center '+(props.option.winner ? 'winner': '')}>
-                <Col md={3}>
+            <Row noGutters={true} className={'option align-items-center ' + (props.option.winner ? 'winner' : '')}>
+                <Col md={2}>
                     <Row noGutters={true} className={'align-items-center'}>
-                        <Col md={2}>
-                            <ProgressBarComponent from={from} to={to} duration={1000} />
+                        <Col md={3}>
+                            <ProgressBarVerticalComponent from={from} to={to} onFinished={() => {
+                                setFrom(to);
+                            }}/>
                         </Col>
                         <Col className={'amount'}>
-                            {props.option.totalAmount}
+                            {totalAmount}
                             <div>pts</div>
                         </Col>
                     </Row>
@@ -52,4 +53,5 @@ function OptionComponent(props: Props) {
         </Col>
     )
 }
+
 export default OptionComponent;

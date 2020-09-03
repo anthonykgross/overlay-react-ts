@@ -108,7 +108,9 @@ export const reducer = (state: State = initialState, action: Action): State => {
             }
             return {
                 ...state,
-                active: contest
+                active: {
+                    ...contest
+                }
             };
         }
     }

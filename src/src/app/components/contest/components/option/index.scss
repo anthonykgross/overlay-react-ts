@@ -19,27 +19,12 @@
         width: 100%;
         height: 0;
         align-self: flex-end;
+        background-color: $gray;
       }
     }
 
     .title {
       height: 65px;
-    }
-  }
-
-  &:nth-child(1) {
-    .bar {
-      background-color: $yellow;
-    }
-  }
-  &:nth-child(2) {
-    .bar{
-      background-color: $orange;
-    }
-  }
-  &:nth-child(3) {
-    .bar{
-      background-color: $red;
     }
   }
 }

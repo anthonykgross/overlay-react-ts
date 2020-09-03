@@ -1,0 +1,28 @@
+@import "src/app/scss/variables";
+@import "src/app/scss/mixins";
+
+.popup {
+  .thumbnail {
+    position: absolute;
+    width: 102px;
+    height: 102px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $purple;
+    margin: 4px;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  .message {
+    @extend .window;
+    position: absolute;
+    padding-left: 113px;
+    height: 110px;
+    width: 100%;
+  }
+}

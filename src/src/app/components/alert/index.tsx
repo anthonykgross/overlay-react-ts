@@ -1,11 +1,12 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {Dispatch} from "redux";
 import {connect} from "react-redux";
 
 import {selector as alertSelector} from "../../../services/alert/selectors";
 import {Alert} from "../../../services/alert/schema";
 import {actions} from "../../../services/alert/actions";
-import AlertPopupComponent from "./components/popup";
+import {PopupFadeComponent} from "../ui/popup";
+import './index.scss'
 
 interface State {
     current?: Alert
@@ -38,35 +39,24 @@ const connector = connect(
 );
 
 function AlertComponent(props: Props) {
-    const [animation, setAnimation] = useState('slideRight');
-
-    useEffect(() => {
-        let count = 0;
-        let interval = setInterval(() => {
-            if (props.current) {
-                if (count === 3) {
-                    setAnimation('slideLeft');
-                }
-                if (count === 6) {
-                    props.next();
-                    count = 0;
-                    setAnimation('slideRight');
-                }
-                count++;
-            } else {
-                clearInterval(interval);
-            }
-        }, 1000);
-        return function cleanUp() {
-            clearInterval(interval);
-        }
-    }, [props])
-
     return (
         <div className={'alert'}>
-            <AlertPopupComponent animation={animation} current={props.current}/>
+            {
+                props.current &&
+                <PopupFadeComponent key={Math.random()} duration={10000} onFinished={() => {
+                    props.next();
+                }}>
+                    <div className={'popup'}>
+                        <div className={'message'}>
+                            <span dangerouslySetInnerHTML={{__html: props.current.message}}/>
+                        </div>
+                        <div className={'thumbnail'}>
+                            <img alt={props.current.image} src={props.current.image}/>
+                        </div>
+                    </div>
+                </PopupFadeComponent>
+            }
         </div>
-
     )
 }
 
