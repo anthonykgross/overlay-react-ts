@@ -10,13 +10,14 @@ export interface User {
         "bits"?: number
         "bits-leader"?: number
     },
-    "badges": {
+    "badges"?: {
         "broadcaster"?: number
         "subscriber"?: number
         "moderator"?: number
         "partner"?: number
         "bits"?: number
         "bits-leader"?: number
+        "premium"?: number
     },
     "client-nonce"?: string
     "color": string
@@ -33,10 +34,11 @@ export interface User {
     "user-type": string
     "emotes-raw": string
     "badge-info-raw": string
-    "badges-raw": string
+    "badges-raw"?: string
     "username": string
     "message-type": string
     "emote-only"?: string
+    "msg-id"?: string
 }
 
 export const UserSchema = Joi.object({
@@ -57,7 +59,8 @@ export const UserSchema = Joi.object({
         "bits": Joi.number(),
         "founder": Joi.number(),
         "bits-leader": Joi.number(),
-    }).required(),
+        "premium": Joi.number(),
+    }).allow(null),
     "client-nonce": Joi.string(),
     "color": Joi.string().allow(null).required(),
     "display-name": Joi.string().required(),
@@ -73,10 +76,11 @@ export const UserSchema = Joi.object({
     "user-type": Joi.string().allow(null).required(),
     "emotes-raw": Joi.string().allow(null).required(),
     "badge-info-raw": Joi.string().allow(null).required(),
-    "badges-raw": Joi.string().required(),
+    "badges-raw": Joi.string().allow(null).required(),
     "username": Joi.string().required(),
     "message-type": Joi.string().required(),
     "emote-only": Joi.boolean(),
+    "msg-id": Joi.string(),
 });
 
 export interface Message {

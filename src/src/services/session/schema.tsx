@@ -133,34 +133,42 @@ export interface Session {
         },
         "cheer-session-top-donation": {
             "name": string
+            "message": string
             "amount": number
         },
         "cheer-weekly-top-donation": {
             "name": string
+            "message": string
             "amount": number
         },
         "cheer-monthly-top-donation": {
             "name": string
+            "message": string
             "amount": number
         },
         "cheer-alltime-top-donation": {
             "name": string
+            "message": string
             "amount": number
         },
         "cheer-session-top-donator": {
             "name": string
+            "message": string
             "amount": number
         },
         "cheer-weekly-top-donator": {
             "name": string
+            "message": string
             "amount": number
         },
         "cheer-monthly-top-donator": {
             "name": string
+            "message": string
             "amount": number
         },
         "cheer-alltime-top-donator": {
             "name": string
+            "message": string
             "amount": number
         },
         "tip-latest": {
@@ -362,34 +370,42 @@ export const SessionSchema = Joi.object({
         }).required(),
         "cheer-session-top-donation": Joi.object().keys({
             name: Joi.string().empty(''),
+            message: Joi.string().empty(''),
             amount: Joi.number().required(),
         }).required(),
         "cheer-weekly-top-donation": Joi.object().keys({
             name: Joi.string().empty(''),
+            message: Joi.string().empty(''),
             amount: Joi.number().required(),
         }).required(),
         "cheer-monthly-top-donation": Joi.object().keys({
             name: Joi.string().empty(''),
+            message: Joi.string().empty(''),
             amount: Joi.number().required(),
         }).required(),
         "cheer-alltime-top-donation": Joi.object().keys({
             name: Joi.string().empty(''),
+            message: Joi.string().empty(''),
             amount: Joi.number().required(),
         }).required(),
         "cheer-session-top-donator": Joi.object().keys({
             name: Joi.string().empty(''),
+            message: Joi.string().empty(''),
             amount: Joi.number().required(),
         }).required(),
         "cheer-weekly-top-donator": Joi.object().keys({
             name: Joi.string().empty(''),
+            message: Joi.string().empty(''),
             amount: Joi.number().required(),
         }).required(),
         "cheer-monthly-top-donator": Joi.object().keys({
             name: Joi.string().empty(''),
+            message: Joi.string().empty(''),
             amount: Joi.number().required(),
         }).required(),
         "cheer-alltime-top-donator": Joi.object().keys({
             name: Joi.string().empty(''),
+            message: Joi.string().empty(''),
             amount: Joi.number().required(),
         }).required(),
         "tip-latest": Joi.object().keys({

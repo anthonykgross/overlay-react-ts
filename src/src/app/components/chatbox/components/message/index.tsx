@@ -42,38 +42,52 @@ function MessageComponent(props: Props) {
     let moderatorIcon = 'https://static-cdn.jtvnw.net/badges/v1/3267646d-33f0-4b17-b3df-f923a41db1d0/1';
     let verifiedIcon = 'https://static-cdn.jtvnw.net/badges/v1/d12a2e27-16f6-41d0-ab77-b780518f00a3/3';
     let vipIcon = 'https://static-cdn.jtvnw.net/badges/v1/b817aba4-fad8-49e2-b88a-7cc744dfa6ec/3';
+    let premiumIcon = 'https://static-cdn.jtvnw.net/badges/v1/bbbe0db0-a598-423e-86d0-f9fb98ca1933/1';
+    let bitsIcon = 'https://static-cdn.jtvnw.net/badges/v1/73b5c3fb-24f9-4a82-a852-2f475b59411c/1';
     let emote = 'https://static-cdn.jtvnw.net/emoticons/v1/{id}/1.0'
-
     let icons = [];
-    if ('broadcaster' in props.message.user.badges) {
-        icons.push(
-            <img key={'broadcaster'} src={broadcasterIcon} alt={'Broadcaster'}/>
-        )
-    }
-    if ('moderator' in props.message.user.badges) {
-        icons.push(
-            <img key={'moderator'} src={moderatorIcon} alt={'Moderator'}/>
-        );
-    }
-    if ('partner' in props.message.user.badges) {
-        icons.push(
-            <img key={'partner'} src={verifiedIcon} alt={'Partner'}/>
-        );
-    }
-    if ('admin' in props.message.user.badges) {
-        icons.push(
-            <img key={'admin'} src={adminIcon} alt={'Admin'}/>
-        );
-    }
-    if ('vip' in props.message.user.badges) {
-        icons.push(
-            <img key={'vip'} src={vipIcon} alt={'VIP'}/>
-        );
-    }
-    if ('staff' in props.message.user.badges) {
-        icons.push(
-            <img key={'staff'} src={twitchStaffIcon} alt={'Twitch Staff'}/>
-        );
+
+    if (props.message.user.badges) {
+        if ('broadcaster' in props.message.user.badges) {
+            icons.push(
+                <img key={'broadcaster'} src={broadcasterIcon} alt={'Broadcaster'}/>
+            )
+        }
+        if ('moderator' in props.message.user.badges) {
+            icons.push(
+                <img key={'moderator'} src={moderatorIcon} alt={'Moderator'}/>
+            );
+        }
+        if ('partner' in props.message.user.badges) {
+            icons.push(
+                <img key={'partner'} src={verifiedIcon} alt={'Partner'}/>
+            );
+        }
+        if ('admin' in props.message.user.badges) {
+            icons.push(
+                <img key={'admin'} src={adminIcon} alt={'Admin'}/>
+            );
+        }
+        if ('vip' in props.message.user.badges) {
+            icons.push(
+                <img key={'vip'} src={vipIcon} alt={'VIP'}/>
+            );
+        }
+        if ('staff' in props.message.user.badges) {
+            icons.push(
+                <img key={'staff'} src={twitchStaffIcon} alt={'Twitch Staff'}/>
+            );
+        }
+        if ('premium' in props.message.user.badges) {
+            icons.push(
+                <img key={'premium'} src={premiumIcon} alt={'Twitch Gaming'}/>
+            );
+        }
+        if ('bits' in props.message.user.badges) {
+            icons.push(
+                <img key={'bits'} src={bitsIcon} alt={'Bits'}/>
+            );
+        }
     }
 
     let message = props.message.message;
