@@ -11,7 +11,7 @@
   font-size: 16px;
   overflow: hidden;
 
-  .display {
+  .block-display {
     position: absolute;
     background-color: $magenta;
     height: $display_height+px;
@@ -20,7 +20,7 @@
     top: $display_top+px;
   }
 
-  .chatbox {
+  .block-chatbox {
     @extend .window;
     position: absolute;
     height: $chat_height + px;
@@ -29,43 +29,38 @@
     left: $chat_left + px;
   }
 
-  .avatar {
+  .block-avatar {
     @extend .window;
     position: absolute;
-    background-color: $purple;
     height: $avatar_height + px;
     width: $avatar_width + px;
     bottom: $avatar_bottom + px;
     left: $avatar_left + px;
 
-    &.webcam {
-      background-color: magenta;
+    .avatar {
+      &.webcam {
+        background-color: magenta;
 
-      & > div {
-        display: none;
+        & > div {
+          display: none;
+        }
       }
-    }
 
-    > * {
-      height: $avatar_height + px;
-      width: $avatar_width + px;
-    }
-
-    .layer {
-      background-position: center 675px;
-      background-size: 550%;
+      .layer {
+        background-position: center 640px;
+        background-size: 550%;
+      }
     }
   }
 
-  .taskbar {
+  .block-taskbar {
     @extend .window;
     position: absolute;
     height: $taskbar_height + px;
     width: $taskbar_width + px;
     bottom: $taskbar_bottom + px;
     left: $taskbar_left + px;
-    padding: 5px;
-    padding-left: $avatar_width + 25 + px;
+    border-left: 0;
 
     .fa-twitter {
       color: #1da1f2;
@@ -84,18 +79,18 @@
     }
   }
 
-  .contest {
+  .block-contest {
     @extend .window;
     position: absolute;
     height: $contest_height + px;
     width: $contest_width + px;
     bottom: $contest_bottom + px;
     left: $contest_left + px;
+    border-left: 0;
     padding: 0;
-    padding-left: $avatar_width + 12 + px;
   }
 
-  .alert {
+  .block-alert {
     position: absolute;
     padding: 0;
     margin: 0;
@@ -109,19 +104,24 @@
     }
   }
 
-  .levelup {
+  .block-levelup {
     position: absolute;
     width: $levelup_width + px;
     bottom: $levelup_bottom + px;
     left: $levelup_left + px;
-
-    .progress {
-      height: $levelup_height+ px;
-    }
+    height: $levelup_height+ px;
 
     b {
       color: $gray;
     }
+  }
+
+  .block-ad {
+    position: absolute;
+    height: $ad_height + px;
+    width: $ad_width + px;
+    bottom: $ad_bottom + px;
+    left: $ad_left + px;
   }
 }
 

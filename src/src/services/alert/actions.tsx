@@ -72,8 +72,8 @@ export const actions = {
             type: channels.ALERT_NEW,
             response: {
                 id: uuidv4(),
-                message: `Level up`,
-                image: 'https://www.google.fr/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
+                message: `<h3>Level UP !</h3>C'est parti pour un Giveaway :D`,
+                image: 'images/levelup.png',
                 type: 'levelup'
             }
         };

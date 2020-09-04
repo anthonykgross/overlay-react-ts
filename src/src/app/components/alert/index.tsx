@@ -40,10 +40,10 @@ const connector = connect(
 
 function AlertComponent(props: Props) {
     return (
-        <div className={'alert'}>
+        <>
             {
                 props.current &&
-                <PopupFadeComponent key={Math.random()} duration={10000} onFinished={() => {
+                <PopupFadeComponent key={props.current.id} duration={10000} onFinished={() => {
                     props.next();
                 }}>
                     <div className={'popup'}>
@@ -56,7 +56,7 @@ function AlertComponent(props: Props) {
                     </div>
                 </PopupFadeComponent>
             }
-        </div>
+        </>
     )
 }
 

@@ -36,10 +36,14 @@ function OpeningComponent(props: Props) {
                 <span>Je mets un slip et j'arrive ! </span>
                 <CountDownComponent message={"Je l'ai !!!!"}/>
             </div>
-            <ChatBoxComponent/>
-            <AvatarComponent/>
+            <div className={'block block-chatbox'}>
+                <ChatBoxComponent/>
+            </div>
+            <div className={'block block-avatar'}>
+                <AvatarComponent/>
+            </div>
             <div className={'customisation'}>
-                Personnalisez l'avatar sur store.anthonykgross.fr
+                Dressing disponible sur http://store.anthonykgross.fr
             </div>
         </div>
     )

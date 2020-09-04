@@ -21,7 +21,7 @@
     border: 0;
   }
 
-  .credit {
+  .block-credit {
     font-size: 26px;
 
     h3 {
@@ -29,25 +29,27 @@
       font-size: 32px;
     }
 
-    > div {
+    .credit > div {
       @extend .window;
       border: 0;
       position: absolute;
       top: $thank_you_top + 100 + px;
       overflow: hidden;
       height: $part_height + px;
-      width: $part_width+ px;
+      width: $part_width + px;
       text-align: center;
     }
 
     .follower {
-      left: 0px;
+      left: 0;
     }
+
     .subscriber {
-      left: $part_width+px;
+      left: $part_width + px;
     }
+
     .cheers {
-      left: $part_width*2+px;
+      left: $part_width * 2 + px;
     }
   }
 

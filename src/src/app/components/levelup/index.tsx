@@ -33,7 +33,8 @@ interface Dispatcher {
     levelup: Function
 }
 
-interface State extends Props, Dispatcher {}
+interface State extends Props, Dispatcher {
+}
 
 const mapStateToProps = (state: any): Props => {
     return {
@@ -61,23 +62,19 @@ const connector = connect(
 
 function LevelUpComponent(props: State) {
     const [from, setFrom] = useState(0)
-
-    let total = props.chatState.messages.length;
-    let to = (total % 10) * 10;
+    let to = (props.chatState.messages.length % 11) * 10;
 
     useEffect(() => {
-        if (total > 0) {
-            if (to === 0) {
-                props.levelup();
-            }
+        if (props.chatState.messages.length > 0 && to === 0) {
+            props.levelup();
         }
-    }, [props, total, to])
+    }, [props, to]);
 
     return (
-        <div className={'levelup'}>
-            <ProgressBarVerticalComponent from={from} to={to} onFinished={() => {
+        <div className={'levelup ' + (to === 100 ? 'shining' : '')}>
+            <ProgressBarVerticalComponent from={from} to={to} duration={500} onFinished={() => {
                 setFrom(to);
-            }} />
+            }}/>
         </div>
     )
 }

@@ -8,6 +8,7 @@ interface Props {
     duration?: number
     onFinished?: Function
     timingFunction?: string
+    className?: string
 }
 
 let defaultProps = {
@@ -51,7 +52,7 @@ function ProgressBarVerticalComponent(props: Props) {
 
 
     return (
-        <div className={'progress'} css={[style]}>
+        <div className={props.className + ' progress '} css={[style]}>
             <div className={'bar'}></div>
         </div>
     )

@@ -1,0 +1,42 @@
+@import "src/app/scss/variables";
+@import "src/app/scss/mixins";
+
+.ad {
+  @extend .window;
+  border: 0;
+  height: 100%;
+  padding: 20px;
+
+  .thumbnail {
+    position: absolute;
+    height: 125px;
+    width: 125px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $white;
+
+    img {
+      width: 75%;
+    }
+  }
+
+  .message {
+    position: absolute;
+    margin-left: 140px;
+
+    h3 {
+      font-size: 26px;
+      color: $gray;
+    }
+
+    p {
+      text-align: justify;
+    }
+
+    b {
+      color: $yellow;
+    }
+  }
+
+}

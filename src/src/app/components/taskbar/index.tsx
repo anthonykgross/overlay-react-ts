@@ -1,7 +1,6 @@
 import React from "react";
 import './index.scss'
 import TimeComponent from "../time";
-import SocialComponent from "../social";
 import LiveComponent from "../live";
 
 function TaskBarComponent() {
@@ -9,7 +8,6 @@ function TaskBarComponent() {
         <div className={'taskbar'}>
             <TimeComponent />
             <LiveComponent />
-            <SocialComponent />
         </div>
     )
 }

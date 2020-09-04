@@ -2,12 +2,16 @@
 @import "src/app/scss/mixins";
 
 .avatar {
-  overflow: hidden;
+  background-color: $purple;
+  position: relative;
+  height: 100%;
+  width: 100%;
 
   .layer {
     overflow: hidden;
     position: absolute;
-    background-position: center center;
+    height: 100%;
+    width: 100%;
 
     &.body {
       z-index: 0;

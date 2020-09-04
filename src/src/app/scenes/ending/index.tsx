@@ -1,6 +1,5 @@
 import React from "react";
 import "./index.scss"
-import AvatarComponent from "../../components/avatar";
 import CreditComponent from "../../components/credit";
 
 function EndingComponent() {
@@ -9,8 +8,9 @@ function EndingComponent() {
             <div className={'thank-you'}>
                 Remerciements
             </div>
-            <CreditComponent/>
-            <AvatarComponent/>
+            <div className={'block block-credit'}>
+                <CreditComponent/>
+            </div>
         </div>
     )
 }

@@ -14,6 +14,7 @@ import DisplayComponent from "../../components/display";
 import ContestComponent from "../../components/contest";
 import AlertComponent from "../../components/alert";
 import LevelUpComponent from "../../components/levelup";
+import AdComponent from "../../components/ad";
 
 interface State {
     contestState: contestState
@@ -39,24 +40,39 @@ const connector = connect(
 function OverlayComponent(props: State) {
     return (
         <div id={'overlay'}>
-            <ChatBoxComponent/>
-            <DisplayComponent/>
+            <div className={'block block-chatbox'}>
+                <ChatBoxComponent/>
+            </div>
+            <div className={'block block-display'}>
+                <DisplayComponent/>
+            </div>
+
             {
                 !props.contestState.active && !props.giveawayState.active &&
-                <TaskBarComponent/>
+                <>
+                    <div className={'block block-taskbar'}>
+                        <TaskBarComponent/>
+                    </div>
+                    <div className={'block block-alert'}>
+                        <AlertComponent/>
+                    </div>
+                    <div className={'block block-ad'}>
+                        <AdComponent/>
+                    </div>
+                </>
             }
             {
                 props.contestState.active &&
-                <ContestComponent/>
+                <div className={'block block-contest'}>
+                    <ContestComponent/>
+                </div>
             }
-            <AvatarComponent/>
-            <LevelUpComponent/>
-            <AlertComponent/>
-
-            {/*{*/}
-            {/*    props.giveawayState.active &&*/}
-            {/*    <TaskBarComponent/>*/}
-            {/*}*/}
+            <div className={'block block-avatar'}>
+                <AvatarComponent/>
+            </div>
+            <div className={'block block-levelup'}>
+                <LevelUpComponent/>
+            </div>
         </div>
     )
 }

@@ -1,28 +1,42 @@
-import React, {ReactElement, useEffect} from "react";
+import React, {useEffect} from "react";
 /** @jsx jsx */
 import {css, jsx, keyframes} from '@emotion/core'
 
 interface Props {
+    fadeInDuration?: number
+    fadeOutDuration?: number
     duration?: number
+    delay?: number
+    iterationCount?: string
     onFinished?: Function
-    children: ReactElement
+    children: JSX.Element[] | JSX.Element |  undefined
     timingFunction?: string
+    className?: string
 }
 
 let defaultProps = {
+    delay: 0,
     duration: 1000,
+    fadeInDuration: 250,
+    fadeOutDuration: 250,
+    iterationCount: 1,
     timingFunction: 'easy-in-out'
 }
 
 function PopupFadeComponent(props: Props) {
+    let fadeInStep = Math.floor(props.fadeInDuration! / props.duration! * 100);
+    let fadeOutStep = Math.floor(
+        100 - (props.fadeOutDuration! / props.duration! * 100)
+    );
+
     const kf = keyframes`
         0% {
             opacity: 0;
         }
-        25% {
+        ${fadeInStep}% {
             opacity: 1;
         }
-        75% {
+        ${fadeOutStep}% {
             opacity: 1;
         }
         100% {
@@ -31,8 +45,9 @@ function PopupFadeComponent(props: Props) {
     `;
 
     const style = css`
+        animation-delay: ${props.delay}ms;
         animation-duration: ${props.duration}ms;
-        animation-iteration-count: 1;
+        animation-iteration-count: ${props.iterationCount};
         animation-timing-function: ${props.timingFunction};
         animation-fill-mode: both;
         animation-name: ${kf};
@@ -51,7 +66,7 @@ function PopupFadeComponent(props: Props) {
 
 
     return (
-        <div css={[style]}>
+        <div className={props.className} css={[style]}>
             {props.children}
         </div>
     )

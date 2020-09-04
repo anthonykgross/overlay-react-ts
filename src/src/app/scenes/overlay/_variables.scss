@@ -16,14 +16,14 @@ $chat_top: 15;
 $chat_left: 15;
 
 $taskbar_height: $avatar_height - 30;
-$taskbar_width: $width - 30;
-$taskbar_left: 15;
+$taskbar_width: 1672;
+$taskbar_left: 230;
 $taskbar_bottom: 30;
 
-$alert_height: 84;
+$alert_height: 110;
 $alert_width: 400;
-$alert_bottom: 57;
-$alert_left: 870;
+$alert_bottom: 228;
+$alert_left: 15;
 
 $contest_height: $taskbar_height;
 $contest_width: $taskbar_width;
@@ -34,3 +34,8 @@ $levelup_height: 170;
 $levelup_width: 18;
 $levelup_bottom: 30;
 $levelup_left: 15;
+
+$ad_height: 164;
+$ad_width: 865;
+$ad_left: 630;
+$ad_bottom: 33;
