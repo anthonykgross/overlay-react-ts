@@ -3,7 +3,7 @@ import {State} from "./reducers";
 
 const state = (s: any): State => s.app;
 
-export const selectors = {
+export const selector = {
     getState: createSelector(
         [state],
         (state) => {

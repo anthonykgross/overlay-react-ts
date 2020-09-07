@@ -1,10 +1,11 @@
 import {Action} from "../../app/schema";
 import Joi from "@hapi/joi";
 
-interface Winner {
+export interface Participant {
     _id: string
     username: string
-    avatar: string
+    avatar?: string
+    giveaway?: string
     subscriber?: boolean
     providerId?: number
     tickets: number
@@ -30,8 +31,20 @@ export interface Giveaway {
     endedAt?: string
     createdAt: string
     updatedAt: string
-    winners: Winner[]
+    winners: Participant[]
+    participants: Participant[]
 }
+
+export const ParticipantSchema = Joi.object().keys({
+    "_id": Joi.string().required(),
+    "username": Joi.string().required(),
+    "avatar": Joi.string(),
+    "giveaway": Joi.string(),
+    "subscriber": Joi.boolean(),
+    "providerId": Joi.number(),
+    "tickets": Joi.number().required(),
+    "createdAt": Joi.string().required()
+});
 
 export const GiveawaySchema = Joi.object({
     "_id": Joi.string().required(),
@@ -52,27 +65,26 @@ export const GiveawaySchema = Joi.object({
     "endedAt": Joi.string(),
     "createdAt": Joi.string().required(),
     "updatedAt": Joi.string().required(),
-    "winners": Joi.array().items(
-        Joi.object().keys({
-            "_id": Joi.string().required(),
-            "username": Joi.string().required(),
-            "avatar": Joi.string().required(),
-            "subscriber": Joi.boolean(),
-            "providerId": Joi.number(),
-            "tickets": Joi.number().required(),
-            "createdAt": Joi.string().required()
-        })
-    ).required()
+    "winners": Joi.array().items(ParticipantSchema).required()
+});
+
+
+export interface ListParticipants {
+    total: number
+    limit: number
+    offset: number
+    entries: Participant[]
+}
+export const ListParticipantsSchema = Joi.object({
+    "total": Joi.number().required(),
+    "limit": Joi.number().required(),
+    "offset": Joi.number().required(),
+    "entries": Joi.array().items(ParticipantSchema).required()
 });
 
 export interface State {
     active?: Giveaway
     giveaways: Giveaway[]
-}
-
-export interface User {
-    username: string
-    amount: number
 }
 
 export interface NewGiveawayAction extends Action {
@@ -92,9 +104,13 @@ export interface CompleteGiveawayAction extends Action {
 }
 
 export interface WinnerGiveawayAction extends Action {
-    response: string
+    response: Participant
 }
 
 export interface EnterGiveawayAction extends Action {
-    response: User
+    response: Participant
+}
+
+export interface SwitchGiveawayAction extends Action {
+    response: {}
 }

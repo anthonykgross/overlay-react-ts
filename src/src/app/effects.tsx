@@ -26,8 +26,11 @@ import {
     EventUpdateRedemptionLatestResponseSchema
 } from "../api/streamelements/websocket/schema/eventUpdate";
 
-import {selectors} from "./selectors";
+import {selector} from "./selectors";
+import {selector as giveawaySelector} from "../services/giveaway/selectors";
+
 import {State} from "./reducers";
+import {ListParticipants, ListParticipantsSchema, State as GiveawayState} from "../services/giveaway/schema";
 import {
     EventCheerResponse,
     EventCheerResponseSchema,
@@ -63,7 +66,7 @@ import {Cheer} from "../services/cheer/schema";
 import {Subscriber} from "../services/subscriber/schema";
 import {Tip} from "../services/tip/schema";
 import {Contest, ContestSchema} from "../services/contest/schema";
-import {Giveaway, GiveawaySchema} from "../services/giveaway/schema";
+import {Giveaway, GiveawaySchema, Participant} from "../services/giveaway/schema";
 import {Redemption, RedemptionSchema} from "../services/redemption/schema";
 import {Follower} from "../services/follower/schema";
 import moment from "moment";
@@ -159,8 +162,19 @@ function* onAuthenticated(action: AuthenticatedAction) {
         let giveaway: Giveaway;
         for (giveaway of json.giveaways) {
             checkSchema(GiveawaySchema, giveaway);
-            if (giveaway.state === 'running') {
+            if (giveaway.state === 'running' || giveaway.state === 'closed') {
                 yield put(giveawayActions.newGiveaway(giveaway));
+
+                let responseGiveaway = yield apiGiveaway.getParticipants(action.response.channelId, giveaway._id);
+                if (responseGiveaway.ok) {
+                    let listParticipants: ListParticipants = yield responseGiveaway.json();
+                    checkSchema(ListParticipantsSchema, listParticipants);
+
+                    let participant: Participant;
+                    for (participant of listParticipants.entries) {
+                        yield put(giveawayActions.enterGiveaway(participant));
+                    }
+                }
             }
         }
     }
@@ -168,7 +182,7 @@ function* onAuthenticated(action: AuthenticatedAction) {
 
 function* onEventUpdate(action: EventUpdateAction) {
     let s: any = yield select();
-    let state = selectors.getState(s) as State;
+    let state = selector.getState(s) as State;
 
     if (action.response.name === "redemption-latest") {
         let response: EventUpdateRedemptionLatestResponse = action.response as EventUpdateRedemptionLatestResponse;
@@ -312,7 +326,7 @@ function* onEventTest(action: EventTestAction) {
 
 function* onContestState(action: ContestStateAction) {
     let s = yield select();
-    let state = selectors.getState(s) as State;
+    let state = selector.getState(s) as State;
 
     if (action.response.state === "running") {
         let response: ContestStateRunningResponse = action.response as ContestStateRunningResponse;
@@ -361,7 +375,7 @@ function* onContestUpdate(action: ContestUpdateAction) {
 
 function* onGiveawayState(action: GiveawayStateAction) {
     let s = yield select();
-    let state = selectors.getState(s) as State;
+    let state = selector.getState(s) as State;
 
     if (action.response.state === "running") {
         checkSchema(GiveawayStateResponseSchema, action.response);
@@ -381,25 +395,58 @@ function* onGiveawayState(action: GiveawayStateAction) {
     if (action.response.state === "refunded") {
         checkSchema(GiveawayStateResponseSchema, action.response);
         yield put(giveawayActions.refundGiveaway());
+        yield delay(5000);
+        yield put(giveawayActions.switchGiveaway());
     }
     if (action.response.state === "completed") {
         let response: GiveawayStateCompletedResponse = action.response as GiveawayStateCompletedResponse;
         checkSchema(GiveawayStateCompletedResponseSchema, response);
         yield put(giveawayActions.completeGiveaway());
+        yield delay(5000);
+        yield put(giveawayActions.switchGiveaway());
     }
 }
 
 function* onGiveawayWinner(action: GiveawayWinnerAction) {
     checkSchema(GiveawayWinnerResponseSchema, action.response);
-    yield put(giveawayActions.winnerGiveaway(action.response.data.winner.username));
+
+    let apiGiveaway = new ApiGiveaway();
+    let responseGiveaway = yield apiGiveaway.getGiveaway(action.response.channelId, action.response.giveawayId);
+    if (responseGiveaway.ok) {
+        let giveaway: Giveaway = yield responseGiveaway.json();
+        checkSchema(GiveawaySchema, giveaway);
+
+        let winner: Participant;
+        for (winner of giveaway.winners) {
+            if (winner.username === action.response.data.winner.username) {
+                yield put(giveawayActions.winnerGiveaway(winner));
+            }
+        }
+    }
 }
 
 function* onGiveawayEntry(action: GiveawayEntryAction) {
+    let s: any = yield select();
+    let state = selector.getState(s) as State;
+    let giveawayState = giveawaySelector.getState(s) as GiveawayState;
     checkSchema(GiveawayEntryResponseSchema, action.response);
-    yield put(giveawayActions.enterGiveaway(
-        action.response.data.entry.tickets,
-        action.response.data.entry.username
-    ));
+
+    if (giveawayState.active) {
+        let apiGiveaway = new ApiGiveaway();
+        let responseGiveaway = yield apiGiveaway.getParticipants(state.channelId, giveawayState.active._id);
+        if (responseGiveaway.ok) {
+            let listParticipants: ListParticipants = yield responseGiveaway.json();
+            checkSchema(ListParticipantsSchema, listParticipants);
+
+
+            let participant: Participant;
+            for (participant of listParticipants.entries) {
+                if (participant.username === action.response.data.entry.username) {
+                    yield put(giveawayActions.enterGiveaway(participant));
+                }
+            }
+        }
+    }
 }
 
 export const MainEffects = [

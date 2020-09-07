@@ -15,6 +15,7 @@ import ContestComponent from "../../components/contest";
 import AlertComponent from "../../components/alert";
 import LevelUpComponent from "../../components/levelup";
 import AdComponent from "../../components/ad";
+import GiveawayComponent from "../../components/giveaway";
 
 interface State {
     contestState: contestState
@@ -65,6 +66,12 @@ function OverlayComponent(props: State) {
                 props.contestState.active &&
                 <div className={'block block-contest'}>
                     <ContestComponent/>
+                </div>
+            }
+            {
+                props.giveawayState.active &&
+                <div className={'block block-giveaway'}>
+                    <GiveawayComponent/>
                 </div>
             }
             <div className={'block block-avatar'}>

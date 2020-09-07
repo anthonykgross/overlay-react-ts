@@ -90,6 +90,17 @@
     padding: 0;
   }
 
+  .block-giveaway {
+    @extend .window;
+    position: absolute;
+    height: $giveaway_height + px;
+    width: $giveaway_width + px;
+    bottom: $giveaway_bottom + px;
+    left: $giveaway_left + px;
+    border-left: 0;
+    padding: 0;
+  }
+
   .block-alert {
     position: absolute;
     padding: 0;

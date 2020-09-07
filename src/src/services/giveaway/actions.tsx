@@ -3,6 +3,7 @@ import {
     CompleteGiveawayAction, EnterGiveawayAction, Giveaway,
     NewGiveawayAction,
     RefundGiveawayAction,
+    SwitchGiveawayAction, Participant,
     WinnerGiveawayAction
 } from "./schema";
 
@@ -12,7 +13,8 @@ export const channels = {
     GIVEAWAY_REFUND: 'services/giveaway/refund',
     GIVEAWAY_COMPLETE: 'services/giveaway/complete',
     GIVEAWAY_WINNER: 'services/giveaway/winner',
-    GIVEAWAY_ENTER: 'services/contest/enter',
+    GIVEAWAY_ENTER: 'services/giveaway/enter',
+    GIVEAWAY_SWITCH: 'services/giveaway/switch',
 };
 
 export const actions = {
@@ -40,20 +42,23 @@ export const actions = {
             response: {}
         };
     },
-    winnerGiveaway: (username: string): WinnerGiveawayAction => {
+    winnerGiveaway: (winner: Participant): WinnerGiveawayAction => {
         return {
             type: channels.GIVEAWAY_WINNER,
-            response: username
+            response: winner
         };
     },
-    enterGiveaway: (amount: number, username: string): EnterGiveawayAction => {
+    enterGiveaway: (participant: Participant): EnterGiveawayAction => {
         return {
             type: channels.GIVEAWAY_ENTER,
-            response: {
-                amount: amount,
-                username: username
-            }
+            response: participant
         };
+    },
+    switchGiveaway: () : SwitchGiveawayAction => {
+        return {
+            type: channels.GIVEAWAY_SWITCH,
+            response: {}
+        }
     }
 
 }

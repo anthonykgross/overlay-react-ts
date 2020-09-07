@@ -1,0 +1,71 @@
+@import "src/app/scss/variables";
+@import "src/app/scss/mixins";
+
+.giveaway {
+  text-align: center;
+  padding: 0 !important;
+  margin: 0 !important;
+
+  .progress {
+    @extend .window;
+    border-left: 0;
+    border-right: 0;
+    border-radius: 0;
+
+    .bar {
+      background-color: $orange;
+      height: 6px;
+    }
+  }
+
+  .question {
+    font-size: 24px;
+    padding: 10px;
+  }
+
+  .options {
+    background-color: $black;
+
+    .command {
+      @extend .window;
+      border-bottom: 0;
+      border-right: 0;
+    }
+
+    .option {
+      background-color: $dark-blue;
+
+      &.winner {
+        color: $green;
+        border-color: $green;
+
+        .progress {
+          border-color: $green;
+        }
+
+        .command {
+          border-color: $green;
+          color: $green;
+        }
+      }
+    }
+  }
+
+
+
+  &.completed, &.closed, &.refunded {
+    .option {
+      color: $gray;
+      border-color: $gray;
+
+      .progress {
+        border-color: $gray;
+      }
+
+      .command {
+        border-color: $gray;
+        color: $gray;
+      }
+    }
+  }
+}

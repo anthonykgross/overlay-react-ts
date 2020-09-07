@@ -13,4 +13,11 @@ export class Api extends BaseApi {
             .replace('{giveawayId}', giveawayId)
         return fetch(url, this.getHeaders())
     };
+
+    getParticipants(channelId: string, giveawayId: string) {
+        let url = endpoints.streamelements.giveaways.participants.get;
+        url = url.replace('{channelId}', channelId)
+            .replace('{giveawayId}', giveawayId)
+        return fetch(url, this.getHeaders())
+    };
 }
