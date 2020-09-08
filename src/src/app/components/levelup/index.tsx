@@ -8,6 +8,7 @@ import {selector as cheerSelector} from "../../../services/cheer/selectors";
 import {selector as tipSelector} from "../../../services/tip/selectors";
 import {selector as chatSelector} from "../../../services/chat/selectors";
 import {selector as viewerSelector} from "../../../services/viewer/selectors";
+import {selector as giveawaySelector} from "../../../services/giveaway/selectors";
 
 import {State as followerState} from "../../../services/follower/schema";
 import {State as subscriberState} from "../../../services/subscriber/schema";
@@ -15,6 +16,8 @@ import {State as cheerState} from "../../../services/cheer/schema";
 import {State as tipState} from "../../../services/tip/schema";
 import {State as chatState} from "../../../services/chat/schema";
 import {State as viewerState} from "../../../services/viewer/schema";
+import {State as giveawayState} from "../../../services/giveaway/schema";
+
 import {ProgressBarVerticalComponent} from "../ui/progressbar";
 
 import './index.scss'
@@ -24,6 +27,7 @@ interface Props {
     followerState: followerState
     subscriberState: subscriberState
     cheerState: cheerState
+    giveawayState: giveawayState
     tipState: tipState
     chatState: chatState
     viewerState: viewerState
@@ -41,6 +45,7 @@ const mapStateToProps = (state: any): Props => {
         followerState: followerSelector.getState(state),
         subscriberState: subscriberSelector.getState(state),
         cheerState: cheerSelector.getState(state),
+        giveawayState: giveawaySelector.getState(state),
         tipState: tipSelector.getState(state),
         chatState: chatSelector.getState(state),
         viewerState: viewerSelector.getState(state),
@@ -61,20 +66,36 @@ const connector = connect(
 );
 
 function LevelUpComponent(props: State) {
-    const [from, setFrom] = useState(0)
-    let to = (props.chatState.messages.length % 11) * 10;
+    const getExp = () => {
+        return props.chatState.messages.length;
+    }
+    const expByLevel = 50;
+
+    const [exp, setExp] = useState(0)
+    const [nextLevel, setNextLevel] = useState(expByLevel)
 
     useEffect(() => {
-        if (props.chatState.messages.length > 0 && to === 0) {
+        if (exp >= nextLevel) {
+            setNextLevel(nextLevel => nextLevel + expByLevel);
             props.levelup();
         }
-    }, [props, to]);
+    }, [props, exp, expByLevel, nextLevel]);
+
+    let from = (1 - (nextLevel - exp) / expByLevel) * 100;
+    let to = (1 - (nextLevel - getExp()) / expByLevel) * 100;
 
     return (
-        <div className={'levelup ' + (to === 100 ? 'shining' : '')}>
-            <ProgressBarVerticalComponent from={from} to={to} duration={500} onFinished={() => {
-                setFrom(to);
-            }}/>
+        <div className={'levelup ' + (from > 90 ? 'shining' : '')}>
+            <ProgressBarVerticalComponent
+                from={from}
+                to={to}
+                duration={1000}
+                onFinished={() => {
+                    if (exp !== getExp()) {
+                        setExp(getExp());
+                    }
+                }}
+            />
         </div>
     )
 }

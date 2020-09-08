@@ -7,6 +7,7 @@ export const endpoints = {
         giveaways: {
             list: 'https://api.streamelements.com/kappa/v3/giveaways/{channelId}',
             get: 'https://api.streamelements.com/kappa/v3/giveaways/{channelId}/{giveawayId}',
+            start: 'https://api.streamelements.com/kappa/v3/giveaways/{channelId}/{giveawayId}/action',
             participants: {
                 get: 'https://api.streamelements.com/kappa/v3/giveaways/{channelId}/{giveawayId}/entries'
             }

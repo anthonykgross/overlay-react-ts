@@ -15,7 +15,8 @@ let defaultProps = {
     from: 0,
     to: 100,
     duration: 1000,
-    timingFunction: 'easy-in-out'
+    timingFunction: 'easy-in-out',
+    className: ''
 }
 
 function ProgressBarVerticalComponent(props: Props) {

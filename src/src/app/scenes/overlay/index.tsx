@@ -54,9 +54,6 @@ function OverlayComponent(props: State) {
                     <div className={'block block-taskbar'}>
                         <TaskBarComponent/>
                     </div>
-                    <div className={'block block-alert'}>
-                        <AlertComponent/>
-                    </div>
                     <div className={'block block-ad'}>
                         <AdComponent/>
                     </div>
@@ -74,6 +71,9 @@ function OverlayComponent(props: State) {
                     <GiveawayComponent/>
                 </div>
             }
+            <div className={'block block-alert'}>
+                <AlertComponent/>
+            </div>
             <div className={'block block-avatar'}>
                 <AvatarComponent/>
             </div>

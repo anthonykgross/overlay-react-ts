@@ -1,5 +1,8 @@
 import {takeEvery, put, select, delay} from 'redux-saga/effects';
+
 import {channels as websocketChannels} from "../api/streamelements/websocket/actions";
+import {channels as alertChannels} from "../services/alert/actions";
+
 import {actions as followActions} from "../services/follower/actions";
 import {actions as cheerActions} from "../services/cheer/actions";
 import {actions as subscriberActions} from "../services/subscriber/actions";
@@ -8,6 +11,7 @@ import {actions as redemptionActions} from "../services/redemption/actions";
 import {actions as contestActions} from "../services/contest/actions";
 import {actions as giveawayActions} from "../services/giveaway/actions";
 import {actions as alertActions} from "../services/alert/actions";
+
 import {
     AuthenticatedAction,
     ContestStateAction,
@@ -70,6 +74,7 @@ import {Giveaway, GiveawaySchema, Participant} from "../services/giveaway/schema
 import {Redemption, RedemptionSchema} from "../services/redemption/schema";
 import {Follower} from "../services/follower/schema";
 import moment from "moment";
+import {NewAlertAction} from "../services/alert/schema";
 
 function* onAll(action: any) {
     console.log(action);
@@ -449,6 +454,23 @@ function* onGiveawayEntry(action: GiveawayEntryAction) {
     }
 }
 
+function* onAlertNew(action: NewAlertAction) {
+    let s: any = yield select();
+    let state = selector.getState(s) as State;
+
+    if (action.response.type === 'levelup') {
+        let apiGiveaway = new ApiGiveaway();
+        let responseGiveaway = yield apiGiveaway.newGiveaway(state.channelId);
+        if (responseGiveaway.ok) {
+            let giveaway: Giveaway = yield responseGiveaway.json();
+            checkSchema(GiveawaySchema, giveaway);
+
+            let apiGiveaway = new ApiGiveaway();
+            yield apiGiveaway.startGiveaway(state.channelId, giveaway._id);
+        }
+    }
+}
+
 export const MainEffects = [
     takeEvery('*', onAll),
     takeEvery(websocketChannels.AUTHENTICATED, onAuthenticated),
@@ -461,4 +483,5 @@ export const MainEffects = [
     takeEvery(websocketChannels.GIVEAWAY_STATE, onGiveawayState),
     takeEvery(websocketChannels.GIVEAWAY_WINNER, onGiveawayWinner),
     takeEvery(websocketChannels.GIVEAWAY_ENTRY, onGiveawayEntry),
+    takeEvery(alertChannels.ALERT_NEW, onAlertNew),
 ];

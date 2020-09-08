@@ -27,7 +27,7 @@ export interface Giveaway {
     maxTickets: number
     botResponses: boolean
     state: string
-    startedAt: string
+    startedAt?: string
     endedAt?: string
     createdAt: string
     updatedAt: string
@@ -61,7 +61,7 @@ export const GiveawaySchema = Joi.object({
     "maxTickets": Joi.number().required(),
     "botResponses": Joi.boolean().required(),
     "state": Joi.string().required(),
-    "startedAt": Joi.string().required(),
+    "startedAt": Joi.string(),
     "endedAt": Joi.string(),
     "createdAt": Joi.string().required(),
     "updatedAt": Joi.string().required(),
