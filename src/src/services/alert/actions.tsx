@@ -67,12 +67,12 @@ export const actions = {
             }
         };
     },
-    nextAlertLevelUp: (): NewAlertAction => {
+    nextAlertLevelUp: (level: string): NewAlertAction => {
         return {
             type: channels.ALERT_NEW,
             response: {
                 id: uuidv4(),
-                message: `<h3>Level UP !</h3>C'est parti pour un Giveaway :D`,
+                message: `<h3>Level UP !</h3>Niv. `+level,
                 image: 'images/levelup.png',
                 type: 'levelup'
             }

@@ -12,7 +12,7 @@ function AdComponent() {
         let interval = setInterval(() => {
             c++;
 
-            if (c === 7) {
+            if (c === 8) {
                 c = 0
             }
             setCount(c);
@@ -141,6 +141,23 @@ function AdComponent() {
                             src={'https://static-cdn.jtvnw.net/emoticons/v1/1447198/1.0'} alt={''}/>.
                             Toi aussi customise-le !<br/>
                             <b>http://store.anthonykgross.fr</b>
+                        </p>
+                    </div>
+                </PopupFadeComponent>
+            }
+            {
+                count === 7 &&
+                <PopupFadeComponent className={'ad'} duration={duration} fadeInDuration={fadeDuration}
+                                    fadeOutDuration={fadeDuration}>
+                    <div className={'thumbnail'}>
+                        <img src={'images/streamelements.png'} alt={''}/>
+                    </div>
+                    <div className={'message'}>
+                        <h3>Astuces !</h3>
+                        <p>
+                            !points : Connaitre son nombre de points<br/>
+                            !redeem nom_objet : Personnaliser l'avatar<br/>
+                            <b>https://streamelements.com/anthonykgross/commands</b>
                         </p>
                     </div>
                 </PopupFadeComponent>

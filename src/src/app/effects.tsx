@@ -455,20 +455,10 @@ function* onGiveawayEntry(action: GiveawayEntryAction) {
 }
 
 function* onAlertNew(action: NewAlertAction) {
-    let s: any = yield select();
-    let state = selector.getState(s) as State;
-
     if (action.response.type === 'levelup') {
-        let apiGiveaway = new ApiGiveaway();
-        let responseGiveaway = yield apiGiveaway.newGiveaway(state.channelId);
-        if (responseGiveaway.ok) {
-            let giveaway: Giveaway = yield responseGiveaway.json();
-            checkSchema(GiveawaySchema, giveaway);
 
-            let apiGiveaway = new ApiGiveaway();
-            yield apiGiveaway.startGiveaway(state.channelId, giveaway._id);
-        }
     }
+    yield
 }
 
 export const MainEffects = [

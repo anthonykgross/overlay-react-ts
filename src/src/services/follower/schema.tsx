@@ -8,7 +8,8 @@ export interface Follower {
 }
 
 export interface State {
-    count: number,
+    count: number
+    total: number
     followers: Follower[]
 }
 

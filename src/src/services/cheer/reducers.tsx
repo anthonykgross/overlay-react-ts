@@ -5,6 +5,7 @@ import moment from "moment";
 
 let initialState: State = {
     count: 0,
+    total: 0,
     cheers: []
 };
 
@@ -14,7 +15,8 @@ export const reducer = (state: State = initialState, action: Action): State => {
 
         return {
             ...state,
-            count: state.count + 1,
+            count: state.count + a.response.data.amount,
+            total: state.total + a.response.data.amount,
             cheers: [
                 ...state.cheers, {
                     username: a.response.data.username,
@@ -28,7 +30,8 @@ export const reducer = (state: State = initialState, action: Action): State => {
         let a: TestCheerAction = action as TestCheerAction;
         return {
             ...state,
-            count: state.count + 1,
+            count: state.count + a.response.amount,
+            total: state.total + a.response.amount,
             cheers: [
                 ...state.cheers, {
                     username: a.response.username,
@@ -42,6 +45,7 @@ export const reducer = (state: State = initialState, action: Action): State => {
         let a: InitCheerAction = action as InitCheerAction;
         return {
             ...state,
+            total: a.response.total,
             count: a.response.count,
             cheers: a.response.cheers
         };

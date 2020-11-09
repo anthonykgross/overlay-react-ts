@@ -10,31 +10,23 @@ import {selector as chatSelector} from "../../../services/chat/selectors";
 import {selector as viewerSelector} from "../../../services/viewer/selectors";
 import {selector as giveawaySelector} from "../../../services/giveaway/selectors";
 
-import {State as followerState} from "../../../services/follower/schema";
-import {State as subscriberState} from "../../../services/subscriber/schema";
-import {State as cheerState} from "../../../services/cheer/schema";
-import {State as tipState} from "../../../services/tip/schema";
-import {State as chatState} from "../../../services/chat/schema";
-import {State as viewerState} from "../../../services/viewer/schema";
-import {State as giveawayState} from "../../../services/giveaway/schema";
+import {Giveaway} from "../../../services/giveaway/schema";
 
 import {ProgressBarVerticalComponent} from "../ui/progressbar";
 
 import './index.scss'
-import {actions} from "../../../services/alert/actions";
 
 interface Props {
-    followerState: followerState
-    subscriberState: subscriberState
-    cheerState: cheerState
-    giveawayState: giveawayState
-    tipState: tipState
-    chatState: chatState
-    viewerState: viewerState
+    nbFollowers: number
+    nbSubscribers: number
+    nbCheers: number
+    nbTips: number
+    nbMessages: number
+    nbViewers: number
+    giveawayActive?: Giveaway
 }
 
 interface Dispatcher {
-    levelup: Function
 }
 
 interface State extends Props, Dispatcher {
@@ -42,22 +34,18 @@ interface State extends Props, Dispatcher {
 
 const mapStateToProps = (state: any): Props => {
     return {
-        followerState: followerSelector.getState(state),
-        subscriberState: subscriberSelector.getState(state),
-        cheerState: cheerSelector.getState(state),
-        giveawayState: giveawaySelector.getState(state),
-        tipState: tipSelector.getState(state),
-        chatState: chatSelector.getState(state),
-        viewerState: viewerSelector.getState(state),
+        nbFollowers: followerSelector.getState(state).count,
+        nbSubscribers: subscriberSelector.getState(state).count,
+        nbCheers: cheerSelector.getState(state).count,
+        nbTips: tipSelector.getState(state).count,
+        nbMessages: chatSelector.getState(state).messages.length,
+        nbViewers: viewerSelector.getState(state).max,
+        giveawayActive: giveawaySelector.getState(state).active,
     }
 };
 
 const mapDispatchToProps = (dispatch: Dispatch): Dispatcher => {
-    return {
-        levelup: () => {
-            dispatch(actions.nextAlertLevelUp());
-        }
-    };
+    return {};
 };
 
 const connector = connect(
@@ -66,23 +54,72 @@ const connector = connect(
 );
 
 function LevelUpComponent(props: State) {
-    const getExp = () => {
-        return props.chatState.messages.length;
-    }
-    const expByLevel = 50;
+    const X = 5000;
+    const Y = 11;
+    const Z = 1.07;
 
-    const [exp, setExp] = useState(0)
-    const [nextLevel, setNextLevel] = useState(expByLevel)
+    const expToLevel = (exp: number) => {
+        return Math.floor(
+            Math.log(exp / (X / Y) + 1) / Math.log(Z) + 1
+        );
+    }
+
+    const levelToExp = (lvl: number) => {
+        return (X / Y) * (Math.pow(Z, lvl - 1) - 1);
+    }
+
+    const tipMultiplier = 20;
+    const cheerMultiplier = 15;
+    const subscriberMultiplier = 25;
+    const followerMultiplier = 20;
+    const viewMultiplier = 10;
+    const messageMultiplier = 1;
+
+    const getExp = () => {
+        return (
+            props.nbFollowers * followerMultiplier +
+            props.nbSubscribers * subscriberMultiplier +
+            props.nbCheers * cheerMultiplier +
+            props.nbTips * tipMultiplier +
+            props.nbMessages * messageMultiplier +
+            props.nbViewers * viewMultiplier
+        );
+    }
+
+    const [exp, setExp] = useState(1)
+    const [nextLevel, setNextLevel] = useState(2)
 
     useEffect(() => {
-        if (exp >= nextLevel) {
-            setNextLevel(nextLevel => nextLevel + expByLevel);
-            props.levelup();
+        let expNextLevel = levelToExp(nextLevel);
+        if (exp >= expNextLevel) {
+            setNextLevel(nextLevel + 1);
         }
-    }, [props, exp, expByLevel, nextLevel]);
+    }, [props, exp, nextLevel]);
 
-    let from = (1 - (nextLevel - exp) / expByLevel) * 100;
-    let to = (1 - (nextLevel - getExp()) / expByLevel) * 100;
+    console.log('---------')
+    let level = expToLevel(exp);
+    let expLevel = levelToExp(level);
+    let expNextLevel = levelToExp(nextLevel);
+    console.log(expToLevel(exp), '>', nextLevel);
+    let nbExp = expNextLevel - expLevel;
+    console.log('Exp', expLevel, exp, getExp(), expNextLevel, nbExp);
+
+    let toExp = getExp();
+    if (toExp > expNextLevel) {
+        toExp = expNextLevel;
+    }
+
+    if (nbExp === 0) {
+        nbExp = 1;
+    }
+
+    let from = (exp - expLevel) / nbExp * 100;
+    let to = (toExp - expLevel) / nbExp * 100;
+
+    // console.log(exp, expLevel, exp - expLevel, nbExp)
+    //
+    console.log(from);
+    console.log(to);
 
     return (
         <div className={'levelup ' + (from > 90 ? 'shining' : '')}>
@@ -91,11 +128,10 @@ function LevelUpComponent(props: State) {
                 to={to}
                 duration={1000}
                 onFinished={() => {
-                    if (exp !== getExp()) {
-                        setExp(getExp());
-                    }
+                    setExp(toExp);
                 }}
             />
+            <span>{expToLevel(exp)}</span>
         </div>
     )
 }

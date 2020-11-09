@@ -4,6 +4,7 @@ import {InitSubscriberAction, NewSubscriberAction, State, TestSubscriberAction} 
 import moment from "moment";
 
 let initialState: State = {
+    total: 0,
     count: 0,
     subscribers: []
 };
@@ -14,6 +15,7 @@ export const reducer = (state: State = initialState, action: Action): State => {
 
         return {
             ...state,
+            total: state.total + 1,
             count: state.count + 1,
             subscribers: [
                 ...state.subscribers, {
@@ -29,6 +31,7 @@ export const reducer = (state: State = initialState, action: Action): State => {
         let a: TestSubscriberAction = action as TestSubscriberAction;
         return {
             ...state,
+            total: state.total + 1,
             count: state.count + 1,
             subscribers: [
                 ...state.subscribers, {
@@ -44,6 +47,7 @@ export const reducer = (state: State = initialState, action: Action): State => {
         let a: InitSubscriberAction = action as InitSubscriberAction;
         return {
             ...state,
+            total: a.response.total,
             count: a.response.count,
             subscribers: a.response.subscribers
         };

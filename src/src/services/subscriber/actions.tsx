@@ -26,11 +26,12 @@ export const actions = {
             }
         };
     },
-    initSubscriber: (count: number, subscribers: Subscriber[]): InitSubscriberAction => {
+    initSubscriber: (total: number, subscribers: Subscriber[]): InitSubscriberAction => {
         return {
             type: channels.SUBSCRIBER_INIT,
             response: {
-                count: count,
+                total: total,
+                count: 0,
                 subscribers: subscribers,
             }
         };

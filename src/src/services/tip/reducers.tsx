@@ -4,6 +4,7 @@ import {InitTipAction, NewTipAction, State, TestTipAction} from "./schema";
 import moment from "moment";
 
 let initialState: State = {
+    total: 0,
     count: 0,
     tips: []
 };
@@ -14,7 +15,8 @@ export const reducer = (state: State = initialState, action: Action): State => {
 
         return {
             ...state,
-            count: state.count + 1,
+            count: state.count + a.response.data.amount,
+            total: state.total + a.response.data.amount,
             tips: [
                 ...state.tips, {
                     username: a.response.data.username,
@@ -28,7 +30,8 @@ export const reducer = (state: State = initialState, action: Action): State => {
         let a: TestTipAction = action as TestTipAction;
         return {
             ...state,
-            count: state.count + 1,
+            count: state.count + a.response.amount,
+            total: state.total + a.response.amount,
             tips: [
                 ...state.tips, {
                     username: a.response.username,
@@ -42,6 +45,7 @@ export const reducer = (state: State = initialState, action: Action): State => {
         let a: InitTipAction = action as InitTipAction;
         return {
             ...state,
+            total: a.response.total,
             count: a.response.count,
             tips: a.response.tips
         };

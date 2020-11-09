@@ -9,7 +9,8 @@ export interface Tip {
 }
 
 export interface State {
-    count: number,
+    total: number
+    count: number
     tips: Tip[]
 }
 

@@ -10,26 +10,22 @@ import {selector as followerSelector} from "../../../services/follower/selectors
 import {selector as subscriberSelector} from "../../../services/subscriber/selectors";
 import {selector as viewerSelector} from "../../../services/viewer/selectors";
 
-import {State as followerState} from "../../../services/follower/schema";
-import {State as subscriberState} from "../../../services/subscriber/schema";
-import {State as viewerState} from "../../../services/viewer/schema";
-
 interface Live {
     icon: IconDefinition
     count: number
 }
 
 interface State {
-    followerState: followerState
-    subscriberState: subscriberState
-    viewerState: viewerState
+    nbFollowers: number
+    nbSubscribers: number
+    nbViewers: number
 }
 
 const mapStateToProps = (state: any): State => {
     return {
-        followerState: followerSelector.getState(state),
-        subscriberState: subscriberSelector.getState(state),
-        viewerState: viewerSelector.getState(state),
+        nbFollowers: followerSelector.getState(state).total,
+        nbSubscribers: subscriberSelector.getState(state).total,
+        nbViewers: viewerSelector.getState(state).count,
     }
 };
 
@@ -45,7 +41,7 @@ const connector = connect(
 function LiveComponent(props: State) {
     const [live, setLive] = useState<Live>({
         icon: findIcon('fas', 'heart'),
-        count: props.followerState.count
+        count: props.nbFollowers
     });
 
     useEffect(() => {
@@ -54,20 +50,20 @@ function LiveComponent(props: State) {
             if (count === 0) {
                 setLive({
                     icon: findIcon('fas', 'heart'),
-                    count: props.followerState.count
+                    count: props.nbFollowers
                 });
             }
             if (count === 1) {
                 setLive({
                     icon: findIcon('fas', 'star'),
-                    count: props.subscriberState.count
+                    count: props.nbSubscribers
                 });
             }
 
             if (count === 2) {
                 setLive({
                     icon: findIcon('fas', 'eye'),
-                    count: props.viewerState.count
+                    count: props.nbViewers
                 });
             }
             count++;

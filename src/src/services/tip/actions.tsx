@@ -25,11 +25,12 @@ export const actions = {
             }
         };
     },
-    initTip: (count: number, tips: Tip[]): InitTipAction => {
+    initTip: (total: number, tips: Tip[]): InitTipAction => {
         return {
             type: channels.TIP_INIT,
             response: {
-                count: count,
+                total: total,
+                count: 0,
                 tips: tips,
             }
         };

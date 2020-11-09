@@ -9,7 +9,8 @@ export interface Cheer {
 }
 
 export interface State {
-    count: number,
+    count: number
+    total: number
     cheers: Cheer[]
 }
 

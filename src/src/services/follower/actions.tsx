@@ -24,11 +24,12 @@ export const actions = {
             }
         };
     },
-    initFollow: (count: number, followers: Follower[]): InitFollowAction => {
+    initFollow: (total: number, followers: Follower[]): InitFollowAction => {
         return {
             type: channels.FOLLOW_INIT,
             response: {
-                count: count,
+                total: total,
+                count: 0,
                 followers: followers,
             }
         };

@@ -10,7 +10,8 @@ export interface Subscriber {
 }
 
 export interface State {
-    count: number,
+    total: number
+    count: number
     subscribers: Subscriber[]
 }
 

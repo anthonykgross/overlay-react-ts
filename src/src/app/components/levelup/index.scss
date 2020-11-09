@@ -4,13 +4,20 @@
 .levelup {
   height: 100%;
 
+  span {
+    @extend .window;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+  }
+
   .progress {
     @extend .window;
     display: flex;
     border-radius: 0;
-    height: 100%;
-
-
+    height: 88%;
+    border-bottom: 0;
+    margin-right: 20px;
 
     .bar {
       width: 100%;
@@ -21,12 +28,14 @@
   }
 
   &.shining {
-    box-shadow: 0 0 10px $yellow;
-    animation-timing-function: ease-in-out;
-    animation-fill-mode: both;
-    animation-duration: 1000ms;
-    animation-iteration-count: infinite;
-    animation-name: kf-shining;
+    .progress, span {
+      box-shadow: 0 0 10px $yellow;
+      animation-timing-function: ease-in-out;
+      animation-fill-mode: both;
+      animation-duration: 1000ms;
+      animation-iteration-count: infinite;
+      animation-name: kf-shining;
+    }
   }
 
   @keyframes kf-shining {

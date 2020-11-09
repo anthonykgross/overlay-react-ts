@@ -25,11 +25,12 @@ export const actions = {
             }
         };
     },
-    initCheer: (count: number, cheers: Cheer[]): InitCheerAction => {
+    initCheer: (total: number, cheers: Cheer[]): InitCheerAction => {
         return {
             type: channels.CHEER_INIT,
             response: {
-                count: count,
+                total: total,
+                count: 0,
                 cheers: cheers,
             }
         };

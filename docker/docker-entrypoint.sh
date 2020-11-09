@@ -18,7 +18,7 @@ run() {
     gosu docker serve -s build --no-clipboard -l 3000
   else
     gosu docker yarn start
-    # tail -f
+#    tail -f
   fi
 }
 
