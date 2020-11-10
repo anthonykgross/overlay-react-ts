@@ -1,4 +1,4 @@
-import {EmoteAction, MessageAction, User} from "./schema";
+import {MessageAction, User} from "./schema";
 import {v4 as uuidv4} from "uuid";
 
 export const channels = {
@@ -20,15 +20,6 @@ export const actions = {
                 user: user,
                 id: uuidv4(),
                 message: message
-            }
-        };
-    },
-    emote: (user: User, emote: string) : EmoteAction => {
-        return {
-            type: channels.EMOTE,
-            response: {
-                user: user,
-                emote: emote
             }
         };
     }

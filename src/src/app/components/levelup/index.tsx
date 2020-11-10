@@ -96,13 +96,10 @@ function LevelUpComponent(props: State) {
         }
     }, [props, exp, nextLevel]);
 
-    console.log('---------')
     let level = expToLevel(exp);
     let expLevel = levelToExp(level);
     let expNextLevel = levelToExp(nextLevel);
-    console.log(expToLevel(exp), '>', nextLevel);
     let nbExp = expNextLevel - expLevel;
-    console.log('Exp', expLevel, exp, getExp(), expNextLevel, nbExp);
 
     let toExp = getExp();
     if (toExp > expNextLevel) {
@@ -115,11 +112,6 @@ function LevelUpComponent(props: State) {
 
     let from = (exp - expLevel) / nbExp * 100;
     let to = (toExp - expLevel) / nbExp * 100;
-
-    // console.log(exp, expLevel, exp - expLevel, nbExp)
-    //
-    console.log(from);
-    console.log(to);
 
     return (
         <div className={'levelup ' + (from > 90 ? 'shining' : '')}>

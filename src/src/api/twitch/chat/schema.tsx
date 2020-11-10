@@ -93,12 +93,3 @@ export interface MessageAction extends Action {
     type: string
     response: Message
 }
-
-export interface Emote {
-    user: User
-    emote: string
-}
-export interface EmoteAction extends Action {
-    type: string
-    response: Emote
-}

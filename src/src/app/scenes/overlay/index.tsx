@@ -14,6 +14,7 @@ import DisplayComponent from "../../components/display";
 import ContestComponent from "../../components/contest";
 import AlertComponent from "../../components/alert";
 import LevelUpComponent from "../../components/levelup";
+import EmojiComponent from "../../components/emoji";
 import AdComponent from "../../components/ad";
 import GiveawayComponent from "../../components/giveaway";
 
@@ -79,6 +80,9 @@ function OverlayComponent(props: State) {
             </div>
             <div className={'block block-levelup'}>
                 <LevelUpComponent/>
+            </div>
+            <div className={'block block-emoji'}>
+                <EmojiComponent/>
             </div>
         </div>
     )

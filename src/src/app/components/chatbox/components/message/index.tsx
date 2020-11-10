@@ -5,7 +5,7 @@ import {State} from "../../../../../services/chat/schema";
 import {selector} from "../../../../../services/chat/selectors";
 import {Dispatch} from "redux";
 import {connect} from "react-redux";
-import {actions} from "../../../../../api/twitch/chat/actions";
+import {actions} from "../../../../../services/emoji/actions";
 
 interface Props {
     message: Message,
@@ -25,7 +25,7 @@ const mapStateToProps = (state: any) : State => {
 const mapDispatchToProps = (dispatch: Dispatch) => {
     return {
         emote: (user: User, url: string) => {
-            dispatch(actions.emote(user, url));
+            dispatch(actions.newEmoji(user, url));
         }
     };
 };
@@ -113,7 +113,7 @@ function MessageComponent(props: Props) {
     replacements.sort((a, b) => b.start - a.start);
 
     replacements.forEach((emoji) => {
-        props.emote(props.message.user, emoji.url);
+        //props.emote(props.message.user, emoji.url);
 
         let tag = '<img src="' + emoji.url + '" alt="R"/>';
         message = message.substring(0, emoji.start) + tag + message.substring(emoji.end);

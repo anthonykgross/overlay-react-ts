@@ -130,5 +130,13 @@
     bottom: $ad_bottom + px;
     left: $ad_left + px;
   }
+
+  .block-emoji {
+    position: absolute;
+    width: $width + px;
+    height: $height+ px;
+    top: 0;
+    left: 0;
+  }
 }
 

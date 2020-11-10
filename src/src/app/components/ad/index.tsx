@@ -71,7 +71,7 @@ function AdComponent() {
                     <div className={'message'}>
                         <h3>Github</h3>
                         <p>
-                            La plupart des projets sont disponible sur mon Github. N'hésite pas à me suivre
+                            La plupart des projets sont disponibles sur mon Github. N'hésite pas à me suivre
                             afin d'être averti de tous les changements apportés.<br/>
                             <b>http://github.anthonykgross.fr</b>
                         </p>
@@ -104,7 +104,7 @@ function AdComponent() {
                     <div className={'message'}>
                         <h3>Youtube</h3>
                         <p>
-                            La quasi totalité des VOD sont disponible sur Youtube.<br/>
+                            La quasi totalité des VOD sont disponibles sur Youtube.<br/>
                             <b>http://youtube.anthonykgross.fr</b>
                         </p>
                     </div>
